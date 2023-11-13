@@ -130,7 +130,7 @@ in { config, pkgs, lib, ... }:
     isNormalUser = true;
     description = "Matthias Wünsch";
     extraGroups = [ "networkmanager" "wheel" "nixoseditor" ];
-    packages = with pkgs; [ firefox spotify home-manager bash ];
+    packages = with pkgs; [ firefox spotify home-manager bash htop];
     openssh.authorizedKeys.keys = [ publicKey ];
     shell = pkgs.fish;
   };

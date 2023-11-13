@@ -26,6 +26,26 @@
 
   swapDevices = [ ];
 
+	environment.systemPackages = with pkgs;
+    [ tlp powertop s-tui ] ++ [ config.boot.kernelPackages.cpupower ];
+
+  system.activationScripts.cpu-frequency-set =
+    let max-freq = 75; # 100 = the maximum capacity of my CPU
+    in lib.mkIf (max-freq != null) {
+      text = ''
+        max_perf_pct=/sys/devices/system/cpu/intel_pstate/max_perf_pct
+        value=${toString max-freq}
+        if [[ -f $max_perf_pct ]]; then
+          echo $value > $max_perf_pct
+        fi
+      '';
+      deps = [ ];
+    };
+
+  powerManagement = {
+    enable = true;
+    powertop.enable = false;
+	};
   # Enables DHCP on each ethernet and wireless interface. In case of scripted networking
   # (the default) this is the recommended approach. When using systemd-networkd it's
   # still possible to use this option, but it's recommended to use it in conjunction
