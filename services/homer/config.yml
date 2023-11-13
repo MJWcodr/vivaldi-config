@@ -4,14 +4,14 @@
 
 title: "Homelab Dashboard"
 subtitle: "Homer"
-logo: "logo.png"
-# icon: "fas fa-skull-crossbones" # Optional icon
+# logo: "logo.png"
+icon: "fas fa-skull-crossbones" # Optional icon
 
 header: false
 footer: '<p>Created with <span class="has-text-danger">❤️</span> with <a href="https://bulma.io/">bulma</a>, <a href="https://vuejs.org/">vuejs</a> & <a href="https://fontawesome.com/">font awesome</a> // Fork me on <a href="https://github.com/bastienwirtz/homer"><i class="fab fa-github-alt"></i></a></p>' # set false if you want to hide it.
 
 # Optional theme customization
-theme: dark
+theme: defa
 colors:
   light:
     highlight-primary: "#3367d6"
@@ -86,13 +86,14 @@ services:
         logo: "assets/tools/gitea.svg"
         url: "http://vivaldi.fritz.box:3001"
   - name: "Socials"
-    icon: "fas circle-user"
+    icon: "fas fa-circle-user"
     items:
       - name: "GitHub"
         url: "https://github.com/mjwcodr"
+        icon: "fas fa-brands fa-github-alt"
   - name: "Local Services"
     icon: "fas fa-cloud"
     items:
       - name: "Fritz!Box"
-        icon: "https://upload.wikimedia.org/wikipedia/de/6/68/Fritz%21_Logo.svg"
+        logo: "https://upload.wikimedia.org/wikipedia/de/6/68/Fritz%21_Logo.svg"
         url: "http://fritz.box"
