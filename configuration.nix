@@ -12,7 +12,7 @@ in { config, pkgs, lib, ... }:
 {
   imports = [ # Include the results of the hardware scan.
     # Home Manager NixOS
- 
+
     # Secret Management
     <agenix/modules/age.nix>
 		#"${builtins.fetchTarball "https://github.com/Mic92/sops-nix/archive/master.tar.gz"}/modules/sops"
@@ -23,30 +23,32 @@ in { config, pkgs, lib, ... }:
 
 		# Immich
 		# not implemented yet
-		
+
 		# Seafile
 	  # ./services/seafile.nix
 
     # CoreDNS
     # ./services/coredns.nix
 
+		# Homer
+		./services/homer.nix
 
     # Syncthing
     ./services/syncthing.nix
 
     # Navidrome
     ./services/navidrome.nix
-		
-		# Gitea 
+
+		# Gitea
 		./services/gitea.nix
-		
+
 		# Dashy
 		# ./services/dashy.nix
   ];
   # Secrets
   #
   # age.secrets.nextcloud-pass.file = ./secrets/nextcloud-pass.age;
-	
+
   # Bootloader.
   boot.loader.systemd-boot.enable = true;
   boot.loader.systemd-boot.editor = false;
