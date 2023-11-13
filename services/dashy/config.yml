@@ -1,0 +1,8 @@
+pageInfo:
+  title: Home Lab
+sections:
+- name: Data Management
+  icon: far fa-rocket
+  - title: GitHub
+    icon: fab fa-github
+    url: https://github.com/mjwcodr
