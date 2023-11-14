@@ -1,19 +1,40 @@
+{config, ...}:
 {
+
+age.secrets = {
+	"secrets/sslcert.crt.age" = {
+		file = ../secrets/sslcert.crt.age;
+		owner = config.services.nginx.user;
+	};
+	"secrets/sslcert.key.age" = {
+		file = ../secrets/sslcert.key.age;
+		owner = config.services.nginx.user;
+	};
+	};
+
 virtualisation.oci-containers.containers = {
 	"homer" = {
 		image = "b4bz/homer:latest";
 		volumes = ["/etc/nixos/services/homer/:/www/assets:ro"];
 		autoStart = true;
-		ports = [ "80:8080" ];
+		ports = [ "8050:8080" ];
 	};
 };
 
 services.nginx = {
 	enable = true;
-	virtualHosts."vivaldi.mjwcodr.de" = {
-		locations."/".proxyPass = "http://vivaldi.fritz.box:80";
+virtualHosts."vivaldi.mjwcodr.de" = {
+		sslCertificate = config.age.secrets."secrets/sslcert.crt.age".path;
+		sslCertificateKey = config.age.secrets."secrets/sslcert.key.age".path;
+		locations."/".proxyPass = "http://localhost:8050";
+		forceSSL = true;
+		listen = [ {
+			ssl = true;
+			port = 443;
+			addr = "vivaldi.fritz.box";
+		} ];
 	};
 };
 
-networking.firewall.allowedTCPPorts = [ 80 ];
+networking.firewall.allowedTCPPorts = [ 443 ];
 }

@@ -5,11 +5,30 @@
 		file = ../secrets/postgrespass.age;
 		owner = config.services.gitea.user;
 	};
+
+	age.secrets."secrets/sslcert.crt.age" = {
+		file = ../secrets/sslcert.crt.age;
+		owner = config.services.nginx.user;
+	};
+
+	age.secrets."secrets/sslcert.key.age" = {
+		file = ../secrets/sslcert.key.age;
+		owner = config.services.nginx.user;
+	};
+
 	services.nginx.virtualHosts."vivaldi.fritz.box" = {
-    enableACME = false;
-    forceSSL = false;
+    forceSSL = true;
+		sslCertificate = config.age.secrets."secrets/sslcert.crt.age".path;
+		sslCertificateKey = config.age.secrets."secrets/sslcert.key.age".path;
+
+		listen = [ {
+			ssl = true;
+			port = 3001;
+			addr = "vivaldi.fritz.box";
+		} ];
+
     locations."/" = {
-      proxyPass = "http://localhost:3001/";
+      proxyPass = "http://localhost:8030/";
     };
   };
 
@@ -43,7 +62,7 @@
 		settings.server = {
 			DOMAIN = "vivaldi.fritz.box";
 			ROOT_URL = "http://vivaldi.fritz.box:3001/";
-			HTTP_PORT = 3001;
+			HTTP_PORT = 8030;
 		};
   };
 	

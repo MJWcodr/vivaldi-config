@@ -7,4 +7,7 @@ in
 	"secrets/rclone_backup.age".publicKeys = [ system matthias];
 	"secrets/restic_backup.age".publicKeys = [ system matthias];
 	"secrets/postgrespass.age".publicKeys = [ system matthias];
+
+	"secrets/sslcert.crt.age".publicKeys = [ system matthias ];
+	"secrets/sslcert.key.age".publicKeys = [ system matthias ];
 }
