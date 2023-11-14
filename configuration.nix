@@ -186,7 +186,10 @@ in { config, pkgs, lib, ... }:
 
   environment.variables.EDITOR = "vim";
   # Enable the OpenSSH daemon.
-  services.openssh.enable = true;
+  services.openssh = {
+	enable = true;
+	ports = [ 22 ]; 
+};
 
   services.logind.lidSwitch = "ignore";
   # Open ports in the firewall.

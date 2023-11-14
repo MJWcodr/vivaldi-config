@@ -8,5 +8,12 @@ virtualisation.oci-containers.containers = {
 	};
 };
 
+services.nginx = {
+	enable = true;
+	virtualHosts."vivaldi.mjwcodr.de" = {
+		locations."/".proxyPass = "http://vivaldi.fritz.box:80";
+	};
+};
+
 networking.firewall.allowedTCPPorts = [ 80 ];
 }
