@@ -39,10 +39,12 @@
       type = "postgres";
       passwordFile = config.age.secrets."secrets/postgrespass.age".path;
 			};
-    domain = "viavldi.fritz.box";
-    rootUrl = "http://vivaldi.fritz.box:3000/";
-    httpPort = 3001;
 		stateDir = "/srv/gitea";
+		settings.server = {
+			DOMAIN = "vivaldi.fritz.box";
+			ROOT_URL = "http://vivaldi.fritz.box:3001/";
+			HTTP_PORT = 3001;
+		};
   };
 	
 	networking.firewall.allowedTCPPorts = [ 3001 ];
