@@ -24,9 +24,6 @@ in { config, pkgs, lib, ... }:
 		# Immich
 		# not implemented yet
 
-		# Seafile
-	  # ./services/seafile.nix
-
     # CoreDNS
     # ./services/coredns.nix
 
@@ -40,10 +37,10 @@ in { config, pkgs, lib, ... }:
     ./services/navidrome.nix
 
 		# Gitea
-		./services/gitea.nix
+		# ./services/gitea.nix
 
-		# Dashy
-		# ./services/dashy.nix
+		# Wireguard
+		./services/wireguard.nix
   ];
   # Secrets
   #

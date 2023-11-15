@@ -61,7 +61,7 @@
 		stateDir = "/srv/gitea";
 		settings.server = {
 			DOMAIN = "vivaldi.fritz.box";
-			ROOT_URL = "http://vivaldi.fritz.box:3001/";
+			ROOT_URL = "https://vivaldi.fritz.box:3001/";
 			HTTP_PORT = 8030;
 		};
   };
