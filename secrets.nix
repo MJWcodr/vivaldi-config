@@ -4,10 +4,18 @@ let
 	system = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIF7iwA1DTPIsyLbHeFFnC9wa/Sd/np54NVgTFaKHoNFf";
 in
 {
+	# Backup keys
 	"secrets/rclone_backup.age".publicKeys = [ system matthias];
 	"secrets/restic_backup.age".publicKeys = [ system matthias];
-	"secrets/postgrespass.age".publicKeys = [ system matthias];
 
+	# Postgres password
+	"secrets/postgrespass.age".publicKeys = [ system matthias];
+	# SSL cert for the webserver
 	"secrets/sslcert.crt.age".publicKeys = [ system matthias ];
 	"secrets/sslcert.key.age".publicKeys = [ system matthias ];
+
+	# Wireguard
+	"secrets/wireguard-privatekey.age".publicKeys = [ system matthias ];
+	"secrets/wireguard-publickey.age".publicKeys = [ system matthias ];
+
 }
