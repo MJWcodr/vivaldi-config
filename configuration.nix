@@ -43,7 +43,7 @@ in { config, pkgs, lib, ... }:
 		# ./services/wireguard.nix
 
 		# HedgeDoc
-		./services/hedgedoc.nix
+		# ./services/hedgedoc.nix
   ];
   # Secrets
   #
