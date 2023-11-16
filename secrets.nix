@@ -15,7 +15,9 @@ in
 	"secrets/sslcert.key.age".publicKeys = [ system matthias ];
 
 	# Wireguard
-	"secrets/wireguard-privatekey.age".publicKeys = [ system matthias ];
-	"secrets/wireguard-publickey.age".publicKeys = [ system matthias ];
+	"secrets/wireguard-client-privatekey.age".publicKeys = [ system matthias ];
+	"secrets/wireguard-client-publickey.age".publicKeys = [ system matthias ];
+
+	"secrets/wireguard-server-publickey.age".publicKeys = [ system matthias ];
 
 }

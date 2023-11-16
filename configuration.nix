@@ -42,8 +42,8 @@ in { config, pkgs, lib, ... }:
 		# Gitea
 		./services/gitea.nix
 
-		# Dashy
-		# ./services/dashy.nix
+		# Wireguard
+		./services/wireguard.nix
   ];
   # Secrets
   #
