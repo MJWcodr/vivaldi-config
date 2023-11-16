@@ -1,25 +1,30 @@
 { config, ... }:
 {
 
-	age.secrets."secrets/postgrespass.age" = {
-		file = ../secrets/postgrespass.age;
-		owner = config.services.gitea.user;
+	age.secrets = {
+		gitea-postgres = {
+			file = ../secrets/postgrespass.age;
+			owner = config.services.gitea.user;
+		};
+		sslcert = {
+			file = ../secrets/sslcert.crt.age;
+			owner = config.services.nginx.user;
+		};
+		sslkey = {
+			file = ../secrets/sslcert.key.age;
+			owner = config.services.nginx.user;
+		};
 	};
 
-	age.secrets."secrets/sslcert.crt.age" = {
-		file = ../secrets/sslcert.crt.age;
-		owner = config.services.nginx.user;
-	};
 
-	age.secrets."secrets/sslcert.key.age" = {
-		file = ../secrets/sslcert.key.age;
-		owner = config.services.nginx.user;
-	};
+	##########
+	# Nginx
+	##########
 
 	services.nginx.virtualHosts."vivaldi.fritz.box" = {
     forceSSL = true;
-		sslCertificate = config.age.secrets."secrets/sslcert.crt.age".path;
-		sslCertificateKey = config.age.secrets."secrets/sslcert.key.age".path;
+		sslCertificate = config.age.secrets.sslcert.path;
+		sslCertificateKey = config.age.secrets.sslkey.path;
 
 		listen = [ {
 			ssl = true;
@@ -32,6 +37,10 @@
     };
   };
 
+	##########
+	# Postgres
+	##########
+
   services.postgresql = {
     ensureDatabases = [ config.services.gitea.user ];
     ensureUsers = [
@@ -41,6 +50,10 @@
       }
     ];
   };
+
+	##########
+	# Gitea
+	##########
 
 	system.activationScripts.gitea = {
 		text = ''
@@ -56,7 +69,7 @@
     appName = "My awesome Gitea server"; # Give the site a name
     database = {
       type = "postgres";
-      passwordFile = config.age.secrets."secrets/postgrespass.age".path;
+      passwordFile = config.age.secrets.gitea-postgres.path;
 			};
 		stateDir = "/srv/gitea";
 		settings.server = {
@@ -66,6 +79,9 @@
 		};
   };
 	
+	##########
+	# Firewall
+	##########
 	networking.firewall.allowedTCPPorts = [ 3001 ];
 }
 
