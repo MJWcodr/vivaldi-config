@@ -37,10 +37,13 @@ in { config, pkgs, lib, ... }:
     ./services/navidrome.nix
 
 		# Gitea
-		# ./services/gitea.nix
+		./services/gitea.nix
 
 		# Wireguard
-		./services/wireguard.nix
+		# ./services/wireguard.nix
+
+		# HedgeDoc
+		./services/hedgedoc.nix
   ];
   # Secrets
   #
