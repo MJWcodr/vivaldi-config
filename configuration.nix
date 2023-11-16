@@ -39,6 +39,9 @@ in { config, pkgs, lib, ... }:
 		# Gitea
 		./services/gitea.nix
 
+		# Drone
+		./services/drone.nix
+
 		# Wireguard
 		# ./services/wireguard.nix
 

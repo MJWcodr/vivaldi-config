@@ -1,5 +1,11 @@
-{ config, ... }:
+{ config, pkgs, ... }:
+let 
+	droneserver = config.users.users.droneserver.name;
+in 
 {
+	##########
+	# Secrets
+	##########
 
 	age.secrets = {
 		gitea-postgres = {
@@ -30,7 +36,8 @@
 			ssl = true;
 			port = 3001;
 			addr = "vivaldi.fritz.box";
-		} ];
+		} 
+		];
 
     locations."/" = {
       proxyPass = "http://localhost:8030/";
@@ -48,11 +55,11 @@
         name = config.services.gitea.database.user;
         ensurePermissions."DATABASE ${config.services.gitea.database.name}" = "ALL PRIVILEGES";
       }
-    ];
+  ];
   };
 
 	##########
-	# Gitea
+	# Gitea	
 	##########
 
 	system.activationScripts.gitea = {
@@ -79,9 +86,6 @@
 		};
   };
 	
-	##########
-	# Firewall
-	##########
 	networking.firewall.allowedTCPPorts = [ 3001 ];
 }
 
