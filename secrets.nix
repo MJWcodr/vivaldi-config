@@ -10,4 +10,6 @@ in
 
 	"secrets/sslcert.crt.age".publicKeys = [ system matthias ];
 	"secrets/sslcert.key.age".publicKeys = [ system matthias ];
+	"secrets/sslroot.crt.age".publicKeys = [ system matthias ];
+	"secrets/drone-server.age".publicKeys = [ system matthias ];
 }
