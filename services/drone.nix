@@ -22,7 +22,7 @@ in
 	##########
 
 	# Add the sslcert to the trusted store
-	security.pki.certificateFiles = [ config.age.secrets.sslrootcert.path ];
+	# security.pki.certificateFiles = [ config.age.secrets.sslrootcert.path ];
 
 	users.users.droneserver = {
 		name = "droneserver";

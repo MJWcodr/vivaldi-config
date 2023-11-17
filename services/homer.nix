@@ -32,7 +32,8 @@ virtualHosts."vivaldi.mjwcodr.de" = {
 			ssl = true;
 			port = 443;
 			addr = "vivaldi.fritz.box";
-		} ];
+		}
+		];
 	};
 };
 
