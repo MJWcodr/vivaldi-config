@@ -1,0 +1,16 @@
+---
+kind: pipeline
+type: exec
+name: deploy
+
+platform:
+  os: linux
+  arch: amd64
+
+steps:
+  - name: main-step
+    environment:
+      MY_SECRET:
+        from_secret: MY_SECRET
+    commands:
+      - nix run .#run-my-app
