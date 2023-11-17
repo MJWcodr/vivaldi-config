@@ -67,6 +67,9 @@ in { config, pkgs, lib, ... }:
   # networking.proxy.noProxy = "127.0.0.1,localhost,internal.domain";
 
 	virtualisation.oci-containers.backend = "podman";
+	virtualisation.podman.enable = true;
+	virtualisation.podman.dockerCompat = true;
+	virtualisation.podman.dockerSocket.enable = true;
 
   # Enable networking
   networking.networkmanager.enable = true;
