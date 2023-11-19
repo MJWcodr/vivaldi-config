@@ -85,9 +85,9 @@ services:
       - name: "Gitea"
         logo: "assets/tools/gitea.svg"
         url: "https://vivaldi.fritz.box:3001"
-        #       - name: "Drone"
-        # logo: "https://raw.githubusercontent.com/drone/brand/master/logos/vector/drone-logo-vector-dark.svg"
-        # url: "https://vivaldi.fritz.box:3002"
+      - name: "Drone"
+        logo: "https://raw.githubusercontent.com/drone/brand/master/logos/vector/drone-logo-vector-dark.svg"
+        url: "https://vivaldi.fritz.box:3002"
   - name: "Socials"
     icon: "fas fa-circle-user"
     items:
