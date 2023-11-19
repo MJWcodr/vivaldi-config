@@ -52,6 +52,11 @@ in { config, pkgs, lib, ... }:
   #
   # age.secrets.nextcloud-pass.file = ./secrets/nextcloud-pass.age;
 
+	# PKI
+	security.pki.certificateFiles = [
+		./services/tls/ca.pem
+	];
+
   # Bootloader.
   boot.loader.systemd-boot.enable = true;
   boot.loader.systemd-boot.editor = false;
