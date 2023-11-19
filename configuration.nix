@@ -148,6 +148,8 @@ in { config, pkgs, lib, ... }:
     shell = pkgs.fish;
   };
 
+	nix.settings.allowed-users = [ "matthias" ];
+
   users.users.miol = {
     isNormalUser = true;
     description = "Miol";
