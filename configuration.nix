@@ -47,6 +47,9 @@ in { config, pkgs, lib, ... }:
 
 		# HedgeDoc
 		# ./services/hedgedoc.nix
+
+		# Grafana
+		./services/grafana.nix
   ];
   # Secrets
   #
