@@ -118,7 +118,7 @@ in
   users.groups.drone-runner-exec = { };
 
   # Allow the exec runner to write to build with nix
-  nix.allowedUsers = [ "drone-runner-exec" ];
+  nix.settings.allowed-users = [ "drone-runner-exec" ];
 
   systemd.services.drone-runner-exec = {
     enable = true;
@@ -178,6 +178,44 @@ in
       Group = "drone-runner-exec";
     };
   };
+	
+	##########
+	# Drone-Runner-SSH
+	##########
+
+	users.users.drone-runner-ssh = {
+		name = "drone-runner-ssh";
+		group = "drone-runner-ssh";
+		isSystemUser = true;
+	};
+	users.groups."drone-runner-ssh" = {};
+
+	systemd.services.drone-runner-ssh = {
+		enable = true;
+		confinement.enable = true;
+		confinement.packages = [
+			pkgs.git
+			pkgs.gnutar
+			pkgs.bash
+			pkgs.nixFlakes
+			pkgs.gzip
+			pkgs.openssh
+		];
+		serviceConfig = {
+			Environment = [
+				"DRONE_RPC_PROTO=http"
+				"DRONE_RPC_HOST=localhost:3030"
+				"DRONE_RUNNER_CAPACITY=2"
+				"DRONE_RUNNER_NAME=drone-runner-ssh"
+				"DRONE_DEBUG=true"
+				"PAGER=cat"
+			];
+			EnvironmentFile = config.age.secrets.drone-server.path;
+			User = "drone-runner-ssh";
+			Group = "drone-runner-ssh";
+		};
+
+	};
 
 
 	##########
