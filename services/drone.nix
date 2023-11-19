@@ -23,6 +23,27 @@ in
 
 	# Add the sslcert to the trusted store
 	# security.pki.certificateFiles = [ config.age.secrets.sslrootcert.path ];
+	
+	# Create Log directory
+	system.activationScripts.drone-log-dir = {
+		text = ''
+		# Check if users exist
+			mkdir -p /var/log/drone
+			chown droneserver:droneserver /var/log/drone
+
+			touch /var/log/drone/drone-server.log
+			chown droneserver:droneserver /var/log/drone/drone-server.log
+
+			touch /var/log/drone/drone-runner-docker.log
+			chown drone-runner-docker:drone-runner-docker /var/log/drone/drone-runner-docker.log
+
+			touch /var/log/drone/drone-runner-exec.log
+			chown drone-runner-exec:drone-runner-exec /var/log/drone/drone-runner-exec.log
+
+			touch /var/log/drone/drone-runner-ssh.log
+			chown drone-runner-ssh:drone-runner-ssh /var/log/drone/drone-runner-ssh.log
+		'';
+	};
 
 	users.users.droneserver = {
 		name = "droneserver";
@@ -59,6 +80,8 @@ in
 				"DRONE_SERVER_PROTO=https"
 				"DRONE_GITEA_REDIRECT_URL=https://vivaldi.fritz.box:3002/login"
 				"DRONE_GITEA_SKIP_VERIFY=true"
+				"DRONE_DEBUG=true"
+				"DRONE_LOG_FILE=/var/log/drone/drone-server.log"
 				# Defined in EnvironmentFile
 				# DRONE_GITEA_CLIENT_ID = "";
 				# DRONE_GITEA_CLIENT_SECRET = "";
@@ -98,6 +121,8 @@ in
         "DRONE_RPC_HOST=localhost:3030"
         "DRONE_RUNNER_CAPACITY=2"
         "DRONE_RUNNER_NAME=drone-runner-docker"
+				"DRONE_DEBUG=true"
+				"DRONE_LOG_FILE=/var/log/drone/drone-runner-docker.log"
       ];
       EnvironmentFile = config.age.secrets.drone-server.path;
       User = "drone-runner-docker";
@@ -152,6 +177,7 @@ in
         "NIX_REMOTE=daemon"
         "PAGER=cat"
         "DRONE_DEBUG=true"
+				"DRONE_LOG_FILE=/var/log/drone/drone-runner-exec.log"
       ];
       BindPaths = [
         "/nix/var/nix/daemon-socket/socket"
@@ -192,6 +218,10 @@ in
 
 	systemd.services.drone-runner-ssh = {
 		enable = true;
+		wantedBy = [ "multi-user.target" ];
+		script = ''
+			${pkgs.drone-runner-ssh}/bin/drone-runner-ssh
+		'';
 		confinement.enable = true;
 		confinement.packages = [
 			pkgs.git
@@ -208,6 +238,7 @@ in
 				"DRONE_RUNNER_CAPACITY=2"
 				"DRONE_RUNNER_NAME=drone-runner-ssh"
 				"DRONE_DEBUG=true"
+				"DRONE_LOG_FILE=/var/log/drone/drone-runner-ssh.log"
 				"PAGER=cat"
 			];
 			EnvironmentFile = config.age.secrets.drone-server.path;
