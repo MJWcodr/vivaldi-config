@@ -39,6 +39,13 @@
   services.prometheus = {
     enable = true;
     port = 9001;
+		exporters = {
+			node = {
+				enable = true;
+				enabledCollectors = [ "systemd" ];
+				port = 9002;
+			};
+		};
 		scrapeConfigs = [
 			{
 				job_name = "prometheus";
@@ -60,14 +67,34 @@
 		};
 		listen = [ {
 			ssl = true;
-			port = 9002;
+			port = 9011;
 			addr = "vivaldi.fritz.box";
 		} ];
 };
 
 #########
+# Loki
+#########
+
+	services.loki = {
+		enable = true;
+		configFile = ./monitoring/loki.yaml;
+	};
+
+	systemd.services.promtail = {
+		description = "Promtail service";
+		wantedBy = [ "multi-user.target" ];
+
+		serviceConfig = {
+			ExecStart = ''
+		 ${pkgs.grafana-loki}/bin/promtail --config.file ${./monitoring/promtail.yaml}
+		'';
+		};
+	};
+
+#########
 # Nginx
 #########
 
-	networking.firewall.allowedTCPPorts = [ 2343 9002];
+	networking.firewall.allowedTCPPorts = [ 2343 9011];
 }
