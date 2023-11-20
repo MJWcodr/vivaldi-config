@@ -88,6 +88,9 @@ services:
       - name: "Drone"
         logo: "https://raw.githubusercontent.com/drone/brand/master/logos/vector/drone-logo-vector-dark.svg"
         url: "https://vivaldi.fritz.box:3002"
+      - name: "Grafana"
+        logo: "https://upload.wikimedia.org/wikipedia/commons/3/3b/Grafana_icon.svg"
+        url: "https://vivaldi.fritz.box:2343"
   - name: "Socials"
     icon: "fas fa-circle-user"
     items:
