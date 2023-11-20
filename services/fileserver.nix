@@ -19,9 +19,9 @@
 
   # Backup service
   services.restic = {
-    backups.srvdata = {
+    backups.srv = {
       repository = "rclone:backup:restic_backup";
-      paths = [ "/srv/data" ];
+      paths = [ "/srv" ];
       passwordFile = config.age.secrets."secrets/restic_backup.age".path;
       rcloneConfigFile = config.age.secrets."secrets/rclone_backup.age".path;
 			pruneOpts = [ 
@@ -30,8 +30,14 @@
 				"--keep-monthly 6"
 				"--keep-yearly 2"
 			];
-    };
-  };
+			rcloneOptions = {
+				logFile = "/var/log/restic.log";
+			};
+			timerConfig = {
+				OnCalendar = "hourly";
+			};
+		};
+			};
 
   networking.firewall.allowedTCPPorts = [ 8080 ];
 }

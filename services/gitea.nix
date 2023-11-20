@@ -85,7 +85,7 @@ in
 			HTTP_PORT = 8030;
 		};
   };
-	
+
 	networking.firewall.allowedTCPPorts = [ 3001 ];
 }
 
