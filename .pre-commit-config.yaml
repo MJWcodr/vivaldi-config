@@ -10,6 +10,10 @@ repos:
  # name: luacheck
  # entry: luacheck -g --
  # types: [file, lua]
+  - repo: https://github.com/nix-community/nixpkgs-fmt
+    rev: f3fac47d6509e6b23c6103bb833353db348c634f
+    hooks: 
+      - id: nixpkgs-fmt
 
   - repo: https://github.com/commitizen-tools/commitizen
     rev: 04acac4ebe9d708ce4e824e90a6f6e94d49f122a  # frozen: 3.6.0

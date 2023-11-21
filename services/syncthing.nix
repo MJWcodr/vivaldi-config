@@ -16,20 +16,20 @@
           devices = [ "mjw-laptop" "pixel6a" "redmi-juri" ];
         };
       };
-			devices = {
-      "mjw-laptop" = {
-        id = "7DWYRCE-GZ4C5JX-CMMYE73-2ARC4QI-5Z5HRRH-CBXW6VO-D6RUSQK-X7YPLQV";
+      devices = {
+        "mjw-laptop" = {
+          id = "7DWYRCE-GZ4C5JX-CMMYE73-2ARC4QI-5Z5HRRH-CBXW6VO-D6RUSQK-X7YPLQV";
+        };
+        "pixel6a" = {
+          id = "EA3NWML-6OQ2XLO-QN7NFMW-OENHZPH-7XCK7AJ-HLV7IRQ-ZVG4ASW-MPMO2AA";
+          introducer = true;
+        };
+        "redmi-juri" = {
+          id = "5QT7BKV-JNRTXKY-W2ZIISU-KCDKXIO-OGYJ4VD-SKTF32G-U6J2E4U-MQJGZAN";
+        };
       };
-      "pixel6a" = {
-        id = "EA3NWML-6OQ2XLO-QN7NFMW-OENHZPH-7XCK7AJ-HLV7IRQ-ZVG4ASW-MPMO2AA";
-        introducer = true;
-      };
-			"redmi-juri" = {
-				id = "5QT7BKV-JNRTXKY-W2ZIISU-KCDKXIO-OGYJ4VD-SKTF32G-U6J2E4U-MQJGZAN";
-			};
-    };
 
     };
-      };
+  };
   networking.firewall.allowedTCPPorts = [ 22000 21027 8384 ];
 }

@@ -7,28 +7,30 @@ let
   publicKey =
     "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABgQCow7KnyMQO/WGYfyNAIVUf+KAK+Bk4OLxhwPrRjZom+KhADGjFvYn7dVzBh51/zPkd3BReuW8rpC6eyVDkX7rItOD9d32m2ozW/W5/h3UrSmpyo5DaqmPlXn9+TmLFENWWDXmqImRRlEb9Ts4md54d8cJVTF/Rolxi3y4dxALwnIKzPxorJ61rQEr04izdCo84c3NH+Q5fuu2NLgSJxnhLZTz+/DSexpmK7K9Mw23z73e1hRY68pi3/tQPQdVX0YGM2AHyubryrgbhEDzig6CAiHKEvWpc7hKeha/LYYiq9Rs/J1Nui1e/lcxLDz+lgNBMooiwvdrB3WIeVSjIVhx/wrT5YeYPKCWvPdPRZ5wZ3cPk76yB/I2AacHZEWqSXhS88wIdmuEcTAKDLP3HHUWYWpbY4JiaTFHtba4UpIkSd7wW5BY3HIupHLEwHMR7jemenak3ueQtsrCExeO3axD0VL4/xL/PgJPdZm8HsUsn+oJnz5cRBtv2a2gsmAcoPVc= matthias@Matthiass-MBP.fritz.box";
 
-in { config, pkgs, lib, ... }:
+in
+{ config, pkgs, lib, ... }:
 
 {
-  imports = [ # Include the results of the hardware scan.
+  imports = [
+    # Include the results of the hardware scan.
     # Home Manager NixOS
 
     # Secret Management
     <agenix/modules/age.nix>
-		#"${builtins.fetchTarball "https://github.com/Mic92/sops-nix/archive/master.tar.gz"}/modules/sops"
-     ./hardware-configuration.nix
+    #"${builtins.fetchTarball "https://github.com/Mic92/sops-nix/archive/master.tar.gz"}/modules/sops"
+    ./hardware-configuration.nix
 
     # File Server
-		./services/fileserver.nix
+    ./services/fileserver.nix
 
-		# Immich
-		# not implemented yet
+    # Immich
+    # not implemented yet
 
     # CoreDNS
     # ./services/coredns.nix
 
-		# Homer
-		./services/homer.nix
+    # Homer
+    ./services/homer.nix
 
     # Syncthing
     ./services/syncthing.nix
@@ -36,29 +38,32 @@ in { config, pkgs, lib, ... }:
     # Navidrome
     ./services/navidrome.nix
 
-		# Gitea
-		./services/gitea.nix
+    # Gitea
+    ./services/gitea.nix
 
-		# Drone
-		./services/drone.nix
+    # Drone
+    ./services/drone.nix
 
-		# Wireguard
-		# ./services/wireguard.nix
+    # Wireguard
+    # ./services/wireguard.nix
 
-		# HedgeDoc
-		# ./services/hedgedoc.nix
+    # HedgeDoc
+    # ./services/hedgedoc.nix
 
-		# Grafana
-		./services/grafana.nix
+    # Grafana
+    ./services/grafana.nix
+
+		# Metube
+		./services/metube.nix
   ];
   # Secrets
   #
   # age.secrets.nextcloud-pass.file = ./secrets/nextcloud-pass.age;
 
-	# PKI
-	security.pki.certificateFiles = [
-		./services/tls/ca.pem
-	];
+  # PKI
+  security.pki.certificateFiles = [
+    ./services/tls/ca.pem
+  ];
 
   # Bootloader.
   boot.loader.systemd-boot.enable = true;
@@ -74,10 +79,10 @@ in { config, pkgs, lib, ... }:
   # networking.proxy.default = "http://user:password@proxy:port/";
   # networking.proxy.noProxy = "127.0.0.1,localhost,internal.domain";
 
-	virtualisation.oci-containers.backend = "podman";
-	virtualisation.podman.enable = true;
-	virtualisation.podman.dockerCompat = true;
-	virtualisation.podman.dockerSocket.enable = true;
+  virtualisation.oci-containers.backend = "podman";
+  virtualisation.podman.enable = true;
+  virtualisation.podman.dockerCompat = true;
+  virtualisation.podman.dockerSocket.enable = true;
 
   # Enable networking
   networking.networkmanager.enable = true;
@@ -146,12 +151,12 @@ in { config, pkgs, lib, ... }:
     isNormalUser = true;
     description = "Matthias Wünsch";
     extraGroups = [ "networkmanager" "wheel" "nixoseditor" ];
-    packages = with pkgs; [ firefox spotify home-manager bash htop];
+    packages = with pkgs; [ firefox spotify home-manager bash htop ];
     openssh.authorizedKeys.keys = [ publicKey ];
     shell = pkgs.fish;
   };
 
-	nix.settings.allowed-users = [ "matthias" ];
+  nix.settings.allowed-users = [ "matthias" ];
 
   users.users.miol = {
     isNormalUser = true;
@@ -203,9 +208,9 @@ in { config, pkgs, lib, ... }:
   environment.variables.EDITOR = "vim";
   # Enable the OpenSSH daemon.
   services.openssh = {
-	enable = true;
-	ports = [ 22 ]; 
-};
+    enable = true;
+    ports = [ 22 ];
+  };
 
   services.logind.lidSwitch = "ignore";
   # Open ports in the firewall.

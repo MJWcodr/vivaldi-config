@@ -22,9 +22,9 @@
 - Add Powersaving Options
 - Add Powersaving Options
 
-### Fix
+  ### Fix
 
-- Fix Boot Inhibiting Bug in Navidrome Config
+  - Fix Boot Inhibiting Bug in Navidrome Config
 - Disable Hedgedoc
 - Disable Hedgedoc
 - fix Gitea

@@ -24,20 +24,20 @@
       paths = [ "/srv" ];
       passwordFile = config.age.secrets."secrets/restic_backup.age".path;
       rcloneConfigFile = config.age.secrets."secrets/rclone_backup.age".path;
-			pruneOpts = [ 
-				"--keep-daily 7"
-				"--keep-weekly 4"
-				"--keep-monthly 6"
-				"--keep-yearly 2"
-			];
-			rcloneOptions = {
-				logFile = "/var/log/restic.log";
-			};
-			timerConfig = {
-				OnCalendar = "hourly";
-			};
-		};
-			};
+      pruneOpts = [
+        "--keep-daily 7"
+        "--keep-weekly 4"
+        "--keep-monthly 6"
+        "--keep-yearly 2"
+      ];
+      rcloneOptions = {
+        logFile = "/var/log/restic.log";
+      };
+      timerConfig = {
+        OnCalendar = "hourly";
+      };
+    };
+  };
 
   networking.firewall.allowedTCPPorts = [ 8080 ];
 }
