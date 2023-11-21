@@ -2,25 +2,25 @@
 
 {
 
-	# Import SSL Certificates
-	# Secrets already imported in gitea.nix
+  # Import SSL Certificates
+  # Secrets already imported in gitea.nix
 
-	# Nginx Configuration
-	services.nginx.virtualHosts."navidrome" = {
-		sslCertificate = config.age.secrets."secrets/sslcert.crt.age".path;
-		sslCertificateKey = config.age.secrets."secrets/sslcert.key.age".path;
-		forceSSL = true;
-		listen = [ { 
-			port = 4533;
-			ssl = true;
-			addr = "vivaldi.fritz.box";
-		} ];
+  # Nginx Configuration
+  services.nginx.virtualHosts."navidrome" = {
+    sslCertificate = config.age.secrets."secrets/sslcert.crt.age".path;
+    sslCertificateKey = config.age.secrets."secrets/sslcert.key.age".path;
+    forceSSL = true;
+    listen = [{
+      port = 4533;
+      ssl = true;
+      addr = "vivaldi.fritz.box";
+    }];
 
-		locations."/" = {
-			proxyPass = "http://localhost:${toString config.services.navidrome.settings.Port}";
-		};
+    locations."/" = {
+      proxyPass = "http://localhost:${toString config.services.navidrome.settings.Port}";
+    };
 
-	};
+  };
 
 
   services.navidrome.enable = true;
