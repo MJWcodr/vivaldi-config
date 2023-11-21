@@ -79,6 +79,10 @@ services:
       - name: "Syncthing"
         logo: "https://upload.wikimedia.org/wikipedia/commons/5/57/Syncthing_Logo.svg"
         url: "https://vivaldi.fritz.box:8384"
+      - name: "Metube"
+        logo: "assets/tools/metube.png"
+        url: "https://vivaldi.fritz.box:8090"
+
   - name: "Programming"
     icon: "fas fa-cloud"
     items:
