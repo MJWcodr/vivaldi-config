@@ -55,6 +55,9 @@ in
 
 		# Metube
 		./services/metube.nix
+
+		# Gnome # for dev purposes
+		./services/gnome.nix
   ];
   # Secrets
   #
@@ -104,13 +107,6 @@ in
     LC_TELEPHONE = "de_DE.UTF-8";
     LC_TIME = "de_DE.UTF-8";
   };
-
-  # Enable the X11 windowing system.
-  services.xserver.enable = false;
-
-  # Enable the GNOME Desktop Environment.
-  services.xserver.displayManager.gdm.enable = false;
-  services.xserver.desktopManager.gnome.enable = false;
 
   # Enable Fish
   programs.fish.enable = true;
