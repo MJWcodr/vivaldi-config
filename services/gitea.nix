@@ -1,6 +1,10 @@
 { config, pkgs, ... }:
 let
-  droneserver = config.users.users.droneserver.name;
+	internalPort = 3000;
+	exposedPort = 3001;
+	domain = "vivaldi.fritz.box";
+
+	giteaRunnerDir = "/var/lib/gitea-runner/vivaldi";
 in
 {
   ##########
@@ -20,26 +24,37 @@ in
       file = ../secrets/sslcert.key.age;
       owner = config.services.nginx.user;
     };
+		gitea-actions-token = {
+			file = ../secrets/gitea-actions-token.age;
+			owner = "gitea-runner";
+		};
   };
-
+	
+	# Create Gitea-Runner user
+	users.users.gitea-runner = {
+		isSystemUser = true;
+		name = "gitea-runner";
+		group = "gitea-runner";
+	};
+	users.groups.gitea-runner = {};
 
   ##########
   # Nginx
   ##########
 
-  services.nginx.virtualHosts."vivaldi.fritz.box" = {
+  services.nginx.virtualHosts."gitea" = {
     forceSSL = true;
     sslCertificate = config.age.secrets.sslcert.path;
     sslCertificateKey = config.age.secrets.sslkey.path;
 
     listen = [{
       ssl = true;
-      port = 3001;
-      addr = "vivaldi.fritz.box";
+      port = exposedPort;
+      addr = domain;
     }];
 
     locations."/" = {
-      proxyPass = "http://localhost:8030/";
+      proxyPass = "http://localhost:${toString internalPort}/";
     };
   };
 
@@ -78,12 +93,62 @@ in
       passwordFile = config.age.secrets.gitea-postgres.path;
     };
     stateDir = "/srv/gitea";
-    settings.server = {
-      DOMAIN = "vivaldi.fritz.box";
-      ROOT_URL = "https://vivaldi.fritz.box:3001/";
-      HTTP_PORT = 8030;
-    };
+    settings = {
+			server = {
+      	DOMAIN = domain;
+      	ROOT_URL = "https://${domain}:${toString exposedPort}/";
+      	HTTP_PORT = internalPort;
+    	};
+			service = {
+				DISABLE_REGISTRATION = true;
+			};
+			"service.explore" = {
+				REQUIRE_SIGNIN_VIEW = true;
+			};
+			actions.ENABLED = true;
+		};
   };
+
+	# Create a token for the actions runner
+	systemd.services.gitea-actions-runner-token = {
+		description = "Create a token for the gitea actions runner";
+		script = ''
+		token=$(${pkgs.sudo}/bin/sudo -u gitea gitea actions grt --config /srv/gitea/custom/conf/app.ini)
+		
+		mkdir -p $(dirname ${config.services.gitea-actions-runner.instances.vivaldi.tokenFile})
+		
+		echo $token > ${config.services.gitea-actions-runner.instances.vivaldi.tokenFile}
+
+		${pkgs.toybox}/bin/chown -R gitea-runner:  /var/lib/gitea-runner/vivaldi
+		'';
+		serviceConfig = {
+			Type = "oneshot";
+			RemainAfterExit = true;
+			User = "root";
+		};
+		path = [ 
+			pkgs.bash 
+			pkgs.coreutils 
+			pkgs.gitea 
+			];
+		after = [ "gitea.service" ];
+		wantedBy = [ "multi-user.target" ];
+	};
+
+
+	##########
+	# Gitea Actions Runner
+	##########
+	services.gitea-actions-runner.instances = {
+		"vivaldi" = {
+			enable = true;
+			url = config.services.gitea.settings.server.ROOT_URL;
+			name = "vivaldi";
+			labels = [ "native:host" ];
+			tokenFile = "/var/lib/gitea-runner/vivaldi/token";
+		};
+	};
+	
 
   networking.firewall.allowedTCPPorts = [ 3001 ];
 }

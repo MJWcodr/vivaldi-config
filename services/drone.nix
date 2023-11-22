@@ -21,30 +21,6 @@ in
   # Drone-Server
   ##########
 
-  # Add the sslcert to the trusted store
-  # security.pki.certificateFiles = [ config.age.secrets.sslrootcert.path ];
-
-  # Create Log directory
-  system.activationScripts.drone-log-dir = {
-    text = ''
-      		# Check if users exist
-      			mkdir -p /var/log/drone
-      			chown droneserver:droneserver /var/log/drone
-
-      			touch /var/log/drone/drone-server.log
-      			chown droneserver:droneserver /var/log/drone/drone-server.log
-
-      			touch /var/log/drone/drone-runner-docker.log
-      			chown drone-runner-docker:drone-runner-docker /var/log/drone/drone-runner-docker.log
-
-      			touch /var/log/drone/drone-runner-exec.log
-      			chown drone-runner-exec:drone-runner-exec /var/log/drone/drone-runner-exec.log
-
-      			touch /var/log/drone/drone-runner-ssh.log
-      			chown drone-runner-ssh:drone-runner-ssh /var/log/drone/drone-runner-ssh.log
-      		'';
-  };
-
   users.users.droneserver = {
     name = "droneserver";
     group = droneserver;
@@ -57,6 +33,18 @@ in
     text = ''
       			mkdir -p /var/lib/drone
       			chown droneserver:droneserver /var/lib/drone
+
+						touch /var/log/drone/drone-server.log
+						chown droneserver:droneserver /var/log/drone/drone-server.log
+
+						touch /var/log/drone/drone-runner-docker.log
+						chown drone-runner-docker:drone-runner-docker /var/log/drone/drone-runner-docker.log
+
+						touch /var/log/drone/drone-runner-exec.log
+						chown drone-runner-exec:drone-runner-exec /var/log/drone/drone-runner-exec.log
+
+						touch /var/log/drone/drone-runner-ssh.log
+						chown drone-runner-ssh:drone-runner-ssh /var/log/drone/drone-runner-ssh.log
       		'';
   };
 
@@ -182,7 +170,7 @@ in
       BindPaths = [
         "/nix/var/nix/daemon-socket/socket"
         "/run/nscd/socket"
-        # "/var/lib/drone"
+				"/var/log/drone:/var/log/drone"
       ];
       BindReadOnlyPaths = [
         "/etc/passwd:/etc/passwd"

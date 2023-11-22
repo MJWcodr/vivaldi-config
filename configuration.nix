@@ -41,8 +41,8 @@ in
     # Gitea
     ./services/gitea.nix
 
-    # Drone
-    ./services/drone.nix
+    # Drone # Replaced by Gitea CI
+    # ./services/drone.nix
 
     # Wireguard
     # ./services/wireguard.nix

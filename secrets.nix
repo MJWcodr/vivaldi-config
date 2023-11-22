@@ -16,6 +16,7 @@ in
 
 	# Drone Keys
   "secrets/drone-server.age".publicKeys = [ system matthias ];
+	"secrets/gitea-actions-token.age".publicKeys = [ system matthias ];
 
 	# Nextcloud Keys
 	"secrets/nextcloud-secrets.age".publicKeys = [ system matthias ];
