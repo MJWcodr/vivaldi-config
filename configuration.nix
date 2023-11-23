@@ -56,8 +56,8 @@ in
 		# Metube
 		./services/metube.nix
 
-		# Gnome # for dev purposes
-		./services/gnome.nix
+		# Workspace for Matthias
+		./workspaces/workspace.nix
   ];
   # Secrets
   #
