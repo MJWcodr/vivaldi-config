@@ -56,8 +56,8 @@ in
 		# Metube
 		./services/metube.nix
 
-		# Gnome # for dev purposes
-		./services/gnome.nix
+		# Workspace for Matthias
+		./workspace/workspace.nix
   ];
   # Secrets
   #
@@ -86,6 +86,7 @@ in
   virtualisation.podman.enable = true;
   virtualisation.podman.dockerCompat = true;
   virtualisation.podman.dockerSocket.enable = true;
+	virtualisation.podman.defaultNetwork.settings.dns_enabled = true;
 
   # Enable networking
   networking.networkmanager.enable = true;
