@@ -121,12 +121,15 @@ in {
 			token=$(sudo -u gitea gitea actions generate-runner-token --config ${config.services.gitea.stateDir}/custom/conf/app.ini)
 			mkdir -p ${giteaRunnerDir}	
 			
-			cd ${giteaRunnerDir}	
+			cd ${giteaRunnerDir}
+
+			echo "${builtins.readFile ./gitea/runner.yaml}" > config.yaml
+
 			act_runner register	\
 				--instance "https://${domain}:${toString exposedPort}" \
 				--name vivaldi \
 				--token $token \
-				--labels "ubuntu-20.04:docker://node:16-bullseye, nixos:docker:nixos/nix:latest linux:host" \
+				--labels "ubuntu-20.04:docker://node:16-bullseye,nixos:docker:nixos/nix:latest,linux:host,ubuntu-latest:docker://node:16-bullseye" \
 				--no-interactive 
 
 			chown -R gitea-runner:  ${giteaRunnerDir}'';
@@ -144,7 +147,7 @@ in {
     script = ''
 			set -e
 			DOCKER_HOST="unix://$XDG_RUNTIME_DIR/podman/podman.sock"
-			act_runner daemon
+			act_runner daemon -c config.yaml
 		'';
   };
 
