@@ -57,7 +57,7 @@ in
 		./services/metube.nix
 
 		# Workspace for Matthias
-		./workspaces/workspace.nix
+		./workspace/workspace.nix
   ];
   # Secrets
   #
