@@ -23,8 +23,8 @@ in
     # File Server
     ./services/fileserver.nix
 
-    # Immich
-    # not implemented yet
+    # Photoprism
+		./services/photoprism.nix
 
     # CoreDNS
     # ./services/coredns.nix
@@ -67,6 +67,17 @@ in
   security.pki.certificateFiles = [
     ./services/tls/ca.pem
   ];
+	
+	age.secrets = {
+	sslcert = {
+      file = ./secrets/sslcert.crt.age;
+      owner = config.services.nginx.user;
+    };
+  sslkey = {
+      file = ./secrets/sslcert.key.age;
+      owner = config.services.nginx.user;
+    };
+	};
 
   # Bootloader.
   boot.loader.systemd-boot.enable = true;
