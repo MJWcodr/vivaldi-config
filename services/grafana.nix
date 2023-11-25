@@ -10,7 +10,7 @@
     domain = "vivaldi.fritz.box";
     package = pkgs.grafana;
     port = 2342;
-    addr = "127.0.0.1";
+    addr = "localhost";
   };
 
   # Nginx reverse proxy
@@ -50,7 +50,7 @@
       {
         job_name = "prometheus";
         static_configs = [{
-          targets = [ "127.0.0.1:${toString config.services.prometheus.exporters.node.port}" ];
+          targets = [ "localhost:${toString config.services.prometheus.exporters.node.port}" ];
         }];
       }
     ];

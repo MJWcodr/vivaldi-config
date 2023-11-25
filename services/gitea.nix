@@ -15,14 +15,6 @@ in {
       file = ../secrets/postgrespass.age;
       owner = config.services.gitea.user;
     };
-    sslcert = {
-      file = ../secrets/sslcert.crt.age;
-      owner = config.services.nginx.user;
-    };
-    sslkey = {
-      file = ../secrets/sslcert.key.age;
-      owner = config.services.nginx.user;
-    };
     gitea-ctions-token = {
       file = ../secrets/gitea-actions-token.age;
       owner = "gitea-runner";
