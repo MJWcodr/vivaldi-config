@@ -5,6 +5,27 @@ let
 	domain = "vivaldi.fritz.box";
 in
 {
+
+	############
+	# Secrets
+	############
+	
+	age.secrets = {
+		photoprismAdminPassword = {
+			file = ../secrets/photoprism.age;
+			owner = "photoprism";
+			group = "photoprism";
+		};
+	};
+
+	users.users.photoprism = {
+		group = "photoprism";
+		isSystemUser = true;
+	 
+	};
+
+	users.groups.photoprism = {};
+	
 	############
   # Photoprism
 	############
@@ -66,8 +87,8 @@ in
       PHOTOPRISM_SITE_TITLE = "My PhotoPrism";
 			PHOTOPRISM_READONLY = "false";
 			PHOTOPRISM_UPLOAD_NSFW = "true";
-
     };
+		passwordFile = config.age.secrets.photoprismAdminPassword.path;
   };
 	
 	############
