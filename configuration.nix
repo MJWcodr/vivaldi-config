@@ -58,10 +58,12 @@ in
 
 		# Workspace for Matthias
 		./workspace/workspace.nix
+
+		# Jellyfin
+		./services/jellyfin.nix
   ];
-  # Secrets
-  #
-  # age.secrets.nextcloud-pass.file = ./secrets/nextcloud-pass.age;
+
+	# Secrets
 
   # PKI
   security.pki.certificateFiles = [
@@ -94,10 +96,14 @@ in
   # networking.proxy.noProxy = "127.0.0.1,localhost,internal.domain";
 
   virtualisation.oci-containers.backend = "podman";
-  virtualisation.podman.enable = true;
-  virtualisation.podman.dockerCompat = true;
-  virtualisation.podman.dockerSocket.enable = true;
-	virtualisation.podman.defaultNetwork.settings.dns_enabled = true;
+	virtualisation.podman = {
+		enable = true;
+		dockerCompat = true;
+		dockerSocket.enable = true;
+		defaultNetwork.settings.dns_enabled = true;
+	};
+
+	networking.firewall.trustedInterfaces = [ "podman0" ];
 
   # Enable networking
   networking.networkmanager.enable = true;

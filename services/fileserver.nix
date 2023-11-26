@@ -34,7 +34,10 @@
         logFile = "/var/log/restic.log";
       };
       timerConfig = {
-        OnCalendar = "hourly";
+        # Run every day at 3am
+				OnCalendar = "daily";
+				Persistent = true;
+				RandomizedDelaySec = "1h";
       };
     };
   };
