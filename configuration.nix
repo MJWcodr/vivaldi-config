@@ -61,6 +61,9 @@ in
 
 		# Jellyfin
 		./services/jellyfin.nix
+
+		# Paperless
+		./services/paperless.nix
   ];
 
 	# Secrets
