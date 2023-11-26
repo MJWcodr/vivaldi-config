@@ -95,7 +95,12 @@ services:
       - name: "Photoprism"
         logo: "assets/logos/photoprism.svg"
         url: "https://vivaldi.fritz.box:2352"
-
+      - name: "Paperless"
+        logo: "assets/logos/paperless.svg"
+        url: "https://vivaldi.fritz.box:9000"
+        target: "_blank"
+        type: "PaperlessNG"
+        apikey: "45d936a9879e96314097a187f2c0054babcda803"
   - name: "Programming"
     icon: "fas fa-cloud"
     items:
@@ -117,10 +122,14 @@ services:
       - name: "Fritz!Box"
         logo: "https://upload.wikimedia.org/wikipedia/de/6/68/Fritz%21_Logo.svg"
         url: "http://fritz.box"
+
   - name: "Weather"
-    location: "Berlin" # your location.
-      # locationId: "2759794" # Optional: Specify OpenWeatherMap city ID for better accuracy
-    apikey: "<---insert-api-key-here--->" # insert your own API key here. Request one from https://openweathermap.org/api.
-    units: "metric" # units to display temperature. Can be one of: metric, imperial, kelvin. Defaults to kelvin.
-    background: "square" # choose which type of background you want behind the image. Can be one of: square, circle, none. Defaults to none.
-    type: "OpenWeather"
+    icons: "fas fa-cloud"
+    items:
+      - name: "Weather"
+        location: "Berlin" # your location.
+        locationId: "2950159" # Optional: Specify OpenWeatherMap city ID for better accuracy
+        apikey: "70df66d75854665fa3de857561a8b785" # insert your own API key here. Request one from https://openweathermap.org/api.
+        units: "metric" # units to display temperature. Can be one of: metric, imperial, kelvin. Defaults to kelvin.
+        background: "square" # choose which type of background you want behind the image. Can be one of: square, circle, none. Defaults to none.
+        type: "OpenWeather"   
