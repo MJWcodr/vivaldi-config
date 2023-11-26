@@ -22,4 +22,7 @@ in
 	"secrets/nextcloud-secrets.age".publicKeys = [ system matthias ];
 	"secrets/nextcloud-dbpass.age".publicKeys = [ system matthias ];
 	"secrets/nextcloud-adminpass.age".publicKeys = [ system matthias ];
+
+	# Paperless
+	"secrets/paperless.age".publicKeys = [ system matthias ];
 }
