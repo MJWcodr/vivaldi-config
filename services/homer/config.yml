@@ -122,7 +122,10 @@ services:
       - name: "Fritz!Box"
         logo: "https://upload.wikimedia.org/wikipedia/de/6/68/Fritz%21_Logo.svg"
         url: "http://fritz.box"
-
+      - name: "Vikunja"
+        subtitle: "Task Management"
+        logo: "assets/logos/vikunja.svg"
+        url: "https://vivaldi.fritz.box:3456"
   - name: "Weather"
     icons: "fas fa-cloud"
     items:
