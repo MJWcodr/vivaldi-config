@@ -9,11 +9,20 @@ in {
 
 	
 	##############
-	# Directories Setup
+	# Directories and Users Setup
 	##############
 	system.activationScripts.vikunja = ''
 		mkdir -p ${dir}/{files,db}
+		chmod 777 ${dir}/{files,db}
 	'';
+
+	users.users.vikunja = {
+		name = "vikunja";
+		isSystemUser = true;
+		group = "vikunja";
+		extraGroups = [ "podman" ];
+	};
+	users.groups.vikunja = {};
 
   ##############
   # Vikunja - API
@@ -23,9 +32,16 @@ in {
 		ports = [ "${toString APIinternalPort}:3456" ];
 		volumes = [
 			"${dir}/files:/app/vikunja/files"
-			"${dir}/db:/db"
+			"${dir}/db:/app/vikunja/db"
 		];
-		
+		# user = "vikunja";
+		environment = {
+			VIKUNJA_DATABASE_HOST = "localhost";
+			VIKUNJA_DATABASE_TYPE = "sqlite";
+			VIKUNJA_DATABASE_PATH = "/app/vikunja/db/vikunja.db";
+			VIKUNJA_FRONTEND_URL = "https://${domain}:${toString APIexternalPort}";
+
+		};	
 	};
 
   ##############
