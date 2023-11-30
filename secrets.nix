@@ -25,4 +25,7 @@ in
 
 	# Paperless
 	"secrets/paperless.age".publicKeys = [ system matthias ];
+
+	# Music Downloader
+	"secrets/music-downloader-env.age".publicKeys = [ system matthias ];
 }
