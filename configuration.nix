@@ -45,13 +45,13 @@ in
 		./services/vikunja.nix
 
     # Wireguard
-    # ./services/wireguard.nix
+    ./services/wireguard.nix
 
     # HedgeDoc
     # ./services/hedgedoc.nix
 		
 		# Music Nix Downloader
-		./services/music.nix
+		# ./services/music.nix
 
     # Grafana
     ./services/grafana.nix
