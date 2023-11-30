@@ -49,6 +49,9 @@ in
 
     # HedgeDoc
     # ./services/hedgedoc.nix
+		
+		# Music Nix Downloader
+		./services/music.nix
 
     # Grafana
     ./services/grafana.nix
