@@ -35,7 +35,11 @@ in
 		extraConfig = {
 			PAPERLESS_OCR_LANGUAGE = "deu+eng";
 			PAPERLESS_URL = "https://${domain}:${toString exposedPort}";
+			# PAPERLESS_URL = "https://paper.mjwcodr.de";
 			PAPERLESS_ADMIN_USER = "mjwcodr";
+			PAPERLESS_CSRF_TRUSTED_ORIGINS = "https://vivaldi.fritz.box,https://paper.mjwcodr.de";
+			# PAPERLESS_ALLOWED_HOSTS = "vivaldi.fritz.box,paper.mjwcodr.de";
+			DEBUG = "True";
 		};
 	};
 

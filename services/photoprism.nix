@@ -2,7 +2,11 @@
 let
 	internalPort = 2341;
 	exposedPort = 2352;
-	domain = "vivaldi.fritz.box";
+
+	localdomain = "vivaldi.fritz.box";
+	remoteDomain = "photos.mjwcodr.de";
+
+	wireguardIP = "10.100.0.2";
 in
 {
 
@@ -83,7 +87,7 @@ in
       PHOTOPRISM_DATABASE_NAME = "photoprism";
       PHOTOPRISM_DATABASE_SERVER = "/run/mysqld/mysqld.sock";
       PHOTOPRISM_DATABASE_USER = "photoprism";
-      PHOTOPRISM_SITE_URL = "https://${domain}:${toString exposedPort}";
+      PHOTOPRISM_SITE_URL = "https://${remoteDomain}:${toString exposedPort}";
       PHOTOPRISM_SITE_TITLE = "My PhotoPrism";
 			PHOTOPRISM_READONLY = "false";
 			PHOTOPRISM_UPLOAD_NSFW = "true";
@@ -115,7 +119,8 @@ in
   services.nginx = {
     enable = true;
        virtualHosts = {
-      "photoprism" = {
+			 # Local
+      "local-photoprism" = {
 				sslCertificate = "${config.age.secrets.sslcert.path}";
 				sslCertificateKey = "${config.age.secrets.sslkey.path}";
         forceSSL = true;
@@ -135,8 +140,8 @@ in
 					addr = "vivaldi.fritz.box";
 				} ];
       };
-    };
-  };
+		};
 
+	};
 	networking.firewall.allowedTCPPorts = [ exposedPort ];
 }

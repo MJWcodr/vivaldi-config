@@ -40,7 +40,7 @@ in {
 			VIKUNJA_DATABASE_TYPE = "sqlite";
 			VIKUNJA_DATABASE_PATH = "/app/vikunja/db/vikunja.db";
 			VIKUNJA_FRONTEND_URL = "https://${domain}:${toString APIexternalPort}";
-
+			VIKUNJA_SERVICE_ENABLEREGISTRATION = "false";
 		};	
 	};
 
