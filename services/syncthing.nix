@@ -1,11 +1,26 @@
-{ lib, pkgs, ... }: {
-  services.syncthing = {
+{ config, lib, pkgs, ... }: {
+  
+	system.activationScripts.syncthing = ''
+		#!/usr/bin/env bash
+		# syncthing activation script
+		
+		mkdir -p ${config.services.syncthing.configDir}
+		mkdir -p ${config.services.syncthing.dataDir}
+
+		# Chown the syncthing data directory to the syncthing user
+		chown -R ${config.services.syncthing.user}:${config.services.syncthing.group} ${config.services.syncthing.settings.folders.Music.path}
+
+	'';
+
+	services.syncthing = {
     enable = true;
     dataDir = "/home/matthias";
     openDefaultPorts = true;
     configDir = "/home/matthias/.config/syncthing";
     user = "matthias";
     group = "users";
+		overrideFolders = true;
+		overrideDevices = true;
     guiAddress = "vivaldi.fritz.box:8384";
     settings = {
       folders = {
