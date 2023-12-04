@@ -50,7 +50,10 @@ in
 
     # HedgeDoc
     # ./services/hedgedoc.nix
-		
+	
+		# Notifications
+		./services/ntfy.nix
+
 		# Music Nix Downloader
 		# ./services/music.nix
 
@@ -68,6 +71,9 @@ in
 
 		# Paperless
 		./services/paperless.nix
+
+		# Tests
+		./tests/nginx.nix
   ];
 
 	# Secrets
