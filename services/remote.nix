@@ -11,11 +11,16 @@ let
 	# Navidrome
 	navidromePort = 4533;
 	navidromeInternalPort = 8090;
+	
 	# Vikunja
 	vikunjaPort = 3456;
 	vikunjaAPIInternalPort = 3455;
 	vikunjaFrontendInternalPort = 3457;
 	
+	# Notfications
+	notificationsPort = 8500;
+	notificationsInternalPort = 8499;
+
 	domain = "mjwcodr.de";
 	wireguardIP = "10.100.0.2";
 in 
@@ -111,6 +116,27 @@ in
 				addr = "${wireguardIP}";
 			} ];
 		};
+
+		# Notifications
+		"ntfy.${domain}" = {
+			forceSSL = false;
+			http2 = true;
+			locations."/" = {
+				proxyPass = "http://localhost:${toString notificationsInternalPort}";
+				proxyWebsockets = true;
+				extraConfig = ''
+					proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+					proxy_set_header Host $host;
+					proxy_buffering off;
+				'';
+			};
+			listen = [ {
+				port = notificationsPort;
+				ssl = false;
+				addr = "${wireguardIP}";
+			} ];
+		};
+
 		};
 	};
 	networking.firewall.allowedTCPPorts = [ 3500 ];
