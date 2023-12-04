@@ -20,7 +20,7 @@ in
     ./hardware-configuration.nix
 
     # File Server
-    ./services/fileserver.nix
+    # ./services/fileserver.nix
 
     # Photoprism
 		./services/photoprism.nix
@@ -45,6 +45,7 @@ in
 
     # Wireguard
     ./services/wireguard.nix
+
 		# Reverse Proxy through Wireguard
 		./services/remote.nix
 
@@ -61,7 +62,7 @@ in
 		./services/metube.nix
 
 		# Workspace for Matthias
-		./workspace/workspace.nix
+		# ./workspace/workspace.nix
 
 		# Jellyfin
 		./services/jellyfin.nix

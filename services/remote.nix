@@ -8,6 +8,9 @@ let
 	paperlessPort = 9000;
 	paperlessInternalPort = 8999;
 
+	# Navidrome
+	navidromePort = 4533;
+	navidromeInternalPort = 8090;
 	# Vikunja
 	vikunjaPort = 3456;
 	vikunjaAPIInternalPort = 3455;
@@ -89,7 +92,25 @@ in
           addr = "10.100.0.2";
         }];
       };
-
+		# Navidrome
+		"music.${domain}" = {
+			forceSSL = false;
+			http2 = true;
+			locations."/" = {
+				proxyPass = "http://localhost:${toString navidromeInternalPort}";
+				proxyWebsockets = true;
+				extraConfig = ''
+					proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+					proxy_set_header Host $host;
+					proxy_buffering off;
+				'';
+			};
+			listen = [ {
+				port = navidromePort;
+				ssl = false;
+				addr = "${wireguardIP}";
+			} ];
+		};
 		};
 	};
 	networking.firewall.allowedTCPPorts = [ 3500 ];

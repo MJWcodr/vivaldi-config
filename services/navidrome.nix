@@ -17,17 +17,24 @@
     }];
 
     locations."/" = {
-      proxyPass = "http://localhost:${toString config.services.navidrome.settings.Port}";
+      proxyPass =
+        "http://localhost:${toString config.services.navidrome.settings.Port}";
     };
 
   };
 
-
-  services.navidrome.enable = true;
-  services.navidrome.settings = {
-    Address = "localhost";
-    Port = 8090;
-    MusicFolder = "/srv/music";
+  services.navidrome = {
+    enable = true;
+    settings = {
+      Address = "localhost";
+      Port = 8090;
+      MusicFolder = "/srv/music";
+      EnableGravatar = true;
+      EnableLastFM = true;
+			EnableSpotify = true;
+			Spotify.ID = "77b794e641d24037b766e07015288fd4";
+			Spotify.Secret = "04cae150c0f240d09a8865328618ac1e";
+    };
   };
 
   # Open Port 4533 for Navidrome
