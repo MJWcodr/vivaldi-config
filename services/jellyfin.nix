@@ -6,10 +6,10 @@ let
 	domain = "vivaldi.fritz.box";
 in
 {
-	
+
 	system.activationScripts.jellyfin = ''
 		mkdir -p /srv/jellyfin/{cache,log,config}
-		mkdir -p /srv/entertainment/{movies,tv}
+		mkdir -p /srv/entertainment/{movies,tv,youtube}
 
 	'';
 
@@ -23,7 +23,7 @@ in
       "/srv/jellyfin/log:/log"
       "/srv/entertainment/movies:/movies"
       "/srv/entertainment/tv:/tv"
-			"/srv/metube:/metube"
+			"/srv/entertainment/youtube:/youtube"
 
 			# Hardware passthrough
 			"/dev/dri:/dev/dri"
