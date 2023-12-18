@@ -61,17 +61,17 @@ in
     # Grafana
     ./services/grafana.nix
 
-		# Metube
-		./services/metube.nix
-
 		# Workspace for Matthias
-		# ./workspace/workspace.nix
+		./workspace/workspace.nix
 
 		# Jellyfin
 		./services/jellyfin.nix
 
 		# Paperless
 		./services/paperless.nix
+
+		# Youtube Downloader
+		./services/youtube-downloader.nix
 
 		# Tests
 		./tests/nginx.nix

@@ -21,6 +21,10 @@ let
 	notificationsPort = 8500;
 	notificationsInternalPort = 8499;
 
+	# Jellyfin
+	jellyfinPort = 8096;
+	jellyfinInternalPort = 8095;
+
 	domain = "mjwcodr.de";
 	wireguardIP = "10.100.0.2";
 in 
@@ -136,8 +140,28 @@ in
 				addr = "${wireguardIP}";
 			} ];
 		};
-
+		
+		# Jellyfin
+		"movies.${domain}" = {
+			forceSSL = false;
+			http2 = true;
+			locations."/" = {
+				proxyPass = "http://localhost:${toString jellyfinInternalPort}";
+				proxyWebsockets = true;
+				extraConfig = ''
+					proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+					proxy_set_header Host $host;
+					proxy_buffering off;
+				'';
+			};
+			listen = [ {
+				port = jellyfinPort;
+				ssl = false;
+				addr = "${wireguardIP}";
+			} ];
 		};
+		};
+
 	};
 	networking.firewall.allowedTCPPorts = [ 3500 ];
 }

@@ -20,7 +20,6 @@
       proxyPass =
         "http://localhost:${toString config.services.navidrome.settings.Port}";
     };
-
   };
 
   services.navidrome = {
@@ -37,6 +36,15 @@
     };
   };
 
+	# bonob
+	virtualisation.oci-containers.containers.bonob = {
+		image = "docker.io/simojenki/bonob";
+		environment = {
+			BNB_SONOS_AUTO_REGISTER = "true";
+			BNB_SONOS_DEVICE_DISCOVERY = "true";
+		};
+		ports = [ "4534:4534" ];
+	};
   # Open Port 4533 for Navidrome
   networking.firewall.allowedTCPPorts = [ 4533 ];
 }
