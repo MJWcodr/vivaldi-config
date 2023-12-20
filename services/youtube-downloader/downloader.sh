@@ -2,7 +2,6 @@
 #! nix-shell -i bash -p exiftool yt-dlp
 # shellcheck shell=bash
 
-
 # This script downloads youtube videos and manages them
 # It is meant to be run as a cron job
 
@@ -38,14 +37,17 @@ for url in $URLS; do
 		echo "Downloading $url"
 		yt-dlp -i \
 			--playlist-end $NUM_VIDEOS \
+			--download-archive "$DOWNLOAD_DIR/.archive.txt" \
 			--write-thumbnail \
-			--match-filter "original_url!*=/shorts/" \ # Ignore shorts
-			--match-filter "duration < 7000" \ # Ignore videos that are too long
 			--embed-metadata \
 			--embed-chapters \
 			--embed-subs \
 			--write-auto-subs \
-			--compat-options embed-metadata \
+			--match-filter "duration < 7000" \ # Don't download videos longer than 2 hours
+			--match-filter "duration > 120" \ # Don't download videos shorter than 2 minutes
+			--match-filter "uploader !~ /.*[Ll]ive.*/" \ # Don't download live streams
+			--match-filter "uploader !~ /.*[Ss]tream.*/" \ # Don't download live streams
+			--match-filter "original_url!*=/shorts/ & url!*=/shorts/" \
 			-o "$DOWNLOAD_DIR/%(uploader)s/%(title)s.%(ext)s" \
 			"$url"
 done
@@ -53,7 +55,7 @@ done
 # Remove older videos
 for url in $URLS; do
 	yt-dlp --get-filename \
-		--playlist-end $(expr $NUM_VIDEOS+5) \
+		--playlist-end $(expr $NUM_VIDEOS + 5) \
 		-o "$DOWNLOAD_DIR/%(uploader)s/%(title)s.%(ext)s" \
 		"$url" | tail -n 5 | xargs rm -f
 done
