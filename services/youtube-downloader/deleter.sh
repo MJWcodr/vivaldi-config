@@ -27,34 +27,11 @@ clean_list() {
 }
 
 clean_list "$YOUTUBE_CHANNEL_FILE" >> "$TMPFILE"
-
-
-echo "Downloading Youtube videos from:"
 URLS=$(cat "$TMPFILE")
-
-# Download youtube videos
-for url in $URLS; do
-		echo "Downloading $url"
-		yt-dlp -i \
-			--playlist-end $NUM_VIDEOS \
-			--download-archive "$DOWNLOAD_DIR/.archive.txt" \
-			--write-thumbnail \
-			--embed-metadata \
-			--embed-chapters \
-			--embed-subs \
-			--write-auto-subs \
-			--match-filter "duration < 7000" \
-			--match-filter "duration > 120" \
-			--match-filter "uploader !~ /.*[Ll]ive.*/" \
-			--match-filter "uploader !~ /.*[Ss]tream.*/" \
-			--match-filter "original_url!*=/shorts/ & url!*=/shorts/" \
-			-o "$DOWNLOAD_DIR/%(uploader)s/%(title)s.%(ext)s" \
-			"$url"
-done
 
 # Remove older videos
 for url in $URLS; do
-	yt-dlp --get-filename \
+	yt-dlp --print filename \
 		--playlist-end $(expr $NUM_VIDEOS + 5) \
 		-o "$DOWNLOAD_DIR/%(uploader)s/%(title)s.%(ext)s" \
 		"$url" | tail -n 5 | xargs rm -f
