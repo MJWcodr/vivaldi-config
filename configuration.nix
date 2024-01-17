@@ -73,6 +73,9 @@ in
 		# Youtube Downloader
 		./services/youtube-downloader.nix
 
+		# Network Audio
+		./services/audio.nix
+
 		# Tests
 		./tests/nginx.nix
   ];
