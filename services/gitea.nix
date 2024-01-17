@@ -15,10 +15,10 @@ in {
       file = ../secrets/postgrespass.age;
       owner = config.services.gitea.user;
     };
-    gitea-ctions-token = {
-      file = ../secrets/gitea-actions-token.age;
-      owner = "gitea-runner";
-    };
+   # gitea-actions-token = {
+   #   file = ../secrets/gitea-actions-token.age;
+   #   owner = "gitea-runner";
+   # };
   };
 
   ##########
@@ -88,60 +88,60 @@ in {
   ##########
 
 	# Create Gitea-Runner user
-  users.users.gitea-runner = {
-    isSystemUser = true;
-    name = "gitea-runner";
-    group = "gitea-runner";
-		extraGroups = [ "podman" ];
-  };
-  users.groups.gitea-runner = { };
+  # users.users.gitea-runner = {
+  #  isSystemUser = true;
+  #  name = "gitea-runner";
+  #  group = "gitea-runner";
+	#	extraGroups = [ "podman" ];
+  # };
+  # users.groups.gitea-runner = { };
 
   # Enable Podman API
   virtualisation.podman.dockerSocket.enable = true;
 
-  systemd.services.gitea-actions-runner-vivaldi-pre = {
-    description = "Gitea Actions Runner Setup for Vivaldi";
-    after = [ "gitea.service" ];
-    wantedBy = [ "multi-user.target" ];
-    serviceConfig = {
-      Type = "oneshot";
-      RemainAfterExit = true;
-      User = "root";
-    };
-    path = [ pkgs.bash pkgs.coreutils pkgs.gitea pkgs.gitea-actions-runner pkgs.sudo ];
-    script = ''
-			token=$(sudo -u gitea gitea actions generate-runner-token --config ${config.services.gitea.stateDir}/custom/conf/app.ini)
-			mkdir -p ${giteaRunnerDir}	
+  # systemd.services.gitea-actions-runner-vivaldi-pre = {
+  #  description = "Gitea Actions Runner Setup for Vivaldi";
+  #  after = [ "gitea.service" ];
+  #  wantedBy = [ "multi-user.target" ];
+  #  serviceConfig = {
+  #    Type = "oneshot";
+  #    RemainAfterExit = true;
+  #    User = "root";
+  #  };
+  #  path = [ pkgs.bash pkgs.coreutils pkgs.gitea pkgs.gitea-actions-runner pkgs.sudo ];
+  #  script = ''
+	#		token=$(sudo -u gitea gitea actions generate-runner-token --config ${config.services.gitea.stateDir}/custom/conf/app.ini)
+	#		mkdir -p ${giteaRunnerDir}	
 			
-			cd ${giteaRunnerDir}
+	#		cd ${giteaRunnerDir}
 
-			echo "${builtins.readFile ./gitea/runner.yaml}" > config.yaml
+	#		echo "${builtins.readFile ./gitea/runner.yaml}" > config.yaml
 
-			act_runner register	\
-				--instance "https://${domain}:${toString exposedPort}" \
-				--name vivaldi \
-				--token $token \
-				--labels "ubuntu-20.04:docker://node:16-bullseye,nixos:docker:nixos/nix:latest,linux:host,ubuntu-latest:docker://node:16-bullseye" \
-				--no-interactive 
+	#		act_runner register	\
+	#			--instance "https://${domain}:${toString exposedPort}" \
+	#			--name vivaldi \
+	#			--token $token \
+	#			--labels "ubuntu-20.04:docker://node:16-bullseye,nixos:docker:nixos/nix:latest,linux:host,ubuntu-latest:docker://node:16-bullseye" \
+	#			--no-interactive 
 
-			chown -R gitea-runner:  ${giteaRunnerDir}'';
-  };
-		systemd.services.gitea-actions-runner-vivaldi = {
-    description = "Gitea Actions Runner for Vivaldi";
-    after = [ "gitea-actions-runner-vivaldi-pre.service" ];
-    path = [ pkgs.gitea-actions-runner ];
-    wantedBy = [ "multi-user.target" ];
-    serviceConfig = {
-      Type = "simple";
-      User = "gitea-runner";
-      WorkingDirectory = giteaRunnerDir;
-    };
-    script = ''
-			set -e
-			DOCKER_HOST="unix://$XDG_RUNTIME_DIR/podman/podman.sock"
-			act_runner daemon -c config.yaml
-		'';
-  };
+	#		chown -R gitea-runner:  ${giteaRunnerDir}'';
+  #};
+	#	systemd.services.gitea-actions-runner-vivaldi = {
+  #  description = "Gitea Actions Runner for Vivaldi";
+  #  after = [ "gitea-actions-runner-vivaldi-pre.service" ];
+  #  path = [ pkgs.gitea-actions-runner ];
+  #  wantedBy = [ "multi-user.target" ];
+  #  serviceConfig = {
+  #    Type = "simple";
+  #    User = "gitea-runner";
+  #    WorkingDirectory = giteaRunnerDir;
+  #  };
+  #  script = ''
+	#		set -e
+	#		DOCKER_HOST="unix://$XDG_RUNTIME_DIR/podman/podman.sock"
+	#		act_runner daemon -c config.yaml
+	#	'';
+  # };
 
   ##########
   # Firewall
