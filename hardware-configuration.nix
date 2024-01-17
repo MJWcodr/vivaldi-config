@@ -33,8 +33,10 @@
 	networking.useDHCP = lib.mkDefault true;
   # networking.interfaces.enp0s13f0u2c2.useDHCP = lib.mkDefault true;
 
-	
-  nixpkgs.hostPlatform = lib.mkDefault "x86_64-linux";
+	# Don't wait for the network to come up during boot.
+	systemd.services.NetworkManager-wait-online.enable = lib.mkForce false;
+  
+	nixpkgs.hostPlatform = lib.mkDefault "x86_64-linux";
   powerManagement.cpuFreqGovernor = lib.mkDefault "performance";
 
 
