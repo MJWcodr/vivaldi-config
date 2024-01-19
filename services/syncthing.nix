@@ -28,7 +28,7 @@
           id = "silgm-drnzi";
           path = "/srv/music";
           ignorePerms = true;
-          devices = [ "mjw-laptop" "pixel6a" "redmi-juri" ];
+          devices = [ "mjw-laptop" "pixel6a" "redmi-juri" "dmitry-hetzner" ];
         };
       };
       devices = {
@@ -42,6 +42,9 @@
         "redmi-juri" = {
           id = "5QT7BKV-JNRTXKY-W2ZIISU-KCDKXIO-OGYJ4VD-SKTF32G-U6J2E4U-MQJGZAN";
         };
+				"dmitry-hetzner" = {
+					id = "4JQIO44-Z2Y4MEZ-FUJFMOL-WY7QVXW-TFLSRNX-AC3OPFH-TBWQXA2-XEER7AY";
+				};
       };
 
     };
