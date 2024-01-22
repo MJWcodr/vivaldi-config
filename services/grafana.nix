@@ -7,10 +7,14 @@
 
   services.grafana = {
     enable = true;
-    domain = "vivaldi.fritz.box";
     package = pkgs.grafana;
-    port = 2342;
-    addr = "localhost";
+		settings = {
+			server = {
+				domain = "vivaldi.fritz.box";
+				http_port = 2342;
+				http_addr = "localhost";
+			};
+		};
   };
 
   # Nginx reverse proxy
@@ -19,7 +23,7 @@
     sslCertificate = config.age.secrets."sslcert".path;
     sslCertificateKey = config.age.secrets."sslkey".path;
     locations."/" = {
-      proxyPass = "http://localhost:${toString config.services.grafana.port}";
+      proxyPass = "http://localhost:${toString config.services.grafana.settings.server.http_port}";
       proxyWebsockets = true;
       extraConfig = ''
         				proxy_set_header Host $host;

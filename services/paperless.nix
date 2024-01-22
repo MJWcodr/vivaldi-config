@@ -32,7 +32,7 @@ in
 		dataDir = "/var/lib/paperless";
 		port = internalPort;
 		passwordFile = config.age.secrets.paperless.path;
-		extraConfig = {
+		settings = {
 			PAPERLESS_OCR_LANGUAGE = "deu+eng";
 			PAPERLESS_URL = "https://${domain}:${toString exposedPort}";
 			# PAPERLESS_URL = "https://paper.mjwcodr.de";
