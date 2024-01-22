@@ -64,6 +64,6 @@ in
 			addr = domain;
 		} ];
 	};
-
+	
 	networking.firewall.allowedTCPPorts = [ 8096 8920 ];
 }

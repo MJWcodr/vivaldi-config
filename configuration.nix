@@ -78,6 +78,9 @@ in
 
 		# Tests
 		./tests/nginx.nix
+
+		# Home Assistant
+		./services/home-assistant.nix
   ];
 
 	# Secrets
