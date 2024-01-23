@@ -25,6 +25,10 @@ let
 	jellyfinPort = 8096;
 	jellyfinInternalPort = 8095;
 
+	# Home Assistant
+	homeAssistantExternalPort = 8124;
+	homeAssistantPort = 8123;
+
 	domain = "mjwcodr.de";
 	wireguardIP = "10.100.0.2";
 in 
@@ -55,16 +59,6 @@ in
 					ssl = false;
 					addr = "${wireguardIP}";
 				} ];
-			};
-		# Homer
-		"home.${domain}" = {
-				locations."/".proxyPass = "http://localhost:8050";
-				listen = [
-		 			{
-						port = 90;
-			 			addr = "10.100.0.2";
-					}
-			];
 		};
 		# Paperless
 		"paper.${domain}" = {
@@ -160,8 +154,27 @@ in
 				addr = "${wireguardIP}";
 			} ];
 		};
-		};
 
+		# Home Assistant
+		"home.${domain}" = {
+			forceSSL = false;
+			http2 = true;
+			locations."/" = {
+				proxyPass = "http://localhost:${toString homeAssistantPort}";
+				proxyWebsockets = true;
+				extraConfig = ''
+					proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+					proxy_set_header Host $host;
+					proxy_buffering off;
+				'';
+			};
+			listen = [ {
+				port = homeAssistantExternalPort;
+				ssl = false;
+				addr = "${wireguardIP}";
+			} ];
+		};
+		};
 	};
-	networking.firewall.allowedTCPPorts = [ 3500 ];
+	networking.firewall.allowedTCPPorts = [ 3500 80 443 ];
 }

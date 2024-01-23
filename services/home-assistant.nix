@@ -5,7 +5,12 @@
 		${pkgs.coreutils}/bin/mkdir -p /var/lib/hass
 		${pkgs.coreutils}/bin/chown -R 1000:1000 /var/lib/hass
 	'';
-  virtualisation.oci-containers = {
+  
+	####################
+	# Home Assistant
+	####################
+
+	virtualisation.oci-containers = {
     backend = "podman";
     containers.homeassistant = {
       volumes = [ "/var/lib/hass/:/config" ];
