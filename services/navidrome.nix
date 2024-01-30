@@ -14,7 +14,13 @@
       port = 4533;
       ssl = true;
       addr = "vivaldi.fritz.box";
-    }];
+    }
+		{
+			port = 4532;
+			ssl = false;
+			addr = "vivaldi.fritz.box";
+		}
+		];
 
     locations."/" = {
       proxyPass =
@@ -46,6 +52,6 @@
 		ports = [ "4534:4534" ];
 	};
   # Open Port 4533 for Navidrome
-  networking.firewall.allowedTCPPorts = [ 4533 ];
+  networking.firewall.allowedTCPPorts = [ 4533 4532 ];
 }
 

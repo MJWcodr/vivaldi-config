@@ -176,5 +176,5 @@ in
 		};
 		};
 	};
-	networking.firewall.allowedTCPPorts = [ 3500 80 443 ];
+	networking.firewall.allowedTCPPorts = [ 3500 80 443 8124 ];
 }
