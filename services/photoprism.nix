@@ -25,7 +25,6 @@ in
 	users.users.photoprism = {
 		group = "photoprism";
 		isSystemUser = true;
-	 
 	};
 
 	users.groups.photoprism = {};
@@ -69,6 +68,10 @@ in
 
 		script = ''
 		# Import photos
+
+		## allow all users from the photoprism group to access /var/lib/photoprism/import
+		chmod 770 /var/lib/photoprism/import
+
 		photoprism --originals-path /srv/photos/ --import-path /var/lib/photoprism/import import
 
 		'';

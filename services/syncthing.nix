@@ -10,7 +10,14 @@
 		# Chown the syncthing data directory to the syncthing user
 		chown -R ${config.services.syncthing.user}:${config.services.syncthing.group} ${config.services.syncthing.settings.folders.Music.path}
 
+		# Create the photoprism import directory 
+		mkdir -p /var/lib/photoprism/import/pixel6a
+		chmod 770 /var/lib/photoprism/import/pixel6a
+
 	'';
+
+	# Add syncthing user to the photoprism group
+	users.users.${config.services.syncthing.user}.extraGroups = [ "photoprism" ];
 
 	services.syncthing = {
     enable = true;
@@ -30,6 +37,19 @@
           ignorePerms = true;
           devices = [ "mjw-laptop" "pixel6a" "redmi-juri" "dmitry-hetzner" ];
         };
+				# Pictures and Videos from Pixel 6a
+				"Pictures-Pictures" = {
+					id = "pwt40-pfnih";
+					path = "/var/lib/photoprism/import/pixel6a/Pictures";
+					ignorePerms = true;
+					devices = [ "mjw-laptop" "pixel6a" ];
+				};
+				"Pictures-DCIM" = {
+					id = "nqbb2-d2gt5";
+					path = "/var/lib/photoprism/import/pixel6a/DCIM";
+					ignorePerms = true;
+					devices = [ "mjw-laptop" "pixel6a" ];
+				};
       };
       devices = {
         "mjw-laptop" = {
