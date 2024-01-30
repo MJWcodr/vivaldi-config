@@ -22,6 +22,9 @@ in
     # File Server
     # ./services/fileserver.nix
 
+		# Backup
+		./services/backup.nix
+
     # Photoprism
 		./services/photoprism.nix
 
@@ -49,9 +52,6 @@ in
 		# Reverse Proxy through Wireguard
 		./services/remote.nix
 
-    # HedgeDoc
-    # ./services/hedgedoc.nix
-	
 		# Notifications
 		./services/ntfy.nix
 
@@ -75,13 +75,14 @@ in
 
 		# Network Audio
 		./services/audio.nix
+		
+		# Home Assistant
+		./services/home-assistant.nix
 
 		# Tests
 		./tests/nginx.nix
 
-		# Home Assistant
-		./services/home-assistant.nix
-  ];
+];
 
 	# Secrets
 
