@@ -29,6 +29,9 @@ let
 	homeAssistantExternalPort = 8124;
 	homeAssistantPort = 8123;
 
+	radicalePort = 5232;
+	radicaleInternalPort = 5231;
+
 	domain = "mjwcodr.de";
 	wireguardIP = "10.100.0.2";
 in 
@@ -170,6 +173,24 @@ in
 			};
 			listen = [ {
 				port = homeAssistantExternalPort;
+				ssl = false;
+				addr = "${wireguardIP}";
+			} ];
+		};
+		"calendar.${domain}" = {
+			forceSSL = false;
+			http2 = true;
+			locations."/" = {
+				proxyPass = "http://localhost:${toString radicaleInternalPort}";
+				proxyWebsockets = true;
+				extraConfig = ''
+					proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+					proxy_set_header Host $host;
+					proxy_buffering off;
+				'';
+			};
+			listen = [ {
+				port = radicalePort;
 				ssl = false;
 				addr = "${wireguardIP}";
 			} ];

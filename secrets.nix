@@ -28,4 +28,7 @@ in
 
 	# Music Downloader
 	"secrets/music-downloader-env.age".publicKeys = [ system matthias ];
+
+	# Radicale
+	"secrets/radicale-auth.age".publicKeys = [ system matthias ];
 }

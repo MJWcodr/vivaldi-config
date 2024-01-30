@@ -79,6 +79,9 @@ in
 		# Home Assistant
 		./services/home-assistant.nix
 
+		# Radicale
+		./services/radicale.nix
+
 		# Tests
 		./tests/nginx.nix
 
