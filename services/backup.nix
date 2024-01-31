@@ -7,9 +7,9 @@
 	age.secrets."secrets/restic_backup.age".file = ../secrets/restic_backup.age;
 
 	services.restic.backups = {
-	 "srv" = {
+	 "full-backup" = {
 			repository = "rclone:backup:restic_backup";
-			paths = [ "/srv" ];
+			paths = [ "/" ];
 			passwordFile = config.age.secrets."secrets/restic_backup.age".path;
       rcloneConfigFile = config.age.secrets."secrets/rclone_backup.age".path;
       pruneOpts = [
@@ -23,40 +23,51 @@
       };
       timerConfig = {
         # Run every day at 3am
-				OnCalendar = "daily";
+				OnCalendar = "hourly";
 				Persistent = true;
 				RandomizedDelaySec = "1h";
       };
 			exclude = [
+				# srv
 				"/srv/entertainment"
 				"/srv/metube"
 				"/srv/music"
-			];
-	 };
-	 "var" = {
-	 		repository = "rclone:backup:restic_backup";
-			paths = [ "/srv" ];
-			passwordFile = config.age.secrets."secrets/restic_backup.age".path;
-      rcloneConfigFile = config.age.secrets."secrets/rclone_backup.age".path;
-      pruneOpts = [
-        "--keep-daily 7"
-        "--keep-weekly 4"
-        "--keep-monthly 6"
-        "--keep-yearly 2"
-      ];
-      rcloneOptions = {
-        logFile = "/var/log/restic.log";
-      };
-      timerConfig = {
-        # Run every day at 3am
-				OnCalendar = "daily";
-				Persistent = true;
-				RandomizedDelaySec = "1h";
-      };
-			exclude = [
+				
+				# don't backup binaries
+				"/bin"
+				"/lib"
+				"/lib64"
+				"/dev"
+				"/sbin"
+				"/usr"
+				
+				# don't backup caches
 				"/var/cache"
-				"/var/empty"
+				"/var/tmp"
+				"/tmp"
+				"/home/*/.cache"
+
+				# don't backup containers
 				"/var/lib/docker"
+				"/var/lib/containers"
+
+				# don't backup devices
+				"/dev"
+				"/afs"
+				"/sys"
+				"/proc"
+				"/run"
+				"/lost+found"
+				"/mnt"
+				"/media"
+
+				# don't backup trash
+				"/home/*/.local/share/Trash"
+				"/home/*/.local/share/Steam"
+				
+				# don't backup nix store
+				"/nix"
+				"/home/*/.nix-profile"
 			];
 	 };
 	};
