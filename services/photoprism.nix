@@ -74,6 +74,11 @@ in
 
 		photoprism --originals-path /srv/photos/ --import-path /var/lib/photoprism/import import
 
+		## Get second import path
+
+		photoprism --originals-path /srv/photos/ --import-path /srv/photoprism/import import
+
+
 		'';
 	};
 
