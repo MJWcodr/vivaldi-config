@@ -25,6 +25,7 @@
     locations."/" = {
       proxyPass =
         "http://localhost:${toString config.services.navidrome.settings.Port}";
+			proxyWebsockets = true;
     };
   };
 
