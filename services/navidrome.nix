@@ -40,6 +40,8 @@
 			EnableSpotify = true;
 			Spotify.ID = "77b794e641d24037b766e07015288fd4";
 			Spotify.Secret = "04cae150c0f240d09a8865328618ac1e";
+			LastFM.ApiKey = "3019cf099934325a4dc53f70095c6ce5";
+			LastFM.Secret = "660436d78c246815936a5806848e2df1";
     };
   };
 
