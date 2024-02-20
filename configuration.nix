@@ -84,7 +84,9 @@ in
 
 		# Tests
 		./tests/nginx.nix
-
+	
+		# Mosh
+		./services/mosh.nix
 ];
 
 	# Secrets
