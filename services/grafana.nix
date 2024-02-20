@@ -71,7 +71,7 @@
     };
     listen = [{
       ssl = true;
-      port = 9011;
+      port = 9512;
       addr = "vivaldi.fritz.box";
     }];
   };
@@ -100,5 +100,5 @@
   # Nginx
   #########
 
-  networking.firewall.allowedTCPPorts = [ 2343 9011 ];
+  networking.firewall.allowedTCPPorts = [ 2343 9512 ];
 }
