@@ -41,7 +41,7 @@
       devices = {
         "mjw-laptop" = {
           id =
-            "7DWYRCE-GZ4C5JX-CMMYE73-2ARC4QI-5Z5HRRH-CBXW6VO-D6RUSQK-X7YPLQV";
+            "4Y5LS2K-5ZEUZIE-DJT3BXB-CJCVZLM-FWSYJ3X-2GUOBE4-VCGJ6IV-567DCAN";
         };
         "pixel6a" = {
           id =
@@ -50,7 +50,7 @@
         };
         "redmi-juri" = {
           id =
-            "5QT7BKV-JNRTXKY-W2ZIISU-KCDKXIO-OGYJ4VD-SKTF32G-U6J2E4U-MQJGZAN";
+            "DWJDLPL-SHFFWDC-RPB6KCJ-PJKRVTS-EZER3ZH-S2AP3L5-6NC3A3T-IFGTUQY";
         };
         "dmitry-hetzner" = {
           id =
