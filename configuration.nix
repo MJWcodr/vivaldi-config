@@ -87,6 +87,9 @@ in
 	
 		# Mosh
 		./services/mosh.nix
+
+		# RSS
+		./services/rss.nix
 ];
 
 	# Secrets

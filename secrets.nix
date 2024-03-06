@@ -31,4 +31,7 @@ in
 
 	# Radicale
 	"secrets/radicale-auth.age".publicKeys = [ system matthias ];
+
+	# FreshRSS 
+	"secrets/freshrss.age".publicKeys = [ system matthias ];
 }
