@@ -32,6 +32,9 @@ let
 	radicalePort = 5232;
 	radicaleInternalPort = 5231;
 
+	freshRSSPort = 8090;
+	freshRSSInternalPort = 8089;
+
 	domain = "mjwcodr.de";
 	wireguardIP = "10.100.0.2";
 in 
@@ -191,6 +194,24 @@ in
 			};
 			listen = [ {
 				port = radicalePort;
+				ssl = false;
+				addr = "${wireguardIP}";
+			} ];
+		};
+		"rss.${domain}" = {
+			forceSSL = false;
+			http2 = true;
+			locations."/" = {
+				proxyPass = "http://localhost:${toString freshRSSInternalPort}";
+				proxyWebsockets = true;
+				extraConfig = ''
+					proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+					proxy_set_header Host $host;
+					proxy_buffering off;
+				'';
+			};
+			listen = [ {
+				port = freshRSSPort;
 				ssl = false;
 				addr = "${wireguardIP}";
 			} ];
