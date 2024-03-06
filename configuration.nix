@@ -6,8 +6,7 @@
 let
   publicKey =
     "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABgQCow7KnyMQO/WGYfyNAIVUf+KAK+Bk4OLxhwPrRjZom+KhADGjFvYn7dVzBh51/zPkd3BReuW8rpC6eyVDkX7rItOD9d32m2ozW/W5/h3UrSmpyo5DaqmPlXn9+TmLFENWWDXmqImRRlEb9Ts4md54d8cJVTF/Rolxi3y4dxALwnIKzPxorJ61rQEr04izdCo84c3NH+Q5fuu2NLgSJxnhLZTz+/DSexpmK7K9Mw23z73e1hRY68pi3/tQPQdVX0YGM2AHyubryrgbhEDzig6CAiHKEvWpc7hKeha/LYYiq9Rs/J1Nui1e/lcxLDz+lgNBMooiwvdrB3WIeVSjIVhx/wrT5YeYPKCWvPdPRZ5wZ3cPk76yB/I2AacHZEWqSXhS88wIdmuEcTAKDLP3HHUWYWpbY4JiaTFHtba4UpIkSd7wW5BY3HIupHLEwHMR7jemenak3ueQtsrCExeO3axD0VL4/xL/PgJPdZm8HsUsn+oJnz5cRBtv2a2gsmAcoPVc= matthias@Matthiass-MBP.fritz.box";
-in
-{ config, pkgs, lib, ... }:
+in { config, pkgs, lib, ... }:
 
 {
   imports = [
@@ -22,11 +21,11 @@ in
     # File Server
     # ./services/fileserver.nix
 
-		# Backup
-		./services/backup.nix
+    # Backup
+    ./services/backup.nix
 
     # Photoprism
-		./services/photoprism.nix
+    ./services/photoprism.nix
 
     # CoreDNS
     # ./services/coredns.nix
@@ -43,72 +42,70 @@ in
     # Gitea
     ./services/gitea.nix
 
-		# ToDo - Vikunja
-		./services/vikunja.nix
+    # ToDo - Vikunja
+    ./services/vikunja.nix
 
     # Wireguard
     ./services/wireguard.nix
 
-		# Reverse Proxy through Wireguard
-		./services/remote.nix
+    # Reverse Proxy through Wireguard
+    ./services/remote.nix
 
-		# Notifications
-		./services/ntfy.nix
+    # Notifications
+    ./services/ntfy.nix
 
-		# Music Nix Downloader
-		# ./services/music.nix
+    # Music Nix Downloader
+    # ./services/music.nix
 
     # Grafana
     ./services/grafana.nix
 
-		# Workspace for Matthias
-		./workspace/workspace.nix
+    # Workspace for Matthias
+    ./workspace/workspace.nix
 
-		# Jellyfin
-		./services/jellyfin.nix
+    # Jellyfin
+    ./services/jellyfin.nix
 
-		# Paperless
-		./services/paperless.nix
+    # Paperless
+    ./services/paperless.nix
 
-		# Youtube Downloader
-		./services/youtube-downloader.nix
+    # Youtube Downloader
+    ./services/youtube-downloader.nix
 
-		# Network Audio
-		./services/audio.nix
-		
-		# Home Assistant
-		./services/home-assistant.nix
+    # Network Audio
+    ./services/audio.nix
 
-		# Radicale
-		./services/radicale.nix
+    # Home Assistant
+    ./services/home-assistant.nix
 
-		# Tests
-		./tests/nginx.nix
-	
-		# Mosh
-		./services/mosh.nix
+    # Radicale
+    ./services/radicale.nix
 
-		# RSS
-		./services/rss.nix
-];
+    # Tests
+    ./tests/nginx.nix
 
-	# Secrets
+    # Mosh
+    ./services/mosh.nix
+
+    # RSS
+    ./services/rss.nix
+  ];
+
+  # Secrets
 
   # PKI
-  security.pki.certificateFiles = [
-    ./services/tls/ca.pem
-  ];
-	
-	age.secrets = {
-	sslcert = {
+  security.pki.certificateFiles = [ ./services/tls/ca.pem ];
+
+  age.secrets = {
+    sslcert = {
       file = ./secrets/sslcert.crt.age;
       owner = config.services.nginx.user;
     };
-  sslkey = {
+    sslkey = {
       file = ./secrets/sslcert.key.age;
       owner = config.services.nginx.user;
     };
-	};
+  };
 
   # Bootloader.
   boot.loader.systemd-boot.enable = true;
@@ -125,14 +122,14 @@ in
   # networking.proxy.noProxy = "127.0.0.1,localhost,internal.domain";
 
   virtualisation.oci-containers.backend = "podman";
-	virtualisation.podman = {
-		enable = true;
-		dockerCompat = true;
-		dockerSocket.enable = true;
-		defaultNetwork.settings.dns_enabled = true;
-	};
+  virtualisation.podman = {
+    enable = true;
+    dockerCompat = true;
+    dockerSocket.enable = true;
+    defaultNetwork.settings.dns_enabled = true;
+  };
 
-	networking.firewall.trustedInterfaces = [ "podman0" ];
+  networking.firewall.trustedInterfaces = [ "podman0" ];
 
   # Enable networking
   networking.networkmanager.enable = true;

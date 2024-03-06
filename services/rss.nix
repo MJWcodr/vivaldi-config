@@ -5,10 +5,10 @@ let
 in
 {
 	age.secrets = {
-		freshrss = {
-			file = ../secrets/freshrss.age;
-			owner = config.services.freshrss.user;
-		};
+	freshrss = {
+		file = ../secrets/freshrss.age;
+		# owner = config.services.freshrss.user; # currently the user is not created yet
+	};
 	};
 
 	# services.freshrss = {

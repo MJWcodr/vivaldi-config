@@ -9,7 +9,7 @@
 # Variables
 ###
 
-NUM_VIDEOS=5
+NUM_VIDEOS="5"
 DOWNLOAD_DIR="/srv/entertainment/youtube"
 YOUTUBE_CHANNEL_FILE="/etc/nixos/services/youtube-downloader/youtube.list"
 
@@ -45,7 +45,6 @@ for url in $URLS; do
 			--write-auto-subs \
 			--match-filter "duration < 7000" \
 			--match-filter "duration > 120" \
-			--match-filter "uploader !~ /.*[Ll]ive.*/" \
 			--match-filter "uploader !~ /.*[Ss]tream.*/" \
 			--match-filter "original_url!*=/shorts/ & url!*=/shorts/" \
 			-o "$DOWNLOAD_DIR/%(uploader)s/%(title)s.%(ext)s" \
@@ -55,7 +54,7 @@ done
 # Remove older videos
 for url in $URLS; do
 	yt-dlp --get-filename \
-		--playlist-end $(expr $NUM_VIDEOS + 5) \
+		--playlist-end "$( $NUM_VIDEOS + 5)" \
 		-o "$DOWNLOAD_DIR/%(uploader)s/%(title)s.%(ext)s" \
 		"$url" | tail -n 5 | xargs rm -f
 done
