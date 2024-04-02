@@ -99,6 +99,7 @@ in
       PHOTOPRISM_SITE_TITLE = "My PhotoPrism";
 			PHOTOPRISM_READONLY = "false";
 			PHOTOPRISM_UPLOAD_NSFW = "true";
+			PHOTOPRISM_ORIGINALS_LIMIT = "-1";
     };
 		passwordFile = config.age.secrets.photoprismAdminPassword.path;
   };

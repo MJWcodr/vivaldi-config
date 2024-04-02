@@ -252,6 +252,10 @@ in { config, pkgs, lib, ... }:
     ports = [ 22 ];
   };
 
+	nixpkgs.config.permittedInsecurePackages = [
+      "nix-2.17.1"
+  ];
+
   services.logind.lidSwitch = "ignore";
   # Open ports in the firewall.
   networking.firewall.allowedTCPPorts = [ 22 80 ];

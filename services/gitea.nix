@@ -49,8 +49,7 @@ in {
     ensureDatabases = [ config.services.gitea.user ];
     ensureUsers = [{
       name = config.services.gitea.database.user;
-      ensurePermissions."DATABASE ${config.services.gitea.database.name}" =
-        "ALL PRIVILEGES";
+			ensureDBOwnership = true;
     }];
   };
 
