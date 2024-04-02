@@ -42,7 +42,7 @@
 			peers = [
 				{
 					# The public key of the peer.
-					publicKey = "biZiqyL8kQYn2joEyz2LxsEn1Imnr74CP5vFN9jROWE=";
+					publicKey = "iY2iP4/wrlVqu0RdMCzKh8Pe6ehKSZhp/kb0bUBYHQE=";
 
 					# Forward traffic to the peer.
 					allowedIPs = [ "10.100.0.0/24" ];
