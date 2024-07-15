@@ -16,7 +16,7 @@ in
 	# Jellyfin
   virtualisation.oci-containers.containers."jellyfin" = {
     autoStart = true;
-    image = "jellyfin/jellyfin";
+    image = "jellyfin/jellyfin:10.10";
     volumes = [
       "/srv/jellyfin/config:/config" # TODO: set this to read-only
       "/srv/jellyfin/cache:/cache"
@@ -24,6 +24,8 @@ in
       "/srv/entertainment/movies:/movies"
       "/srv/entertainment/tv:/tv"
 			"/srv/entertainment/youtube:/youtube"
+			"/srv/entertainment/literature:/literature"
+			"/srv/entertainment/audiobooks:/audiobooks"
 
 			# Hardware passthrough
 			"/dev/dri:/dev/dri"

@@ -35,6 +35,12 @@ let
 	freshRSSPort = 8090;
 	freshRSSInternalPort = 8089;
 
+	invidiousPort = 3040;
+	invidiousInternalPort = 3039;
+
+	audiobookshelfPort = 7000;
+	audiobookshelfInternalPort = 6999;
+
 	domain = "mjwcodr.de";
 	wireguardIP = "10.100.0.2";
 in 
@@ -212,6 +218,42 @@ in
 			};
 			listen = [ {
 				port = freshRSSPort;
+				ssl = false;
+				addr = "${wireguardIP}";
+			} ];
+		};
+		"yt.${domain}" = {
+			forceSSL = false;
+			http2 = true;
+			locations."/" = {
+				proxyPass = "http://localhost:${toString invidiousInternalPort}";
+				proxyWebsockets = true;
+				extraConfig = ''
+					proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+					proxy_set_header Host $host;
+					proxy_buffering off;
+				'';
+			};
+			listen = [ {
+				port = invidiousPort;
+				ssl = false;
+				addr = "${wireguardIP}";
+			} ];
+			};
+		"audiobooks.${domain}" = {
+			forceSSL = false;
+			http2 = true;
+			locations."/" = {
+				proxyPass = "http://localhost:${toString audiobookshelfInternalPort}";
+				proxyWebsockets = true;
+				extraConfig = ''
+					proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+					proxy_set_header Host $host;
+					proxy_buffering off;
+				'';
+			};
+			listen = [ {
+				port = audiobookshelfPort;
 				ssl = false;
 				addr = "${wireguardIP}";
 			} ];

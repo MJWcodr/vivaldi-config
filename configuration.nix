@@ -51,12 +51,6 @@ in { config, pkgs, lib, ... }:
     # Reverse Proxy through Wireguard
     ./services/remote.nix
 
-    # Notifications
-    ./services/ntfy.nix
-
-    # Music Nix Downloader
-    # ./services/music.nix
-
     # Grafana
     ./services/grafana.nix
 
@@ -67,13 +61,13 @@ in { config, pkgs, lib, ... }:
     ./services/jellyfin.nix
 
     # Paperless
-    ./services/paperless.nix
+    # ./services/paperless.nix # Temporarily disabled
 
     # Youtube Downloader
-    ./services/youtube-downloader.nix
+    # ./services/youtube-downloader.nix
 
     # Network Audio
-    ./services/audio.nix
+    # ./services/audio.nix
 
     # Home Assistant
     ./services/home-assistant.nix
@@ -88,7 +82,18 @@ in { config, pkgs, lib, ... }:
     ./services/mosh.nix
 
     # RSS
-    ./services/rss.nix
+    # ./services/rss.nix
+
+		# Invidious
+		# ./services/invidious.nix
+
+		./services/pi-hole.nix
+
+		# Matrix
+		# ./services/matrix.nix
+
+		# Audiobookshelf
+		./services/audiobookshelf.nix
   ];
 
   # Secrets
@@ -106,6 +111,20 @@ in { config, pkgs, lib, ... }:
       owner = config.services.nginx.user;
     };
   };
+
+	system.autoUpgrade = {
+  	enable = true;
+  	# flake = inputs.self.outPath;
+  	flags = [
+    	"--update-input"
+    	"nixpkgs"
+    	"-L" # print build logs
+  	];
+  	dates = "02:00";
+  	randomizedDelaySec = "45min";
+	};
+
+
 
   # Bootloader.
   boot.loader.systemd-boot.enable = true;
@@ -196,7 +215,7 @@ in { config, pkgs, lib, ... }:
     shell = pkgs.fish;
   };
 
-  nix.settings.allowed-users = [ "matthias" ];
+  nix.settings.allowed-users = [ "matthias" ]; # Allow matthias to use nix
 
   users.users.miol = {
     isNormalUser = true;
@@ -244,17 +263,12 @@ in { config, pkgs, lib, ... }:
   '';
 
   # List services that you want to enable:
-
   environment.variables.EDITOR = "vim";
   # Enable the OpenSSH daemon.
   services.openssh = {
     enable = true;
     ports = [ 22 ];
   };
-
-	nixpkgs.config.permittedInsecurePackages = [
-      "nix-2.17.1"
-  ];
 
   services.logind.lidSwitch = "ignore";
   # Open ports in the firewall.

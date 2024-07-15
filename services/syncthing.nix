@@ -22,7 +22,7 @@
           id = "silgm-drnzi";
           path = "/srv/music";
           ignorePerms = true;
-          devices = [ "mjw-laptop" "pixel6a" "redmi-juri" "dmitry-hetzner" ];
+          devices = [ "mjw-laptop" "redmi-juri" "dmitry-hetzner" ];
         };
         # Pictures and Videos from Pixel 6a
         "Pictures-Pictures" = {
