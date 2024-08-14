@@ -41,6 +41,13 @@ let
 	audiobookshelfPort = 7000;
 	audiobookshelfInternalPort = 6999;
 
+	giteaPort = 3001;
+	giteaInternalPort = 3000;
+
+	hedgeDocPort = 6700;
+
+	websitePort = 8000;
+
 	domain = "mjwcodr.de";
 	wireguardIP = "10.100.0.2";
 in 
@@ -53,6 +60,25 @@ in
 	services.nginx = {
 		enable = true;
 		virtualHosts = {
+		# Website
+		"${domain}" = {
+			forceSSL = false;
+			http2 = true;
+			locations."/" = {
+				proxyPass = "http://localhost:${toString websitePort}";
+				proxyWebsockets = true;
+				extraConfig = ''
+					proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+					proxy_set_header Host $host;
+					proxy_buffering off;
+				'';
+			};
+			listen = [ {
+				port = websitePort;
+				ssl = false;
+				addr = "${wireguardIP}";
+			} ];
+		};
 		# Photoprism
 			"photos.${domain}" = {				# SSL is terminated on the remote server
 				forceSSL = false;
@@ -254,6 +280,47 @@ in
 			};
 			listen = [ {
 				port = audiobookshelfPort;
+				ssl = false;
+				addr = "${wireguardIP}";
+			} ];
+		};
+		"git.${domain}" = {
+			forceSSL = false;
+			http2 = true;
+			locations."/" = {
+				proxyPass = "http://localhost:${toString giteaInternalPort}";
+				proxyWebsockets = true;
+				extraConfig = ''
+					client_max_body_size 512M;
+        	proxy_set_header Connection $http_connection;
+        	proxy_set_header Upgrade $http_upgrade;
+        	proxy_set_header Host $host;
+        	proxy_set_header X-Real-IP $remote_addr;
+        	proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+        	proxy_set_header X-Forwarded-Proto $scheme;
+				'';
+			};
+
+			listen = [ {
+				port = giteaPort;
+				ssl = false;
+				addr = "${wireguardIP}";
+			} ];
+		};
+		"doc.${domain}" = {
+			forceSSL = false;
+			http2 = true;
+			locations."/" = {
+				proxyPass = "http://localhost:${toString hedgeDocPort}";
+				proxyWebsockets = true;
+				extraConfig = ''
+					proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+					proxy_set_header Host $host;
+					proxy_buffering off;
+				'';
+			};
+			listen = [ {
+				port = 6700;
 				ssl = false;
 				addr = "${wireguardIP}";
 			} ];

@@ -1,13 +1,13 @@
 {config, pkgs, ...}:
 
 {
-
 	# Initialize Secrets
 	age.secrets."secrets/rclone_backup.age".file = ../secrets/rclone_backup.age;
 	age.secrets."secrets/restic_backup.age".file = ../secrets/restic_backup.age;
 
 	services.restic.backups = {
 	 "full-backup" = {
+	 		user = "root";
 			repository = "rclone:backup:restic_backup";
 			paths = [ "/" ];
 			passwordFile = config.age.secrets."secrets/restic_backup.age".path;
@@ -29,9 +29,9 @@
       };
 			exclude = [
 				# srv
-				"/srv/entertainment"
+				# "/srv/entertainment" # i'd like to backup this. if it gets too big, i'll exclude it again
 				"/srv/metube"
-				"/srv/music"
+				# "/srv/music" # music is essential
 				
 				# don't backup binaries
 				"/bin"

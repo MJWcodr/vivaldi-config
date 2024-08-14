@@ -1,0 +1,3 @@
+[submodule "services/website"]
+	path = services/website
+	url = https://git.mjwcodr.de/mjwcodr/Website.git

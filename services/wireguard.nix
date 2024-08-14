@@ -42,7 +42,7 @@
 			peers = [
 				{
 					# The public key of the peer.
-					publicKey = "iY2iP4/wrlVqu0RdMCzKh8Pe6ehKSZhp/kb0bUBYHQE=";
+					publicKey = "Y+pFXSFxKdHII4llp74CI9cTLIPos98ylGnktUPUaGA=";
 
 					# Forward traffic to the peer.
 					allowedIPs = [ "10.100.0.0/24" ];
@@ -51,9 +51,20 @@
 					endpoint = "gateway.mjwcodr.de:51820";
 					
 					# Send a keepalive packet every 25 seconds.
-					persistentKeepalive = 25;
+					persistentKeepalive = 20;
 				}
 			];
+		};
+	};
+
+	# Restart WireGuard if Service is changed
+	systemd.services.wireguard-restart = {
+		after = [ "network.target" ];
+		wantedBy = [ "multi-user.target" ];
+		serviceConfig = {
+			ExecStart = "${pkgs.wireguard-tools}/bin/wg-quick up wg0";
+			ExecStop = "${pkgs.wireguard-tools}/bin/wg-quick down wg0";
+			Restart = "always";
 		};
 	};
 

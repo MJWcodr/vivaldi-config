@@ -41,6 +41,7 @@ in { config, pkgs, lib, ... }:
 
     # Gitea
     ./services/gitea.nix
+		# /services/gitea/actions-runner.nix
 
     # ToDo - Vikunja
     ./services/vikunja.nix
@@ -55,13 +56,14 @@ in { config, pkgs, lib, ... }:
     ./services/grafana.nix
 
     # Workspace for Matthias
-    ./workspace/workspace.nix
+    # ./workspace/workspace.nix
+		./services/vnc.nix
 
     # Jellyfin
     ./services/jellyfin.nix
 
     # Paperless
-    # ./services/paperless.nix # Temporarily disabled
+    ./services/paperless.nix # Temporarily disabled
 
     # Youtube Downloader
     # ./services/youtube-downloader.nix
@@ -94,7 +96,15 @@ in { config, pkgs, lib, ... }:
 
 		# Audiobookshelf
 		./services/audiobookshelf.nix
-  ];
+
+		# hedgedoc
+		./services/hedgedoc.nix
+
+		# Personal Website
+		./services/website/module.nix
+		./services/website.nix
+
+	];
 
   # Secrets
 
@@ -186,7 +196,7 @@ in { config, pkgs, lib, ... }:
   services.printing.enable = true;
 
   # Enable sound with pipewire.
-  sound.enable = true;
+  # sound.enable = true; # obsolete
   hardware.pulseaudio.enable = false;
   security.rtkit.enable = true;
   services.pipewire = {

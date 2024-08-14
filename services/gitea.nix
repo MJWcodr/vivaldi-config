@@ -15,10 +15,10 @@ in {
       file = ../secrets/postgrespass.age;
       owner = config.services.gitea.user;
     };
-   # gitea-actions-token = {
-   #   file = ../secrets/gitea-actions-token.age;
-   #   owner = "gitea-runner";
-   # };
+   gitea-actions-token = {
+     file = ../secrets/gitea-actions-token.age;
+     owner = "gitea-runner";
+   };
   };
 
   ##########
@@ -73,7 +73,7 @@ in {
     settings = {
       server = {
         DOMAIN = domain;
-        ROOT_URL = "https://${domain}:${toString exposedPort}/";
+        ROOT_URL = "https://git.mjwcodr.de";
         HTTP_PORT = internalPort;
       };
       service = { DISABLE_REGISTRATION = true; };
@@ -88,8 +88,6 @@ in {
 
   # Enable Podman API
   virtualisation.podman.dockerSocket.enable = true;
-
-	# imports =  ["./gitea-actions-runner.nix"];
 
   ##########
   # Firewall

@@ -16,7 +16,7 @@ in
 	# Jellyfin
   virtualisation.oci-containers.containers."jellyfin" = {
     autoStart = true;
-    image = "jellyfin/jellyfin:10.10";
+    image = "jellyfin/jellyfin:2024071505";
     volumes = [
       "/srv/jellyfin/config:/config" # TODO: set this to read-only
       "/srv/jellyfin/cache:/cache"
