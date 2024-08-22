@@ -56,8 +56,8 @@ in { config, pkgs, lib, ... }:
     ./services/grafana.nix
 
     # Workspace for Matthias
-    # ./workspace/workspace.nix
-		./services/vnc.nix
+    ./workspace/workspace.nix
+		# ./services/vnc.nix
 
     # Jellyfin
     ./services/jellyfin.nix

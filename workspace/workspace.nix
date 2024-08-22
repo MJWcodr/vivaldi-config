@@ -1,6 +1,13 @@
 { pkgs, ... }:
 
 {
+
+	imports = [
+		./../services/gnome-remote-desktop.nix
+	]; 
+
+	services.gnome3.gnome-remote-desktop.enable = true;
+
   services.xserver.enable = true;
   services.xserver.displayManager.gdm.enable = true;
   services.xserver.desktopManager.gnome.enable = true;
