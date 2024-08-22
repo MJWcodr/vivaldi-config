@@ -6,21 +6,30 @@
 {
   imports = [ (modulesPath + "/installer/scan/not-detected.nix") ];
 
-  boot.initrd.availableKernelModules = [ "xhci_pci" "thunderbolt" "nvme" ];
+  boot.initrd.availableKernelModules = [
+    "xhci_pci"
+    "thunderbolt"
+    "vmd"
+    "nvme"
+    "usb_storage"
+    "sd_mod"
+    "rtsx_usb_sdmmc"
+  ];
   boot.initrd.kernelModules = [ ];
   boot.kernelModules = [ "kvm-intel" ];
   boot.extraModulePackages = [ ];
 
   fileSystems."/" = {
-    device = "/dev/disk/by-uuid/447e6b3f-a68a-4aa7-af60-5c5d0a10fa3c";
-    fsType = "ext4";
+    device = "/dev/disk/by-uuid/355231aa-8904-4644-a718-79094e5ade38";
+    fsType = "btrfs";
+    options = [ "subvol=@" ];
   };
 
-  boot.initrd.luks.devices."luks-b27f3847-5cc5-44a9-b984-0e717374eab5".device =
-    "/dev/disk/by-uuid/b27f3847-5cc5-44a9-b984-0e717374eab5";
+  boot.initrd.luks.devices."luks-16eff84a-4ce7-47a8-89fc-11a34e0f6ba0".device =
+    "/dev/disk/by-uuid/16eff84a-4ce7-47a8-89fc-11a34e0f6ba0";
 
   fileSystems."/boot" = {
-    device = "/dev/disk/by-uuid/F8BB-86B4";
+    device = "/dev/disk/by-uuid/E986-6F79";
     fsType = "vfat";
   };
 
@@ -30,14 +39,10 @@
   # (the default) this is the recommended approach. When using systemd-networkd it's
   # still possible to use this option, but it's recommended to use it in conjunction
   # with explicit per-interface declarations with `networking.interfaces.<interface>.useDHCP`.
-	networking.useDHCP = lib.mkDefault true;
-  # networking.interfaces.enp0s13f0u2c2.useDHCP = lib.mkDefault true;
+  networking.useDHCP = lib.mkDefault true;
+  # networking.interfaces.wlo1.useDHCP = lib.mkDefault true;
 
-	# Don't wait for the network to come up during boot.
-	systemd.services.NetworkManager-wait-online.enable = lib.mkForce false;
-  
-	nixpkgs.hostPlatform = lib.mkDefault "x86_64-linux";
-  powerManagement.cpuFreqGovernor = lib.mkDefault "performance";
-
-
+  nixpkgs.hostPlatform = lib.mkDefault "x86_64-linux";
+  hardware.cpu.intel.updateMicrocode =
+    lib.mkDefault config.hardware.enableRedistributableFirmware;
 }
