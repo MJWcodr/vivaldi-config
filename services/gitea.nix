@@ -64,7 +64,7 @@ in {
 
   services.gitea = {
     enable = true;
-    appName = "My awesome Gitea server"; # Give the site a name
+    appName = "Mjwcodr Git"; # Give the site a name
     database = {
       type = "postgres";
       passwordFile = config.age.secrets.gitea-postgres.path;
@@ -77,7 +77,7 @@ in {
         HTTP_PORT = internalPort;
       };
       service = { DISABLE_REGISTRATION = true; };
-      "service.explore" = { REQUIRE_SIGNIN_VIEW = true; };
+      "service.explore" = { REQUIRE_SIGNIN_VIEW = false; };
       actions.ENABLED = true;
     };
   };

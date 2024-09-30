@@ -104,6 +104,8 @@ in { config, pkgs, lib, ... }:
 		./services/website/module.nix
 		./services/website.nix
 
+		./services/webdav.nix
+
 	];
 
   # Secrets
