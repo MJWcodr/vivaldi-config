@@ -1,22 +1,26 @@
 repos:
   - repo: https://github.com/pre-commit/pre-commit-hooks
-    rev: f71fa2c1f9cf5cb705f73dffe4b21f7c61470ba9  # frozen: v4.4.0
+    rev: v4.6.0
     hooks:
       - id: end-of-file-fixer
         stages: [commit]
       - id: trailing-whitespace
         stages: [commit]
- # - id: luacheck
- # name: luacheck
- # entry: luacheck -g --
- # types: [file, lua]
-  - repo: https://github.com/nix-community/nixpkgs-fmt
-    rev: f3fac47d6509e6b23c6103bb833353db348c634f
-    hooks: 
-      - id: nixpkgs-fmt
+        # - repo: local
+        #hooks:
+        #- id: print TODOs to console
+        #name: ToDos
+        # description: Print TODOs to console
+        #language: system
+        #entry: grep -nH "TODO"
+
+  # - repo: https://github.com/NixOS/nixfmt
+  #rev:  d0c0cda4fe6b7ae2b9aa37f3ee15e6412573eb01
+  # hooks:
+  #   - id: nixfmt
 
   - repo: https://github.com/commitizen-tools/commitizen
-    rev: 04acac4ebe9d708ce4e824e90a6f6e94d49f122a  # frozen: 3.6.0
+    rev: v3.29.1
     hooks:
       - id: commitizen
         stages: [commit-msg]

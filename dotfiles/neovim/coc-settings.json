@@ -1,0 +1,52 @@
+{
+  "languageserver": {
+    "nix": {
+      "command": "nixd",
+      "filetypes": [
+        "nix"
+      ],
+      "rootPatterns": [
+        "flake.nix"
+      ],
+      "settings": {
+        "nixd": {
+          "eval": {
+            "target": {
+              "args": [],
+              "installable": ""
+            },
+            "depth": 0,
+            "workers": 3
+          },
+          "formatting": {
+            "command": "nixpkgs-fmt"
+          },
+          "options": {
+            "enable": true,
+            "target": {
+              "args": [],
+              "installable": "<flakeref>#homeConfigurations.<name>.options"
+            }
+          }
+        }
+      }
+    }
+  },
+	"terraform": {
+			"command": "terraform-ls",
+			"args": ["serve"],
+			"filetypes": [
+				"terraform",
+				"tf"
+			],
+			"initializationOptions": {},
+			"settings": {}
+		},
+
+	"diagnostic.checkCurrentLine": false,
+	 "diagnostic.virtualTextCurrentLineOnly": false,
+	"diagnostic.virtualText": true,
+	"Lua.diagnostics.globals": [
+		"vim"
+	]
+}

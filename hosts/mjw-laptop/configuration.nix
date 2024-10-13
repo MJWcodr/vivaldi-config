@@ -2,54 +2,50 @@
 # your system.  Help is available in the configuration.nix(5) man page
 # and in the NixOS manual (accessible by running ‘nixos-help’).
 
-{ lib, pkgs, ... }:
+{ lib, config, pkgs, ... }:
 let
-  home-manager = builtins.fetchTarball
-    "https://github.com/nix-community/home-manager/archive/master.tar.gz";
-  agenix = builtins.fetchTarball
-    "https://github.com/ryantm/agenix/archive/main.tar.gz";
-in {
+  home-manager = builtins.fetchTarball {
+
+    url = "https://github.com/nix-community/home-manager/archive/master.tar.gz";
+    sha256 = "sha256:0rana2i953kzk2vdidachfs81j2z55ahpbpnxfgrjw8hgj4m1gly";
+  };
+
+in
+{
   imports = [
     # Enable Home-Manager
     (import "${home-manager}/nixos")
 
-    # Add Catpuccin theme
-    # Link to Guide: https://nix.catppuccin.com/getting-started/stable-nix.html
-    <catppuccin/modules/nixos>
-
-    # Include the agenix module
-    "${agenix}/modules/age.nix"
-
-    # Enable tracker for gnome
-    ./services/tracker-fix.nix
-
-		# Enable NVIDIA drivers
-		# ./hosts/mjw-laptop/services/nvidia.nix
-
     # Include the results of the hardware scan.
-    ./hosts/mjw-laptop/hardware-configuration.nix
-		
+    ./hardware-configuration.nix
+
     # Enable Syncthing
-    ./hosts/mjw-laptop/services/syncthing.nix
+    # ./hosts/mjw-laptop/services/syncthing.nix
+    ./services/syncthing.nix
 
-    # Enable Hyprland
-    ./dotfiles/hyprland.nix
-
-    # Enable wireguard for Work VPN
-    ./hosts/mjw-laptop/services/wireguard.nix
+    # Include the wireguard configuration
+    ./services/wireguard.nix
 
   ];
 
   home-manager.users.matthias = {
     # The home.stateVersion option does not have a default and must be set
-    imports = [ ./hosts/mjw-laptop/home.nix ];
+    imports = [ ./home.nix ];
     # Here goes the rest of your home-manager config, e.g. home.packages = [ pkgs.foo ];
+
+    dconf = {
+      enable = true;
+      settings."org/gnome/desktop/interface".color-scheme = "prefer-dark";
+    };
   };
+
+  # Get latest KERNEL
+  boot.kernelPackages = pkgs.linuxPackages_latest;
 
   # Bootloader.
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
-	boot.blacklistedKernelModules = [ "nouveau" "nvidiafb"];
+
   networking.hostName = "mjw-laptop"; # Define your hostname.
   # networking.wireless.enable = true;  # Enables wireless support via wpa_supplicant.
 
@@ -62,9 +58,6 @@ in {
 
   # Set your time zone.
   time.timeZone = "Europe/Berlin";
-
-  programs.ssh.askPassword =
-    "${pkgs.seahorse}/libexec/seahorse/ssh-askpass";
 
   # Select internationalisation properties.
   i18n.defaultLocale = "en_GB.UTF-8";
@@ -84,21 +77,16 @@ in {
   # if you use pulseaudio
   nixpkgs.config.pulseaudio = true;
 
-	services.displayManager.defaultSession = "gnome";
-	services.desktopManager.plasma6.enable = true;
-
   services.xserver = {
     enable = true;
-    displayManager = {
-      # sddm.enable = true;
-      gdm.enable = true; # Gnome Display Manager
-    };
+    displayManager.gdm.enable = true;
     desktopManager = {
       gnome.enable = true;
       # Windows 95
-      xterm.enable = false;
+      # xterm.enable = false;
       # xfce.enable = true;
     };
+    displayManager.defaultSession = "gnome";
   };
 
   boot.binfmt.registrations.appimage = {
@@ -106,8 +94,8 @@ in {
     interpreter = "${pkgs.appimage-run}/bin/appimage-run";
     recognitionType = "magic";
     offset = 0;
-    mask = "\\xff\\xff\\xff\\xff\\x00\\x00\\x00\\x00\\xff\\xff\\xff";
-    magicOrExtension = "\\x7fELF....AI\\x02";
+    mask = ''\xff\xff\xff\xff\x00\x00\x00\x00\xff\xff\xff'';
+    magicOrExtension = ''\x7fELF....AI\x02'';
   };
 
   # Configure keymap in X11
@@ -145,39 +133,48 @@ in {
   # services.xserver.libinput.enable = true;
 
   networking.extraHosts = ''
-  			0.0.0.0 www.youtube.com
-  		 	::0 www.youtube.com
-  			0.0.0.0 youtube.com
-  			::0 youtube.com
-  
-				127.0.0.2 mjw-laptop
+        0.0.0.0 www.youtube.com
+        ::0 www.youtube.com
+    		0.0.0.0 youtube.com
+    		::0 youtube.com
+
+    		127.0.0.2 mjw-laptop
     		::2 mjw-laptop
-    	
+
+    		10.100.0.2 vivaldi-ext
+    		10.100.0.1 gateway-ext
+
     		127.0.0.1 localhost
     		::1 localhost
-
-				10.100.0.1 gateway
-				10.100.0.2 vivaldi-ext
-				192.168.178.10 vivaldi
   '';
+
 
   # Define a user account. Don't forget to set a password with ‘passwd’.
   users.users.matthias = {
     isNormalUser = true;
     description = "Matthias";
-    extraGroups = [ "networkmanager" "wheel" "libvirtd" ];
+    extraGroups = [ "networkmanager" "wheel" "hidraw" ];
     shell = pkgs.fish;
     packages = with pkgs; [
+      firefox
+      thunderbird
       vim
       git
-      gnomeExtensions.task-widget # Task Widget for Gnome
+      transmission
+      transmission-gtk
     ];
   };
+
+  services.udev.packages = with pkgs; [ gnome.gnome-settings-daemon ];
 
   programs.fish.enable = true;
 
   # Allow unfree packages
   nixpkgs.config.allowUnfree = true;
+
+  nixpkgs.config.allowUnfreePredicate = pkg: builtins.elem (lib.getName pkg) [
+    "maltego"
+  ];
 
   system.autoUpgrade = {
     enable = true;
@@ -189,57 +186,12 @@ in {
   environment.systemPackages = with pkgs; [
     vim # Do not forget to add an editor to edit configuration.nix! The Nano editor is also installed by default.
     git
-
-		( import ./dotfiles/bin/nvidia-offload.nix ) # nvidia-offload
     #  wget
 
-    (pkgs.callPackage "${
-        builtins.fetchTarball
-        "https://github.com/ryantm/agenix/archive/main.tar.gz"
-      }/pkgs/agenix.nix" { }) # agenix-cli
-
-    virt-manager
-    virt-viewer
-    spice
-    spice-gtk
-    spice-protocol
-    # win-virtio # don't use windows
-    # win-spice # don't use windows
+    gnomeExtensions.task-widget # Task Widget for Gnome
+    gnomeExtensions.appindicator
   ];
 
-  programs.virt-manager.enable = true;
-
-  # Virtualisation
-  virtualisation = {
-    libvirtd = {
-      enable = true;
-      qemu = {
-        swtpm.enable = true;
-        ovmf.enable = true;
-        ovmf.packages = [ pkgs.OVMFFull.fd ];
-      };
-    };
-    spiceUSBRedirection.enable = true;
-  };
-  services.spice-vdagentd.enable = true;
-
-  programs.nix-ld.enable = true;
-	programs.steam = {
-  enable = true;
-  remotePlay.openFirewall = true; # Open ports in the firewall for Steam Remote Play
-  dedicatedServer.openFirewall = true; # Open ports in the firewall for Source Dedicated Server
-  localNetworkGameTransfers.openFirewall = true; # Open ports in the firewall for Steam Local Network Game Transfers
-};
-
-  # Theme Gnome with Catppuccin
-  catppuccin.enable = true;
-  catppuccin.flavor = "mocha";
-  catppuccin.accent = "peach";
-
-  home-manager.backupFileExtension = "backup";
-
-  nix.settings.experimental-features =
-    [ "nix-command" "flakes" ]; # Enable Nix Flakes
   # Some programs need SUID wrappers, can be configured further or are
   # started in user sessions.
   # programs.mtr.enable = true;
@@ -249,30 +201,59 @@ in {
   # };
 
   # List services that you want to enable:
+
   # Enable the OpenSSH daemon.
   # services.openssh.enable = true;
 
+  ##########
+  # Bluetooth
+  ##########
+
+  hardware.bluetooth.settings = {
+    General = {
+      Experimental = true;
+    };
+  };
+
+  ##########
+  # Finger Print Reader
+  ##########
+  # Install the driver
+  services.fprintd.enable = true;
+  # If simply enabling fprintd is not enough, try enabling fprintd.tod...
+  services.fprintd.tod.enable = true;
+  # ...and use one of the next four drivers
+  services.fprintd.tod.driver = pkgs.libfprint-2-tod1-goodix; # Goodix driver module
+  # services.fprintd.tod.driver = pkgs.libfprint-2-tod1-elan # Elan(04f3:0c4b) driver
+  # services.fprintd.tod.driver = pkgs.libfprint-2-tod1-vfs0090; # driver for 2016 ThinkPads
+  # services.fprintd.tod.driver = pkgs.libfprint-2-tod1-goodix-550a # Goodix 550a driver (from Lenovo)
+
+
+  ##########
+  # Hidraw
+  ##########
+
+  users.groups.hidraw = {
+    gid = 1010;
+  };
+
+  services.udev.extraRules = ''
+    		# https://unix.stackexchange.com/a/85459
+    		# Allow all users to access hidraw devices
+    		KERNEL=="hidraw*", SUBSYSTEM=="hidraw", MODE="0660", GROUP="hidraw"
+    	'';
+
+  ##########
+  # Enable Experimental Features
+  ##########
+
+  nix.settings.experimental-features = "nix-command flakes";
+
   # Open ports in the firewall.
-  # networking.firewall.allowedTCPPorts = [ ... ];
+  networking.firewall.allowedTCPPorts = [ 5173 ];
   # networking.firewall.allowedUDPPorts = [ ... ];
   # Or disable the firewall altogether.
-  # networking.firewall.enable = false;
-		
-	# 
-
-	# Set up NextDNS
-
-	 services.resolved = {
-    enable = true;
-    extraConfig = ''
-    [Resolve]
-		DNS=45.90.28.0#mjw-laptop-da57ae.dns.nextdns.io
-		DNS=2a07:a8c0::#mjw-laptop-da57ae.dns.nextdns.io
-		DNS=45.90.30.0#mjw-laptop-da57ae.dns.nextdns.io
-		DNS=2a07:a8c1::#mjw-laptop-da57ae.dns.nextdns.io
-		DNSOverTLS=yes
-	'';
-  };
+  networking.firewall.enable = true;
 
   # This value determines the NixOS release from which the default
   # settings for stateful data, like file locations and database versions

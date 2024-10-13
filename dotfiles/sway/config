@@ -1,0 +1,111 @@
+set $background ~/.images/wallpaper.png
+
+set $mod Mod4
+# set homerow keys
+set $left h
+set $down j
+set $up k
+set $right l
+
+set $term kitty
+set $browser firefox
+
+input * {
+    xkb_layout "de"
+    xkb_variant "colemak,,typewriter"
+    xkb_options "grp:win_space_toggle"
+}
+
+input <identifier> xkb_model "pc101"
+
+input "1739:52861:SYNA32B9:00_06CB:CE7D_Touchpad" {
+       dwt enabled
+       tap enabled
+       natural_scroll disabled
+       middle_emulation enabled
+   }
+
+output eDP-1 scale 1.75
+
+#
+# OPTICS
+#
+
+# Status Bar
+bar {
+     swaybar_command waybar
+}
+
+default_floating_border pixel 2
+default_border pixel 2
+client.focused "#9f1209" "#9f1209" "#ffffff" "#9f1209"
+
+set $rosewater #f2d5cf
+set $flamingo  #eebebe
+set $pink      #f4b8e4
+set $mauve     #ca9ee6
+set $red       #e78284
+set $maroon    #ea999c
+set $peach     #ef9f76
+set $green     #a6d189
+set $teal      #81c8be
+set $sky       #99d1db
+set $sapphire  #85c1dc
+set $blue      #8caaee
+set $lavender  #babbf1
+set $text      #c6d0f5
+set $subtext1  #b5bfe2
+set $subtext0  #a5adce
+set $overlay2  #949cbb
+set $overlay1  #838ba7
+set $overlay0  #737994
+set $surface2  #626880
+set $surface1  #51576d
+set $surface0  #414559
+set $base      #303446
+set $mantle    #292c3c
+set $crust     #232634
+
+# Config Colors
+# target                 title     bg    text   indicator  border
+client.focused           $lavender $base $text  $rosewater $lavender
+client.focused_inactive  $overlay0 $base $text  $rosewater $overlay0
+client.unfocused         $overlay0 $base $text  $rosewater $overlay0
+client.urgent            $peach    $base $peach $overlay0  $peach
+client.placeholder       $overlay0 $base $text  $overlay0  $overlay0
+client.background        $base
+
+# Set Background
+output * bg $background fill
+
+# Set Window Gaps
+gaps inner 20
+
+#
+# BINDINGS
+#
+
+# Change focus between windows
+bindsym $mod+$left focus left
+bindsym $mod+$down focus down
+bindsym $mod+$up focus up
+bindsym $mod+$right focus right
+
+# Change Focus between workspaces
+bindsym $mod+1 workspace 1
+bindsym $mod+2 workspace 2
+bindsym $mod+3 workspace 3
+bindsym $mod+4 workspace 4
+bindsym $mod+5 workspace 5
+bindsym $mod+6 workspace 6
+bindsym $mod+7 workspace 7
+bindsym $mod+8 workspace 8
+bindsym $mod+9 workspace 9
+bindsym $mod+0 workspace 10
+
+# Close focused window
+bindsym $mod+Shift+q kill
+
+# Start Programs
+bindsym $mod+Return exec $term
+bindsym $mod+b exec $browser
