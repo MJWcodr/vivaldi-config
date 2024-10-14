@@ -2,12 +2,12 @@
 # your system.  Help is available in the configuration.nix(5) man page
 # and in the NixOS manual (accessible by running ‘nixos-help’).
 
-{ lib, config, pkgs, ... }:
+{ lib, pkgs, ... }:
 let
   home-manager = builtins.fetchTarball {
 
     url = "https://github.com/nix-community/home-manager/archive/master.tar.gz";
-    sha256 = "sha256:0rana2i953kzk2vdidachfs81j2z55ahpbpnxfgrjw8hgj4m1gly";
+    sha256 = "sha256:0jhpr6gxcvqa7j5jhbmm478vkb8dckz060kgwacvh3l3slc6nwb4";
   };
 
 in
