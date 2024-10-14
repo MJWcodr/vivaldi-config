@@ -16,7 +16,7 @@
     ../../dotfiles/fish.nix
     ../../dotfiles/git.nix
     ../../dotfiles/ssh.nix
-    ../../dotfiles/gnome/shortcuts.nix
+    #../../dotfiles/gnome/shortcuts.nix
     ../../dotfiles/entertainment/entertainment.nix
   ];
 
