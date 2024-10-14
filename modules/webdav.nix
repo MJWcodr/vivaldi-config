@@ -31,20 +31,20 @@ in {
 
   config = lib.mkIf cfg.enable {
     # Private WebDAV
-		systemd.services.privateWebdav = {
-			description = "Private WebDAV";
-			after = [ "network.target" ];
-			wants = [ "network.target" ];
-			serviceConfig = {
-				ExecStart = "${pkgs.rclone}/bin/rclone serve webdav --baseurl /private --htpasswd ${cfg.htpasswdFile} --addr :${toString cfg.internalPrivatePort} ${cfg.serveDir}";
-				Restart = "always";
-				RestartSec = "10";
-				StandardOutput = "journal";
-				StandardError = "journal";
-			};
-		};
+    systemd.services.privateWebdav = {
+      description = "Private WebDAV";
+      after = [ "network.target" ];
+      wants = [ "network.target" ];
+      serviceConfig = {
+        ExecStart = "${pkgs.rclone}/bin/rclone serve webdav --htpasswd ${cfg.htpasswdFile} --baseurl /private  --addr :${toString cfg.internalPrivatePort} ${cfg.serveDir}";
+        Restart = "always";
+        RestartSec = "10";
+        StandardOutput = "journal";
+        StandardError = "journal";
+      };
+    };
 
-		# Public WebDAV
+    # Public WebDAV
     services.static-web-server = {
       enable = true;
       listen = "0.0.0.0:${toString cfg.internalPublicPort}";
@@ -64,10 +64,7 @@ in {
               proxyPass = "http://localhost:${toString cfg.internalPublicPort}";
             };
             "/private" = {
-              proxyPass = "http://localhost:${toString cfg.internalPrivatePort}";
-							extraConfig = ''
-								client_max_body_size 0;
-							'';
+              proxyPass = "http://localhost:${toString cfg.internalPrivatePort}/private";
             };
           };
           listen = [{
@@ -81,4 +78,3 @@ in {
     };
   };
 }
-
