@@ -3,8 +3,7 @@ let
   internalMetubePort = 8081;
   externalMetubePort = 8090;
   MetubeVolume = "/srv/metube";
-in
-{
+in {
 
   ##########
   # Metube

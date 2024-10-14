@@ -1,87 +1,86 @@
-{ pkgs, config, ... }:
+{pkgs, config, ...}:
 let
-  internalPort = 2341;
-  exposedPort = 2352;
+	internalPort = 2341;
+	exposedPort = 2352;
 
-  localdomain = "vivaldi.fritz.box";
-  remoteDomain = "photos.mjwcodr.de";
+	localdomain = "vivaldi.fritz.box";
+	remoteDomain = "photos.mjwcodr.de";
 
-  wireguardIP = "10.100.0.2";
+	wireguardIP = "10.100.0.2";
 in
 {
 
-  ############
-  # Secrets
-  ############
+	############
+	# Secrets
+	############
 
-  age.secrets = {
-    photoprismAdminPassword = {
-      file = ../../../secrets/photoprism.age;
-      owner = "photoprism";
-      group = "photoprism";
-    };
-  };
+	age.secrets = {
+		photoprismAdminPassword = {
+			file = ../../../secrets/photoprism.age;
+			owner = "photoprism";
+			group = "photoprism";
+		};
+	};
 
-  users.users.photoprism = {
-    group = "photoprism";
-    isSystemUser = true;
-  };
+	users.users.photoprism = {
+		group = "photoprism";
+		isSystemUser = true;
+	};
 
-  users.groups.photoprism = { };
+	users.groups.photoprism = {};
 
-  ############
+	############
   # Photoprism
-  ############
+	############
 
-  systemd.services.photoprism-pre = {
-    description = "Photoprism pre-startup";
-    after = [ "network.target" ];
-    wants = [ "network.target" ];
-    before = [ "photoprism.service" ];
-    path = [ pkgs.coreutils pkgs.bash pkgs.openssl pkgs.gnused ];
+	systemd.services.photoprism-pre = {
+		description = "Photoprism pre-startup";
+		after = [ "network.target" ];
+		wants = [ "network.target" ];
+		before = [ "photoprism.service" ];
+		path = [ pkgs.coreutils pkgs.bash pkgs.openssl pkgs.gnused ];
 
-    serviceConfig.Type = "oneshot";
+		serviceConfig.Type = "oneshot";
 
-    script = ''
-      #!/bin/sh
-      # This script is executed before Photoprism starts.
+		script = ''
+		#!/bin/sh
+		# This script is executed before Photoprism starts.
 
-      mkdir -p /run/photoprism
-      chown -R photoprism:photoprism /srv/photos
+		mkdir -p /run/photoprism
+		chown -R photoprism:photoprism /srv/photos
 
-    '';
-  };
+		'';
+	};
 
-  systemd.timers.photoprism-import = {
-    description = "Photoprism import";
-    timerConfig.OnCalendar = "hourly";
-    timerConfig.Unit = "photoprism-import.service";
-  };
+	systemd.timers.photoprism-import = {
+		description = "Photoprism import";
+		timerConfig.OnCalendar = "hourly";
+		timerConfig.Unit = "photoprism-import.service";
+	};
 
-  systemd.services.photoprism-import = {
-    description = "Photoprism import";
-    after = [ "photoprism-pre.service" ];
-    wants = [ "photoprism-pre.service" ];
-    path =
-      [ pkgs.coreutils pkgs.bash pkgs.openssl pkgs.gnused pkgs.photoprism ];
+	systemd.services.photoprism-import = {
+		description = "Photoprism import";
+		after = [ "photoprism-pre.service" ];
+		wants = [ "photoprism-pre.service" ];
+		path = [ pkgs.coreutils pkgs.bash pkgs.openssl pkgs.gnused pkgs.photoprism ];
 
-    serviceConfig.Type = "simple";
+		serviceConfig.Type = "simple";
 
-    script = ''
-      # Import photos
+		script = ''
+		# Import photos
 
-      ## allow all users from the photoprism group to access /var/lib/photoprism/import
-      chmod 770 /var/lib/photoprism/import
+		## allow all users from the photoprism group to access /var/lib/photoprism/import
+		chmod 770 /var/lib/photoprism/import
 
-      photoprism --originals-path /srv/photos/ --import-path /var/lib/photoprism/import import
+		photoprism --originals-path /srv/photos/ --import-path /var/lib/photoprism/import import
 
-      ## Get second import path
+		## Get second import path
 
-      photoprism --originals-path /srv/photos/ --import-path /srv/photoprism/import import
+		photoprism --originals-path /srv/photos/ --import-path /srv/photoprism/import import
 
 
-    '';
-  };
+		'';
+	};
 
   services.photoprism = {
     enable = true;
@@ -98,39 +97,41 @@ in
       PHOTOPRISM_DATABASE_USER = "photoprism";
       PHOTOPRISM_SITE_URL = "https://${remoteDomain}:${toString exposedPort}";
       PHOTOPRISM_SITE_TITLE = "My PhotoPrism";
-      PHOTOPRISM_READONLY = "false";
-      PHOTOPRISM_UPLOAD_NSFW = "true";
-      PHOTOPRISM_ORIGINALS_LIMIT = "-1";
+			PHOTOPRISM_READONLY = "false";
+			PHOTOPRISM_UPLOAD_NSFW = "true";
+			PHOTOPRISM_ORIGINALS_LIMIT = "-1";
     };
-    passwordFile = config.age.secrets.photoprismAdminPassword.path;
+		passwordFile = config.age.secrets.photoprismAdminPassword.path;
   };
 
-  ############
-  # Database
-  ############
+	############
+	# Database
+	############
 
   services.mysql = {
     enable = true;
     # dataDir = "/data/mysql";
     package = pkgs.mariadb;
     ensureDatabases = [ "photoprism" ];
-    ensureUsers = [{
+    ensureUsers = [ {
       name = "photoprism";
-      ensurePermissions = { "photoprism.*" = "ALL PRIVILEGES"; };
-    }];
+      ensurePermissions = {
+        "photoprism.*" = "ALL PRIVILEGES";
+      };
+    } ];
   };
 
-  ############
-  # Nginx
-  ############
+	############
+	# Nginx
+	############
 
   services.nginx = {
     enable = true;
-    virtualHosts = {
-      # Local
+       virtualHosts = {
+			 # Local
       "local-photoprism" = {
-        sslCertificate = "${config.age.secrets.sslcert.path}";
-        sslCertificateKey = "${config.age.secrets.sslkey.path}";
+				sslCertificate = "${config.age.secrets.sslcert.path}";
+				sslCertificateKey = "${config.age.secrets.sslkey.path}";
         forceSSL = true;
         http2 = true;
         locations."/" = {
@@ -142,14 +143,14 @@ in
             proxy_buffering off;
           '';
         };
-        listen = [{
-          port = exposedPort;
-          ssl = true;
-          addr = "vivaldi.fritz.box";
-        }];
+				listen = [ {
+					port = exposedPort;
+					ssl = true;
+					addr = "vivaldi.fritz.box";
+				} ];
       };
-    };
+		};
 
-  };
-  networking.firewall.allowedTCPPorts = [ exposedPort ];
+	};
+	networking.firewall.allowedTCPPorts = [ exposedPort ];
 }

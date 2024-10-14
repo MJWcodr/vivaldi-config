@@ -2,7 +2,7 @@
 
 {
 
-  imports = [ ./../services/gnome-remote-desktop.nix ];
+  imports = [ ../hosts/vivaldi/services/gnome-remote-desktop.nix ];
 
   services.gnome3.gnome-remote-desktop.enable = true;
 
@@ -15,10 +15,10 @@
       keepassxc
       firefox
       # gnome
-      gnome3.gnome-tweaks
-      gnome3.gnome-control-center
-      gnome3.gnome-terminal
-      gnome3.gnome-calculator
+      gnome-tweaks
+      gnome-control-center
+      gnome-terminal
+      gnome-calculator
 
       shotwell
 
@@ -34,8 +34,7 @@
     dedicatedServer.openFirewall =
       true; # Open ports in the firewall for Source Dedicated Server
   };
-  hardware.opengl.driSupport32Bit =
-    true; # Enables support for 32bit libs that steam uses
+	hardware.graphics.enable32Bit = true; # Enable 32bit libs that steam uses
 
   # Enable Stadia Controller
   services.udev.extraRules = ''

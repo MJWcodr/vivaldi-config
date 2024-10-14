@@ -1,4 +1,4 @@
-{ config, pkgs, lib, ... }: {
+{config, pkgs, lib, ...}: {
   # enable coturn
   services.coturn = rec {
     enable = true;
@@ -42,30 +42,28 @@
   };
   # open the firewall
   networking.firewall = {
-    interfaces.enp2s0 =
-      let
-        range = with config.services.coturn; [{
-          from = min-port;
-          to = max-port;
-        }];
-      in
-      {
-        allowedUDPPortRanges = range;
-        allowedUDPPorts = [ 3478 5349 ];
-        allowedTCPPortRanges = [ ];
-        allowedTCPPorts = [ 3478 5349 ];
-      };
+    interfaces.enp2s0 = let
+      range = with config.services.coturn; [ {
+      from = min-port;
+      to = max-port;
+    } ];
+    in
+    {
+      allowedUDPPortRanges = range;
+      allowedUDPPorts = [ 3478 5349 ];
+      allowedTCPPortRanges = [ ];
+      allowedTCPPorts = [ 3478 5349 ];
+    };
   };
   # get a certificate
   security.acme.certs.${config.services.coturn.realm} = {
-    # insert here the right configuration to obtain a certificate
+    /* insert here the right configuration to obtain a certificate */
     postRun = "systemctl restart coturn.service";
     group = "turnserver";
   };
   # configure synapse to point users to coturn
   services.matrix-synapse = with config.services.coturn; {
-    turn_uris =
-      [ "turn:${realm}:3478?transport=udp" "turn:${realm}:3478?transport=tcp" ];
+    turn_uris = ["turn:${realm}:3478?transport=udp" "turn:${realm}:3478?transport=tcp"];
     turn_shared_secret = static-auth-secret;
     turn_user_lifetime = "1h";
   };

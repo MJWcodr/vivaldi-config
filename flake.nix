@@ -7,13 +7,12 @@
     deploy-rs.url = "github:serokell/deploy-rs";
     stylix.url = "github:danth/stylix";
     pre-commit-hooks.url = "github:cachix/git-hooks.nix";
+		website.url = "git+https://git.mjwcodr.de/mjwcodr/Website.git";
   };
 
-  outputs = { self, nixpkgs, agenix, deploy-rs, stylix, pre-commit-hooks, ... }:
+  outputs = { self, nixpkgs, agenix, stylix, website, deploy-rs, ... }:
     let
       system = "x86_64-linux";
-      supportedSystems = [ "x86_64-linux" "aarch64-linux" ];
-      forAllSystems = nixpkgs.lib.genAttrs supportedSystems;
       pkgs = nixpkgs.legacyPackages.${system};
     in
     {
@@ -27,7 +26,6 @@
           cabal-install
           pkgs.deploy-rs
         ];
-        inherit (self.checks.${system}.pre-commit-check) shellHook;
       };
       nixosConfigurations = {
         # mjw-laptop is my main machine
@@ -76,6 +74,45 @@
             }
           ];
         };
+				# vivaldi is my main server
+				"vivaldi" = nixpkgs.lib.nixosSystem {
+					system = "x86_64-linux";
+					modules =
+						[
+							agenix.nixosModules.default
+							{
+								services.nginx = {
+									enable = true;
+									virtualHosts = {
+										"website" = {
+											enableACME = false;
+											locations = {
+												"/" = {
+													root = website.defaultPackage.x86_64-linux;
+												};
+												};
+												listen = [
+													{
+														port = 8000;
+														ssl = false;
+														addr = "localhost";
+													}
+													{
+														port = 8000;
+														ssl = false;
+														addr = "vivaldi.fritz.box";
+													}
+												];
+
+										};
+									};
+								};
+								networking.firewall.allowedTCPPorts = [ 8000 ];
+							}
+							./hosts/vivaldi/configuration.nix
+						];
+				};
+
         # smetana is my vpn-gateway
         "smetana" = nixpkgs.lib.nixosSystem {
           system = "x86_64-linux";
@@ -94,6 +131,16 @@
             self.nixosConfigurations."smetana";
         };
       };
+			deploy.nodes."vivaldi" = {
+				hostname = "vivaldi";
+				profiles.system = {
+					sshUser = "matthias";
+					user = "matthias";
+					remoteBuild = true;
+					path = deploy-rs.lib.x86_64-linux.activate.nixos
+						self.nixosConfigurations."vivaldi";
+					};
+			};
       # This is highly advised, and will prevent many possible mistakes
       checks = builtins.mapAttrs
        (system: deployLib: deployLib.deployChecks self.deploy) deploy-rs.lib;

@@ -123,8 +123,8 @@
     slack
     xournalpp
 
-    gnome.gnome-boxes
-    gnome.gnome-themes-extra
+    gnome-boxes
+    gnome-themes-extra
 
     # Media
     # spotifY

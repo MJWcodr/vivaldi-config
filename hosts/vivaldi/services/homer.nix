@@ -1,4 +1,5 @@
-{ config, ... }: {
+{ config, ... }:
+{
 
   age.secrets = {
     "secrets/sslcert.crt.age" = {
@@ -23,25 +24,25 @@
   services.nginx = {
     enable = true;
     virtualHosts = {
-      "vivaldi.mjwcodr.de" = {
-        sslCertificate = config.age.secrets."secrets/sslcert.crt.age".path;
-        sslCertificateKey = config.age.secrets."secrets/sslcert.key.age".path;
-        locations."/".proxyPass = "http://localhost:8050";
-        forceSSL = true;
-        listen = [
-          {
-            ssl = true;
-            port = 443;
-            addr = "vivaldi.fritz.box";
-          }
-          {
-            ssl = false;
-            port = 80;
-            addr = "vivaldi.fritz.box";
-          }
-        ];
-      };
+			"vivaldi.mjwcodr.de" = {
+      sslCertificate = config.age.secrets."secrets/sslcert.crt.age".path;
+      sslCertificateKey = config.age.secrets."secrets/sslcert.key.age".path;
+      locations."/".proxyPass = "http://localhost:8050";
+      forceSSL = true;
+      listen = [
+     	{
+		 		ssl = true;
+        port = 443;
+        addr = "vivaldi.fritz.box";
+			}
+			{
+				ssl = false;
+				port = 80;
+				addr = "vivaldi.fritz.box";
+			}
+			];
     };
-  };
+	  };
+	};
   networking.firewall.allowedTCPPorts = [ 443 80 90 ];
 }

@@ -2,10 +2,8 @@
 
 {
   # Initalize secrets
-  age.secrets."secrets/rclone_backup.age".file =
-    ../../../secrets/rclone_backup.age;
-  age.secrets."secrets/restic_backup.age".file =
-    ../../../secrets/restic_backup.age;
+  age.secrets."secrets/rclone_backup.age".file = ../secrets/rclone_backup.age;
+  age.secrets."secrets/restic_backup.age".file = ../secrets/restic_backup.age;
 
   # Install filebrowser
   virtualisation.oci-containers.containers.filebrowser = {
@@ -32,12 +30,14 @@
         "--keep-monthly 6"
         "--keep-yearly 2"
       ];
-      rcloneOptions = { logFile = "/var/log/restic.log"; };
+      rcloneOptions = {
+        logFile = "/var/log/restic.log";
+      };
       timerConfig = {
         # Run every day at 3am
-        OnCalendar = "daily";
-        Persistent = true;
-        RandomizedDelaySec = "1h";
+				OnCalendar = "daily";
+				Persistent = true;
+				RandomizedDelaySec = "1h";
       };
     };
   };

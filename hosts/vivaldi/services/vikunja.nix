@@ -4,41 +4,46 @@ let
   APIexternalPort = 3456;
   frontendinternalPort = 3457;
   domain = "vivaldi.fritz.box";
-  dir = "/var/lib/vikunja";
-in
-{
+	dir = "/var/lib/vikunja";
+in {
 
-  ##############
-  # Directories and Users Setup
-  ##############
-  system.activationScripts.vikunja =
-    "	mkdir -p ${dir}/{files,db}\n	chmod 777 ${dir}/{files,db}\n";
 
-  users.users.vikunja = {
-    name = "vikunja";
-    isSystemUser = true;
-    group = "vikunja";
-    extraGroups = [ "podman" ];
-  };
-  users.groups.vikunja = { };
+	##############
+	# Directories and Users Setup
+	##############
+	system.activationScripts.vikunja = ''
+		mkdir -p ${dir}/{files,db}
+		chmod 777 ${dir}/{files,db}
+	'';
+
+	users.users.vikunja = {
+		name = "vikunja";
+		isSystemUser = true;
+		group = "vikunja";
+		extraGroups = [ "podman" ];
+	};
+	users.groups.vikunja = {};
 
   ##############
   # Vikunja - API
   ##############
-  virtualisation.oci-containers.containers.vikunja-api = {
-    image = "vikunja/api:latest";
-    ports = [ "${toString APIinternalPort}:3456" ];
-    volumes = [ "${dir}/files:/app/vikunja/files" "${dir}/db:/app/vikunja/db" ];
-    # user = "vikunja";
-    environment = {
-      VIKUNJA_DATABASE_HOST = "localhost";
-      VIKUNJA_DATABASE_TYPE = "sqlite";
-      VIKUNJA_DATABASE_PATH = "/app/vikunja/db/vikunja.db";
-      VIKUNJA_FRONTEND_URL = "https://${domain}:${toString APIexternalPort}";
-      VIKUNJA_SERVICE_ENABLEREGISTRATION = "true";
+	virtualisation.oci-containers.containers.vikunja-api = {
+		image = "vikunja/api:latest";
+		ports = [ "${toString APIinternalPort}:3456" ];
+		volumes = [
+			"${dir}/files:/app/vikunja/files"
+			"${dir}/db:/app/vikunja/db"
+		];
+		# user = "vikunja";
+		environment = {
+			VIKUNJA_DATABASE_HOST = "localhost";
+			VIKUNJA_DATABASE_TYPE = "sqlite";
+			VIKUNJA_DATABASE_PATH = "/app/vikunja/db/vikunja.db";
+			VIKUNJA_FRONTEND_URL = "https://${domain}:${toString APIexternalPort}";
+			VIKUNJA_SERVICE_ENABLEREGISTRATION = "true";
 
-    };
-  };
+		};
+	};
 
   ##############
   # Vikunja - Frontend
@@ -62,11 +67,11 @@ in
         locations."/" = {
           proxyPass = "http://localhost:${toString frontendinternalPort}";
         };
-        locations = {
-          "~* ^/(api|dav|.well-known)/" = {
-            proxyPass = "http://localhost:${toString APIinternalPort}";
-          };
-        };
+				locations = {
+					"~* ^/(api|dav|\.well-known)/" = {
+						proxyPass = "http://localhost:${toString APIinternalPort}";
+					};
+				};
         listen = [{
           ssl = true;
           port = APIexternalPort;
@@ -80,5 +85,6 @@ in
 
     };
   };
-  networking.firewall.allowedTCPPorts = [ APIexternalPort ];
+  networking.firewall.allowedTCPPorts =
+    [ APIexternalPort ];
 }

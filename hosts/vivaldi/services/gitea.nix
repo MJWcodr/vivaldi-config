@@ -5,8 +5,7 @@ let
   domain = "vivaldi.fritz.box";
 
   giteaRunnerDir = "/var/lib/gitea-runner/vivaldi";
-in
-{
+in {
   ##########
   # Secrets
   ##########
@@ -16,10 +15,10 @@ in
       file = ../../../secrets/postgrespass.age;
       owner = config.services.gitea.user;
     };
-    gitea-actions-token = {
-      file = ../../../secrets/gitea-actions-token.age;
-      owner = "gitea-runner";
-    };
+   gitea-actions-token = {
+     file = ../../../secrets/gitea-actions-token.age;
+     owner = "gitea-runner";
+   };
   };
 
   ##########
@@ -50,7 +49,7 @@ in
     ensureDatabases = [ config.services.gitea.user ];
     ensureUsers = [{
       name = config.services.gitea.database.user;
-      ensureDBOwnership = true;
+			ensureDBOwnership = true;
     }];
   };
 
@@ -65,7 +64,7 @@ in
 
   services.gitea = {
     enable = true;
-    appName = "My awesome Gitea server"; # Give the site a name
+    appName = "Mjwcodr Git"; # Give the site a name
     database = {
       type = "postgres";
       passwordFile = config.age.secrets.gitea-postgres.path;
@@ -78,7 +77,7 @@ in
         HTTP_PORT = internalPort;
       };
       service = { DISABLE_REGISTRATION = true; };
-      "service.explore" = { REQUIRE_SIGNIN_VIEW = true; };
+      "service.explore" = { REQUIRE_SIGNIN_VIEW = false; };
       actions.ENABLED = true;
     };
   };

@@ -86,8 +86,9 @@ in
       # xterm.enable = false;
       # xfce.enable = true;
     };
-    displayManager.defaultSession = "gnome";
   };
+
+	services.displayManager.defaultSession = "gnome";
 
   boot.binfmt.registrations.appimage = {
     wrapInterpreterInShell = false;
@@ -160,12 +161,12 @@ in
       thunderbird
       vim
       git
-      transmission
-      transmission-gtk
+      transmission_4
+      transmission_4-gtk
     ];
   };
 
-  services.udev.packages = with pkgs; [ gnome.gnome-settings-daemon ];
+  services.udev.packages = with pkgs; [ gnome-settings-daemon ];
 
   programs.fish.enable = true;
 

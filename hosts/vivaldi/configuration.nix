@@ -6,8 +6,7 @@
 let
   publicKey =
     "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABgQCow7KnyMQO/WGYfyNAIVUf+KAK+Bk4OLxhwPrRjZom+KhADGjFvYn7dVzBh51/zPkd3BReuW8rpC6eyVDkX7rItOD9d32m2ozW/W5/h3UrSmpyo5DaqmPlXn9+TmLFENWWDXmqImRRlEb9Ts4md54d8cJVTF/Rolxi3y4dxALwnIKzPxorJ61rQEr04izdCo84c3NH+Q5fuu2NLgSJxnhLZTz+/DSexpmK7K9Mw23z73e1hRY68pi3/tQPQdVX0YGM2AHyubryrgbhEDzig6CAiHKEvWpc7hKeha/LYYiq9Rs/J1Nui1e/lcxLDz+lgNBMooiwvdrB3WIeVSjIVhx/wrT5YeYPKCWvPdPRZ5wZ3cPk76yB/I2AacHZEWqSXhS88wIdmuEcTAKDLP3HHUWYWpbY4JiaTFHtba4UpIkSd7wW5BY3HIupHLEwHMR7jemenak3ueQtsrCExeO3axD0VL4/xL/PgJPdZm8HsUsn+oJnz5cRBtv2a2gsmAcoPVc= matthias@Matthiass-MBP.fritz.box";
-in
-{ config, pkgs, lib, ... }:
+in { config, pkgs, lib, ... }:
 
 {
   imports = [
@@ -15,21 +14,13 @@ in
     # Home Manager NixOS
 
     # Secret Management
-    # <agenix/modules/age.nix>
-    #"${builtins.fetchTarball "https://github.com/Mic92/sops-nix/archive/master.tar.gz"}/modules/sops"
     ./hardware-configuration.nix
-
-    # File Server
-    # ./services/fileserver.nix
 
     # Backup
     ./services/backup.nix
 
     # Photoprism
     ./services/photoprism.nix
-
-    # CoreDNS
-    # ./services/coredns.nix
 
     # Homer
     ./services/homer.nix
@@ -42,7 +33,7 @@ in
 
     # Gitea
     ./services/gitea.nix
-    # /services/gitea/actions-runner.nix
+		# /services/gitea/actions-runner.nix
 
     # ToDo - Vikunja
     ./services/vikunja.nix
@@ -58,19 +49,13 @@ in
 
     # Workspace for Matthias
     ../../workspace/workspace.nix
-    # ./services/vnc.nix
+		# ./services/vnc.nix
 
     # Jellyfin
     ./services/jellyfin.nix
 
     # Paperless
     ./services/paperless.nix # Temporarily disabled
-
-    # Youtube Downloader
-    # ./services/youtube-downloader.nix
-
-    # Network Audio
-    # ./services/audio.nix
 
     # Home Assistant
     ./services/home-assistant.nix
@@ -84,27 +69,17 @@ in
     # Mosh
     ./services/mosh.nix
 
-    # RSS
-    # ./services/rss.nix
+		#./services/pi-hole.nix
 
-    # Invidious
-    # ./services/invidious.nix
+		# Audiobookshelf
+		./services/audiobookshelf.nix
 
-    ./services/pi-hole.nix
+		# hedgedoc
+		./services/hedgedoc.nix
 
-    # Matrix
-    # ./services/matrix.nix
+		./services/webdav.nix
 
-    # Audiobookshelf
-    ./services/audiobookshelf.nix
-
-    # hedgedoc
-    ./services/hedgedoc.nix
-
-    # Personal Website
-    # ./services/website/module.nix
-    # ./services/website.nix
-  ];
+	];
 
   # Secrets
 
@@ -113,26 +88,28 @@ in
 
   age.secrets = {
     sslcert = {
-      file = ../../secrets/sslcert.crt.age;
+      file = ./../../secrets/sslcert.crt.age;
       owner = config.services.nginx.user;
     };
     sslkey = {
-      file = ../../secrets/sslcert.key.age;
+      file = ./../../secrets/sslcert.key.age;
       owner = config.services.nginx.user;
     };
   };
 
-  system.autoUpgrade = {
-    enable = true;
-    # flake = inputs.self.outPath;
-    flags = [
-      "--update-input"
-      "nixpkgs"
-      "-L" # print build logs
-    ];
-    dates = "02:00";
-    randomizedDelaySec = "45min";
-  };
+	system.autoUpgrade = {
+  	enable = true;
+  	# flake = inputs.self.outPath;
+  	flags = [
+    	"--update-input"
+    	"nixpkgs"
+    	"-L" # print build logs
+  	];
+  	dates = "02:00";
+  	randomizedDelaySec = "45min";
+	};
+
+
 
   # Bootloader.
   boot.loader.systemd-boot.enable = true;
@@ -217,18 +194,10 @@ in
   users.users.matthias = {
     isNormalUser = true;
     description = "Matthias Wünsch";
-    initialHashedPassword =
-      "$y$j9T$dmb6uMkOPUASaeXV4/oqD.$BhpwGFE4lb942zPTPISWJLB.gZZsVJ9ed/MAeJ6wX/2";
     extraGroups = [ "networkmanager" "wheel" "nixoseditor" ];
     packages = with pkgs; [ firefox spotify home-manager bash htop ];
     openssh.authorizedKeys.keys = [ publicKey ];
     shell = pkgs.fish;
-  };
-
-  users.users.root = {
-    isNormalUser = false;
-    extraGroups = [ "wheel" ];
-    openssh.authorizedKeys.keys = [ publicKey ];
   };
 
   nix.settings.allowed-users = [ "matthias" ]; # Allow matthias to use nix
@@ -252,7 +221,7 @@ in
     # Nextcloud needs ffmpeg
     neovim
     ffmpeg
-    nixfmt
+    nixfmt-rfc-style
   ];
 
   # Some programs need SUID wrappers, can be configured further or are

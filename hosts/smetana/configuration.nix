@@ -25,7 +25,7 @@ in
     # ./adguard.nix
   ];
 
-  boot.cleanTmpDir = true;
+  boot.tmp.cleanOnBoot = true;
   zramSwap.enable = true;
 
   programs.mosh.enable = true;
@@ -38,7 +38,7 @@ in
   networking.domain = "gateway.mjwcodr.de";
   services.openssh = {
     enable = true;
-    permitRootLogin = "prohibit-password";
+    settings.PermitRootLogin = "prohibit-password";
     passwordAuthentication = false;
   };
   users.users.root.openssh.authorizedKeys.keys = [ sshPublicKey ];

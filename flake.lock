@@ -87,6 +87,24 @@
         "type": "github"
       }
     },
+    "cv": {
+      "inputs": {
+        "nixpkgs": "nixpkgs_6"
+      },
+      "locked": {
+        "lastModified": 1728861450,
+        "narHash": "sha256-cgIn22yq2gHajDC1Vnp/1qQXJxLH7/0n0I2N/lodGE8=",
+        "ref": "refs/heads/main",
+        "rev": "686edfd8884efd3392d757331d61e95d08c6584f",
+        "revCount": 19,
+        "type": "git",
+        "url": "https://git.mjwcodr.de/mjwcodr/cv"
+      },
+      "original": {
+        "type": "git",
+        "url": "https://git.mjwcodr.de/mjwcodr/cv"
+      }
+    },
     "darwin": {
       "inputs": {
         "nixpkgs": [
@@ -389,6 +407,30 @@
         "type": "github"
       }
     },
+    "nixpkgs_6": {
+      "locked": {
+        "lastModified": 0,
+        "narHash": "sha256-f0SBJz1eZ2yOuKUr5CA9BHULGXVSn6miBuUWdTyhUhU=",
+        "path": "/nix/store/mln6wr5z539qgldmsm4j1k8k0dm19yvz-source",
+        "type": "path"
+      },
+      "original": {
+        "id": "nixpkgs",
+        "type": "indirect"
+      }
+    },
+    "nixpkgs_7": {
+      "locked": {
+        "lastModified": 0,
+        "narHash": "sha256-f0SBJz1eZ2yOuKUr5CA9BHULGXVSn6miBuUWdTyhUhU=",
+        "path": "/nix/store/mln6wr5z539qgldmsm4j1k8k0dm19yvz-source",
+        "type": "path"
+      },
+      "original": {
+        "id": "nixpkgs",
+        "type": "indirect"
+      }
+    },
     "pre-commit-hooks": {
       "inputs": {
         "flake-compat": "flake-compat_2",
@@ -416,7 +458,8 @@
         "deploy-rs": "deploy-rs",
         "nixpkgs": "nixpkgs_3",
         "pre-commit-hooks": "pre-commit-hooks",
-        "stylix": "stylix"
+        "stylix": "stylix",
+        "website": "website"
       }
     },
     "stylix": {
@@ -559,6 +602,25 @@
         "owner": "numtide",
         "repo": "flake-utils",
         "type": "github"
+      }
+    },
+    "website": {
+      "inputs": {
+        "cv": "cv",
+        "nixpkgs": "nixpkgs_7"
+      },
+      "locked": {
+        "lastModified": 1728864923,
+        "narHash": "sha256-syZgLPa0cniJhdS1iPdjG7chJ4U9UJJybIE4GlUqomE=",
+        "ref": "refs/heads/main",
+        "rev": "5d939403514d71e915a79e520d81b829836ddc3d",
+        "revCount": 26,
+        "type": "git",
+        "url": "https://git.mjwcodr.de/mjwcodr/Website.git"
+      },
+      "original": {
+        "type": "git",
+        "url": "https://git.mjwcodr.de/mjwcodr/Website.git"
       }
     }
   },
