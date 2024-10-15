@@ -14,6 +14,7 @@
     let
       system = "x86_64-linux";
       pkgs = nixpkgs.legacyPackages.${system};
+			theme = "catppuccin-mocha";
     in
     {
       packages.x86_64-linux.default = pkgs.mkShell {
@@ -40,7 +41,7 @@
                 image = ./wallpaper.jpg;
                 polarity = "dark";
                 base16Scheme =
-                  "${pkgs.base16-schemes}/share/themes/catppuccin-mocha.yaml";
+                  "${pkgs.base16-schemes}/share/themes/${theme}.yaml";
                 fonts = {
                   serif = {
                     package = pkgs.dejavu_fonts;

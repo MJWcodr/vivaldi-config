@@ -124,9 +124,10 @@
 
   # programs.zioxide.enable = true;
 
+
   # move the fish theme to the right place
-  # home.file.".config/fish/themes/mocha" = {
-  #	source = builtins.fetchurl "https://raw.githubusercontent.com/catppuccin/fish/main/themes/Catppuccin%20Mocha.theme";
+  #home.file.".config/fish/themes/mocha" = {
+  #source = builtins.fetchurl "https://raw.githubusercontent.com/catppuccin/fish/main/themes/Catppuccin%20Mocha.theme";
   #
 
   # };
