@@ -249,6 +249,7 @@ in
   ##########
 
   nix.settings.experimental-features = "nix-command flakes";
+	nix.settings.auto-optimise-store = true;
 
   # Open ports in the firewall.
   networking.firewall.allowedTCPPorts = [ 5173 ];
