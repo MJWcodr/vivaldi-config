@@ -142,6 +142,9 @@
     discord
 
     keepassxc
+
+		todo-txt-cli
+		conky
   ];
 
   # Home Manager is pretty good at managing dotfiles. The primary way to manage
@@ -151,10 +154,11 @@
     # # the Nix store. Activating the configuration will then make '~/.screenrc' a
     # # symlink to the Nix store copy.
     # ".screenrc".source = dotfiles/screenrc;
-
+		".config/conky.conf".source = ../../dotfiles/conky.conf;
     ".config/restic".source = ../../dotfiles/restic;
     ".config/rclone".source = ../../dotfiles/rclone;
     ".config/images".source = ../../dotfiles/images;
+		".todo".source = ../../dotfiles/todo;
     # Configure autostart to run "/etc/nixos/dotfiles/bin/checkin.sh" on login
     ".config/autostart/checkin.desktop".text = ''
       			[Desktop Entry]
@@ -168,6 +172,19 @@
       			Comment[en_US]=Checkin
       			Comment=Checkin
       			'';
+		# autostart for conky
+		".config/autostart/conky.desktop".text = ''
+			[Desktop Entry]
+			Type=Application
+			Exec=conky -c ${config.home.homeDirectory}/.config/conky.conf
+			Hidden=false
+			NoDisplay=false
+			X-GNOME-Autostart-enabled=true
+			Name[en_US]=Conky
+			Name=Conky
+			Comment[en_US]=Conky
+			Comment=Conky
+			'';
   };
 
   # You can also manage environment variables but you will have to manually
@@ -222,6 +239,25 @@
     enableFishIntegration = true;
     pinentryPackage = pkgs.pinentry-gnome3;
   };
+
+
+  systemd.user.services.conky = {
+    Unit = {
+      Description = "Conky System Monitor";
+    };
+    Install = {
+      WantedBy = [ "default.target" ];
+    };
+    Service = {
+			Type = "simple";
+      ExecStart = "${pkgs.writeShellScript "conky" ''
+				# ${pkgs.conky}/bin/conky -c ${config.home.homeDirectory}/.config/conky.conf
+				${pkgs.conky}/bin/conky
+      ''}";
+    };
+  };
+
+	services.copyq.enable = true;
 
   nixpkgs.config.permittedInsecurePackages = [ "nix-2.16.2" ];
   # Let Home Manager install and manage itself.

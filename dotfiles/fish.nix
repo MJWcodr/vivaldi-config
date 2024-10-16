@@ -110,6 +110,8 @@
                 	 echo -n "<nix-shell> "
               		end
 
+									export TODO_FILE="$HOME/Documents/Diary/20.\ Listen/10.\ ToDos/todo.txt"
+
       						export KAGI_API_KEY=$(pass kagi.com/api-key)
 
       						export PATH="$HOME/.local/bin:$PATH"
