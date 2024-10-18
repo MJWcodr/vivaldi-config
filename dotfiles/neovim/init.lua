@@ -7,6 +7,9 @@ require("lazy-config") -- install lazy-config
 require("coc") -- install coc
 require('lualine').setup() -- install lualine
 
+require("mason").setup()
+require("mason-lspconfig").setup()
+
 require('gitsigns').setup() -- install gitsigns
 
 local wk = require("which-key")
@@ -80,3 +83,11 @@ require("nvim-tree").setup({
 })
 
 -- require('go').setup()
+
+-- typst
+require'lspconfig'.typst_lsp.setup{
+	settings = {
+		exportPdf = "onType" -- Choose onType, onSave or never.
+        -- serverPath = "" -- Normally, there is no need to uncomment it.
+	}
+}

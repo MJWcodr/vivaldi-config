@@ -2,9 +2,7 @@
   "languageserver": {
 		"typst": {
 			"command": "typst-lsp",
-			"filetypes": ["typ"],
-			"initializationOptions": {},
-			"settings": {}
+			"filetypes": ["typst"]
 		},
 		"bash": {
 			"command": "bash-language-server",
