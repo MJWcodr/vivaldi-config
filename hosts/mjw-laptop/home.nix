@@ -135,6 +135,8 @@
     gnome-podcasts
     # transmission_4-gtk
 
+		typst-lsp
+
     # Communication
     element-desktop
     telegram-desktop

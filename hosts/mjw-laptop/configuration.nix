@@ -250,7 +250,7 @@ in
 
   nix.settings.experimental-features = "nix-command flakes";
 	nix.settings.auto-optimise-store = true;
-
+	nix.settings.trusted-users = [ "matthias" ];
   # Open ports in the firewall.
   networking.firewall.allowedTCPPorts = [ 5173 ];
   # networking.firewall.allowedUDPPorts = [ ... ];
