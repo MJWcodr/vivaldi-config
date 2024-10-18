@@ -1,5 +1,20 @@
 {
   "languageserver": {
+		"typst": {
+			"command": "typst-lsp",
+			"filetypes": ["typ"],
+			"initializationOptions": {},
+			"settings": {}
+		},
+		"bash": {
+			"command": "bash-language-server",
+			"args": ["start"],
+			"filetypes": ["sh"],
+			"initializationOptions": {
+				"provideFormatter": true
+			},
+			"settings": {}
+		},
     "nix": {
       "command": "nixd",
       "filetypes": [

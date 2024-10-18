@@ -136,6 +136,7 @@
     # transmission_4-gtk
 
 		typst-lsp
+		bash-language-server
 
     # Communication
     element-desktop

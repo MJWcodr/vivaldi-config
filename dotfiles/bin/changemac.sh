@@ -36,4 +36,4 @@ echo "New MAC address for $INTERFACE is $NEWMAC"
 RANDOMWORD=$(shuf -n1 /usr/share/dict/words)
 
 echo "Current hostname is $(hostname)"
-sudo hostname $RANDOMWORD && echo "New hostname is $RANDOMWORD"
+sudo hostname "$RANDOMWORD" && echo "New hostname is $RANDOMWORD"

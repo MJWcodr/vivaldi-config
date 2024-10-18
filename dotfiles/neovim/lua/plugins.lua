@@ -14,6 +14,12 @@ return {
 		dependencies = { "nvim-lua/plenary.nvim" }
 	},
 	{
+  'chomosuke/typst-preview.nvim',
+  lazy = false, -- or ft = 'typst'
+  version = '1.*',
+  build = function() require 'typst-preview'.update() end,
+	},
+	{
   "folke/which-key.nvim",
   event = "VeryLazy",
   init = function()
