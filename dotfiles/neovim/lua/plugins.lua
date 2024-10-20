@@ -1,11 +1,6 @@
 return {
   -- Plugins will be added here accordingly.
   { "github/copilot.vim" },
-	{
-    "williamboman/mason.nvim",
-    "williamboman/mason-lspconfig.nvim",
-    "neovim/nvim-lspconfig",
-	},
   { "nvim-telescope/telescope-file-browser.nvim" },
 	{ "projekt0n/github-nvim-theme" },
 	{ "eightpigs/win_resize.nvim" }, -- Resize windows with vim
@@ -13,7 +8,6 @@ return {
 	{ "catppuccin/nvim", name = "catppuccin", priority = 1000 },
 	{ "nvim-lualine/lualine.nvim"
 	},
-	{ "neovim/nvim-lspconfig"},
 	{ "chrisbra/csv.vim" },
 	{ "hashivim/vim-terraform" },
 	{ "nvim-telescope/telescope.nvim",
@@ -29,7 +23,7 @@ return {
   'kaarmu/typst.vim',
   ft = 'typst',
   lazy=false,
-},
+  },
 	{
   "folke/which-key.nvim",
   event = "VeryLazy",

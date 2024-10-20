@@ -7,9 +7,6 @@ require("lazy-config") -- install lazy-config
 require("coc") -- install coc
 require('lualine').setup() -- install lualine
 
-require("mason").setup()
-require("mason-lspconfig").setup()
-
 require('gitsigns').setup() -- install gitsigns
 
 local wk = require("which-key")
@@ -84,10 +81,24 @@ require("nvim-tree").setup({
 
 -- require('go').setup()
 
--- typst
-require'lspconfig'.typst_lsp.setup{
-	settings = {
-		exportPdf = "onType" -- Choose onType, onSave or never.
-        -- serverPath = "" -- Normally, there is no need to uncomment it.
-	}
+-- autocmd for typst
+vim.api.nvim_create_autocmd(
+    {
+        "BufNewFile",
+        "BufRead",
+    },
+    {
+        pattern = "*.typ",
+        callback = function()
+            local buf = vim.api.nvim_get_current_buf()
+            vim.api.nvim_buf_set_option(buf, "filetype", "typst")
+        end
+    }
+)
+
+require 'typst-preview'.setup {
+	dependencies_bin = {
+    ['tinymist'] = "/etc/profiles/per-user/matthias/bin/tinymist",
+    ['websocat'] = "/etc/profiles/per-user/matthias/bin/websocat",
+  },
 }

@@ -64,6 +64,7 @@
     nixfmt-classic
     vale
     luajitPackages.lua-lsp
+		ccls
     nixd
     luajitPackages.luacheck
     terraform-ls
@@ -135,7 +136,7 @@
     gnome-podcasts
     # transmission_4-gtk
 
-		typst-lsp
+		tinymist
 		bash-language-server
 
     # Communication

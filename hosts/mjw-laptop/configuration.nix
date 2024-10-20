@@ -28,6 +28,8 @@ in
 
   ];
 
+	programs.nix-ld.enable = true;
+
   home-manager.users.matthias = {
     # The home.stateVersion option does not have a default and must be set
     imports = [ ./home.nix ];
@@ -163,6 +165,9 @@ in
       git
       transmission_4
       transmission_4-gtk
+			typst-lsp
+			tinymist
+			websocat
     ];
   };
 
