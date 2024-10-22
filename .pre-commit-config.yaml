@@ -24,3 +24,8 @@ repos:
     hooks:
       - id: commitizen
         stages: [commit-msg]
+
+        #- repo: https://github.com/JohnnyMorganz/StyLua
+        #rev: v0.20.0
+        #hooks:
+        #- id: stylua # or stylua-system / stylua-github

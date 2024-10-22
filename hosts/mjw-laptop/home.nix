@@ -18,6 +18,8 @@
     ../../dotfiles/ssh.nix
     ../../dotfiles/gnome/shortcuts.nix
     ../../dotfiles/entertainment/entertainment.nix
+
+		../../dotfiles/neovim.nix
   ];
 
   # Home Manager needs a bit of information about you and the paths it should
@@ -216,11 +218,6 @@
   # Configure the gnome desktop
   # Setup Backup using Restic and Rclone
 
-  # Manage Neovim
-  xdg.configFile.nvim = {
-    source = ../../dotfiles/neovim;
-    recursive = true;
-  };
 
   # Add Applications to Gnome
   # As already mentioned

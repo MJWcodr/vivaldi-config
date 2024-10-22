@@ -23,7 +23,6 @@ vim.opt.number = true
 vim.cmd("colorscheme catppuccin-mocha") -- dark-theme
 -- light theme
 
-
 -- set relative line numbers
 vim.opt.relativenumber = true
 
@@ -43,7 +42,6 @@ vim.api.nvim_set_keymap("n", "<c-up>", ":split<cr>", { noremap = true })
 vim.api.nvim_set_keymap("n", "<c-left>", ":vsplit<cr>", { noremap = true })
 vim.api.nvim_set_keymap("n", "<c-down>", ":split<cr>", { noremap = true })
 
-
 -- configure nvim-tree
 -- disable netrw at the very start of your init.lua
 vim.g.loaded_netrw = 1
@@ -56,12 +54,12 @@ vim.opt.termguicolors = true
 require("nvim-tree").setup()
 
 wk.register({
-		t = {
-			name = "File Explorer",
-			t = { "<cmd>NvimTreeToggle<cr>", "Toggle" },
-			r = { "<cmd>NvimTreeRefresh<cr>", "Refresh" },
-			f = { "<cmd>NvimTreeFindFile<cr>", "Find File" },
-		},
+	t = {
+		name = "File Explorer",
+		t = { "<cmd>NvimTreeToggle<cr>", "Toggle" },
+		r = { "<cmd>NvimTreeRefresh<cr>", "Refresh" },
+		f = { "<cmd>NvimTreeFindFile<cr>", "Find File" },
+	},
 
 }, { prefix = "<leader>" })
 
