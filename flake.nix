@@ -7,16 +7,16 @@
     deploy-rs.url = "github:serokell/deploy-rs";
     stylix.url = "github:danth/stylix";
     pre-commit-hooks.url = "github:cachix/git-hooks.nix";
-		website.url = "git+https://git.mjwcodr.de/mjwcodr/Website.git";
+    website.url = "git+https://git.mjwcodr.de/mjwcodr/Website.git";
+    kagi.url = "git+https://git.mjwcodr.de/mjwcodr/kagi.git";
   };
 
-  outputs = { self, nixpkgs, agenix, stylix, website, deploy-rs, ... }:
+  outputs = { self, nixpkgs, agenix, stylix, website, deploy-rs, kagi, ... }:
     let
       system = "x86_64-linux";
       pkgs = nixpkgs.legacyPackages.${system};
-			theme = "catppuccin-mocha";
-    in
-    {
+      theme = "catppuccin-mocha";
+    in {
       packages.x86_64-linux.default = pkgs.mkShell {
         name = "Development Environment";
         buildInputs = with pkgs; [
@@ -70,49 +70,48 @@
             agenix.nixosModules.default
             ./hosts/mjw-laptop/configuration.nix
             {
-              environment.systemPackages =
-                [ agenix.packages.x86_64-linux.default ];
+              environment.systemPackages = [
+                agenix.packages.x86_64-linux.default
+                kagi.defaultPackage.${system}
+              ];
             }
           ];
         };
-				# vivaldi is my main server
-				"vivaldi" = nixpkgs.lib.nixosSystem {
-					system = "x86_64-linux";
-					modules =
-						[
-							agenix.nixosModules.default
-							{
-								services.nginx = {
-									enable = true;
-									virtualHosts = {
-										"website" = {
-											enableACME = false;
-											locations = {
-												"/" = {
-													root = website.defaultPackage.x86_64-linux;
-												};
-												};
-												listen = [
-													{
-														port = 8000;
-														ssl = false;
-														addr = "localhost";
-													}
-													{
-														port = 8000;
-														ssl = false;
-														addr = "vivaldi.fritz.box";
-													}
-												];
+        # vivaldi is my main server
+        "vivaldi" = nixpkgs.lib.nixosSystem {
+          system = "x86_64-linux";
+          modules = [
+            agenix.nixosModules.default
+            {
+              services.nginx = {
+                enable = true;
+                virtualHosts = {
+                  "website" = {
+                    enableACME = false;
+                    locations = {
+                      "/" = { root = website.defaultPackage.x86_64-linux; };
+                    };
+                    listen = [
+                      {
+                        port = 8000;
+                        ssl = false;
+                        addr = "localhost";
+                      }
+                      {
+                        port = 8000;
+                        ssl = false;
+                        addr = "vivaldi.fritz.box";
+                      }
+                    ];
 
-										};
-									};
-								};
-								networking.firewall.allowedTCPPorts = [ 8000 ];
-							}
-							./hosts/vivaldi/configuration.nix
-						];
-				};
+                  };
+                };
+              };
+              networking.firewall.allowedTCPPorts = [ 8000 ];
+            }
+            ./hosts/vivaldi/configuration.nix
+          ];
+        };
 
         # smetana is my vpn-gateway
         "smetana" = nixpkgs.lib.nixosSystem {
@@ -132,18 +131,18 @@
             self.nixosConfigurations."smetana";
         };
       };
-			deploy.nodes."vivaldi" = {
-				hostname = "vivaldi";
-				profiles.system = {
-					sshUser = "matthias";
-					user = "matthias";
-					remoteBuild = true;
-					path = deploy-rs.lib.x86_64-linux.activate.nixos
-						self.nixosConfigurations."vivaldi";
-					};
-			};
+      deploy.nodes."vivaldi" = {
+        hostname = "vivaldi";
+        profiles.system = {
+          sshUser = "matthias";
+          user = "matthias";
+          remoteBuild = true;
+          path = deploy-rs.lib.x86_64-linux.activate.nixos
+            self.nixosConfigurations."vivaldi";
+        };
+      };
       # This is highly advised, and will prevent many possible mistakes
       checks = builtins.mapAttrs
-       (system: deployLib: deployLib.deployChecks self.deploy) deploy-rs.lib;
+        (system: deployLib: deployLib.deployChecks self.deploy) deploy-rs.lib;
     };
 }
