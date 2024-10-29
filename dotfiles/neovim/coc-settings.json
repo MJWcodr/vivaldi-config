@@ -1,5 +1,27 @@
 {
   "languageserver": {
+		"haskell": {
+			"command": "haskell-language-server-wrapper",
+			"args": ["--lsp"],
+			"rootPatterns": ["stack.yaml",
+				"hie.bios",
+				"cabal.config",
+				"BUILD.bazel",
+				"package.yaml"
+			],
+			"filetypes": ["hs", "lhs", "haskell"],
+			"initializationOptions": {
+				"languageServerHaskell": {
+					"hlintOn": true,
+					"maxNumberOfProblems": 20,
+					"completionSnippetsOn": true
+				}
+			}
+		},
+		"lua": {
+			"command": "lua-lsp",
+			"filetypes": ["lua"]
+			},
 		"cpp": {
 			"command": "ccls",
 			"filetypes": ["c", "cpp", "objc", "objcpp"],

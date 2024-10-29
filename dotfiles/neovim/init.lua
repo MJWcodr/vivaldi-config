@@ -6,11 +6,11 @@ vim.g.mapleader = " "
 require("lazy-config") -- install lazy-config
 require("coc") -- install coc
 require('lualine').setup() -- install lualine
-
-require('gitsigns').setup() -- install gitsigns
+require('leap').create_default_mappings()
 
 local wk = require("which-key")
-wk.register(mappings, opts)
+
+require('gitsigns').setup() -- install gitsigns
 
 -- set tab width
 vim.opt.tabstop = 2
@@ -29,19 +29,6 @@ vim.opt.relativenumber = true
 -- set cursorline
 vim.opt.cursorline = true
 
--- change windows with arrow keys in normal mode
-vim.api.nvim_set_keymap("n", "<up>", "<c-w><up>", { noremap = true })
-vim.api.nvim_set_keymap("n", "<down>", "<c-w><down>", { noremap = true })
-vim.api.nvim_set_keymap("n", "<left>", "<c-w><left>", { noremap = true })
-vim.api.nvim_set_keymap("n", "<right>", "<c-w><right>", { noremap = true })
-
--- split windows with ctrl + arrow keys
-vim.api.nvim_set_keymap("n", "<c-right>", ":vsplit<cr>", { noremap = true })
-vim.api.nvim_set_keymap("n", "<c-up>", ":split<cr>", { noremap = true })
-
-vim.api.nvim_set_keymap("n", "<c-left>", ":vsplit<cr>", { noremap = true })
-vim.api.nvim_set_keymap("n", "<c-down>", ":split<cr>", { noremap = true })
-
 -- configure nvim-tree
 -- disable netrw at the very start of your init.lua
 vim.g.loaded_netrw = 1
@@ -53,15 +40,32 @@ vim.opt.termguicolors = true
 -- empty setup using defaults
 require("nvim-tree").setup()
 
-wk.register({
-	t = {
-		name = "File Explorer",
-		t = { "<cmd>NvimTreeToggle<cr>", "Toggle" },
-		r = { "<cmd>NvimTreeRefresh<cr>", "Refresh" },
-		f = { "<cmd>NvimTreeFindFile<cr>", "Find File" },
-	},
+wk.add({
+	-- File Explorer
+	{"<leader>t", group = "File Explorer"},
+	{"<leader>tt", "<cmd>NvimTreeToggle<cr>", desc = "Toggle"},
+	{"<leader>tr", "<cmd>NvimTreeRefresh<cr>", desc = "Refresh"},
+	{"<leader>tf", "<cmd>NvimTreeFindFile<cr>", desc = "Find File"},
 
-}, { prefix = "<leader>" })
+	-- Buffer Navigation
+	{"", group = "Buffer Navigation"},
+	{"<S-Tab>", "<cmd>BufferPrevious<cr>", desc = "Previous Buffer"},
+	{"<Tab>", "<cmd>BufferNext<cr>", desc = "Next Buffer"},
+	{"<leader>c", "<cmd>BufferClose<cr>", desc = "Close Buffer"},
+	{"<leader>o", "<cmd>BufferCloseAllButCurrent<cr>", desc = "Close All But Current Buffer"},
+
+	-- Window Navigation
+	{"<left>", "<C-w>h", desc = "Move to the window to the left"},
+	{"<down>", "<C-w>j", desc = "Move to the window below"},
+	{"<up>", "<C-w>k", desc = "Move to the window above"},
+	{"<right>", "<C-w>l", desc = "Move to the window to the right"},
+	-- Split Windows with ctrl + arrow keys
+	{"<c-right>", "<cmd>vsplit<cr>", desc = "Split window vertically"},
+	{"<c-up>", "<cmd>split<cr>", desc = "Split window horizontally"},
+	{"<c-left>", "<cmd>vsplit<cr>", desc = "Split window vertically"},
+	{"<c-down>", "<cmd>split<cr>", desc = "Split window horizontally"},
+
+})
 
 -- OR setup with some options
 require("nvim-tree").setup({

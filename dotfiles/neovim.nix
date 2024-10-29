@@ -8,7 +8,13 @@
 			typstfmt
 			tinymist
 			nodePackages_latest.lua-fmt
+			luajitPackages.lua-lsp
 			gcc
+
+			# Haskell
+			haskellPackages.haskell-language-server
+			haskellPackages.ghc
+			haskellPackages.cabal-install
 	];
 
   # Manage Neovim

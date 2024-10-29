@@ -8,11 +8,27 @@ return {
 	{ "catppuccin/nvim", name = "catppuccin", priority = 1000 },
 	{ "nvim-lualine/lualine.nvim"
 	},
+	{
+		"ggandor/leap.nvim"
+	},
 	{ "chrisbra/csv.vim" },
 	{ "hashivim/vim-terraform" },
 	{ "nvim-telescope/telescope.nvim",
 		dependencies = { "nvim-lua/plenary.nvim" }
 	},
+	{'romgrk/barbar.nvim',
+    dependencies = {
+      'lewis6991/gitsigns.nvim', -- OPTIONAL: for git status
+      'nvim-tree/nvim-web-devicons', -- OPTIONAL: for file icons
+    },
+    init = function() vim.g.barbar_auto_setup = false end,
+    opts = {
+      -- lazy.nvim will automatically call setup for you. put your options here, anything missing will use the default:
+      -- animation = true,
+      -- insert_at_start = true,
+      -- …etc.
+    }
+  },
 	{
   'chomosuke/typst-preview.nvim',
   lazy = false, -- or ft = 'typst'
