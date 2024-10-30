@@ -14,7 +14,7 @@
         user = "matthias";
         hostname = "wuensch.sh";
       };
-      "gateway" = {
+      "smetana" = {
         user = "matthias";
         hostname = "gateway.mjwcodr.de";
       };

@@ -13,7 +13,6 @@ let
 	navidromeInternalPort = 8090;
 
 	# Vikunja
-	vikunjaPort = 3456;
 	vikunjaAPIInternalPort = 3455;
 	vikunjaFrontendInternalPort = 3457;
 
@@ -313,10 +312,10 @@ in
 			forceSSL = false;
 			http2 = true;
 			locations."/" = {
-				proxyPass = "http://localhost:${toString davPort}";	
+				proxyPass = "http://localhost:${toString davPort}";
 			};
 			listen = [{
-				port = 6700+1;
+				port = 9100;
 				addr = "${wireguardIP}";
 				ssl = false;
 			}];
