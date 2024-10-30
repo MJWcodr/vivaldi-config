@@ -48,6 +48,8 @@ let
 
 	websitePort = 8000;
 
+	davPort = 9100;
+
 	domain = "mjwcodr.de";
 	wireguardIP = "10.100.0.2";
 in
@@ -306,6 +308,18 @@ in
 				ssl = false;
 				addr = "${wireguardIP}";
 			} ];
+		};
+		"dav.${domain}" = {
+			forceSSL = false;
+			http2 = true;
+			locations."/" = {
+				proxyPass = "http://localhost:${toString davPort}";	
+			};
+			listen = [{
+				port = 6700+1;
+				addr = "${wireguardIP}";
+				ssl = false;
+			}];
 		};
 		"doc.${domain}" = {
 			forceSSL = false;
