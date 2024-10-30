@@ -52,10 +52,10 @@ in
     ./services/remote.nix
 
     # Grafana
-    ./services/grafana.nix
+    # ./services/grafana.nix
 
     # Workspace for Matthias
-    ../../workspace/workspace.nix
+    # ../../workspace/workspace.nix
 		# ./services/vnc.nix
 
     # Jellyfin
