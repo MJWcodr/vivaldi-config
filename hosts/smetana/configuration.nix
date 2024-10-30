@@ -48,6 +48,7 @@ in
     isNormalUser = true;
     extraGroups = [ "wheel" "nix" "docker" ];
     openssh.authorizedKeys.keys = [ sshPublicKey ];
+		hashedPassword = "$y$j9T$A23QXnn.XjIZCEjSnS1FH.$WDnkSFGM/Ry.wRsHWEW5Wjc14ZPFLWT4SHkbo9cAct9";
   };
 
   nix.allowedUsers = [
