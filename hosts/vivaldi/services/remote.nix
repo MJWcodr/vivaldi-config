@@ -49,6 +49,8 @@ let
 
 	davPort = 9100;
 
+	localHostname = "vivaldi.fritz.box";
+
 	domain = "mjwcodr.de";
 	wireguardIP = "10.100.0.2";
 in
@@ -312,10 +314,10 @@ in
 			forceSSL = false;
 			http2 = true;
 			locations."/" = {
-				proxyPass = "http://localhost:${toString davPort}";
+				proxyPass = "http://${localHostname}:${toString davPort}";
 			};
 			listen = [{
-				port = 9100;
+				port = davPort;
 				addr = "${wireguardIP}";
 				ssl = false;
 			}];
