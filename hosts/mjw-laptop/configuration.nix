@@ -2,12 +2,11 @@
 # your system.  Help is available in the configuration.nix(5) man page
 # and in the NixOS manual (accessible by running ‘nixos-help’).
 
-{ lib, pkgs, ... }:
+{ lib, pkgs, config, ... }:
 let
   home-manager = builtins.fetchTarball {
-
     url = "https://github.com/nix-community/home-manager/archive/master.tar.gz";
-    sha256 = "sha256:1zwflhqglxl9fpcpsnbm5gk30yq3gbhprq1vl0rq5aw9why8iqfn";
+    sha256 = "sha256:0kg9iaixqygpncw7avgh1grwyjgnfc9i7k9pk8hc4xrvr8jv2l3c";
   };
 
 in
@@ -26,6 +25,7 @@ in
     # Include the wireguard configuration
     ./services/wireguard.nix
 
+		# ../../modules/qobuz-downloader.nix
   ];
 
 	programs.nix-ld.enable = true;
@@ -220,6 +220,23 @@ in
       Experimental = true;
     };
   };
+
+	##########
+	# Qobuz Downloader
+	##########
+
+	# age.secrets = {
+	#	qobuzConfig = {
+	#		file = ../../secrets/qobuzConfig.age;
+	#		owner = config.services.qobuz-downloader.user;
+	#	};
+	#};
+
+	# services.qobuz-downloader = {
+	#	enable = true;
+	#	user = "matthias";
+	#	configFilePath = config.age.secrets.qobuzConfig.path;
+	#};
 
   ##########
   # Finger Print Reader

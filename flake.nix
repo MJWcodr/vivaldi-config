@@ -9,9 +9,10 @@
     pre-commit-hooks.url = "github:cachix/git-hooks.nix";
     website.url = "git+https://git.mjwcodr.de/mjwcodr/Website.git";
     kagi.url = "git+https://git.mjwcodr.de/mjwcodr/kagi.git";
+		qobuz-dl.url = "git+https://git.mjwcodr.de/mjwcodr/Qobuz-dl";
   };
 
-  outputs = { self, nixpkgs, agenix, stylix, website, deploy-rs, kagi, ... }:
+  outputs = { self, nixpkgs, qobuz-dl, agenix, stylix, website, deploy-rs, kagi, ... }:
     let
       system = "x86_64-linux";
       pkgs = nixpkgs.legacyPackages.${system};
@@ -73,6 +74,7 @@
               environment.systemPackages = [
                 agenix.packages.x86_64-linux.default
                 kagi.defaultPackage.${system}
+								qobuz-dl.packages.${system}.default
               ];
             }
           ];
@@ -110,6 +112,11 @@
               networking.firewall.allowedTCPPorts = [ 8000 ];
             }
             ./hosts/vivaldi/configuration.nix
+						{
+							environment.systemPackages = [
+								qobuz-dl.packages.${system}.default
+							];
+						}
           ];
         };
 
