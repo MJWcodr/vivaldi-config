@@ -7,7 +7,7 @@
     deploy-rs.url = "github:serokell/deploy-rs";
     stylix.url = "github:danth/stylix";
     pre-commit-hooks.url = "github:cachix/git-hooks.nix";
-    website.url = "git+https://git.mjwcodr.de/mjwcodr/Website.git";
+    website.url = "git+https://git.mjwcodr.de/mjwcodr/actual-website.git";
     kagi.url = "git+https://git.mjwcodr.de/mjwcodr/kagi.git";
 		qobuz-dl.url = "git+https://git.mjwcodr.de/mjwcodr/Qobuz-dl";
   };

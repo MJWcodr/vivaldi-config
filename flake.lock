@@ -801,17 +801,17 @@
         "nixpkgs": "nixpkgs_9"
       },
       "locked": {
-        "lastModified": 1729182152,
-        "narHash": "sha256-pvhkZyhbyhtAGKqHwKQ+QCXdZcPXZED/KHDUUQum+8s=",
+        "lastModified": 1730384801,
+        "narHash": "sha256-370N94aSn4xPVySnw1uiYXleFKG3xnOZspe5Nd6RFv0=",
         "ref": "refs/heads/main",
-        "rev": "99426c8ef523685afee59b3d10b8eaa22daee11c",
-        "revCount": 27,
+        "rev": "b15caba97d1834d98f967f6f8dc8ee5e869987f5",
+        "revCount": 3,
         "type": "git",
-        "url": "https://git.mjwcodr.de/mjwcodr/Website.git"
+        "url": "https://git.mjwcodr.de/mjwcodr/actual-website.git"
       },
       "original": {
         "type": "git",
-        "url": "https://git.mjwcodr.de/mjwcodr/Website.git"
+        "url": "https://git.mjwcodr.de/mjwcodr/actual-website.git"
       }
     }
   },
