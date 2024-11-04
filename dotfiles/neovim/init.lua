@@ -40,6 +40,8 @@ vim.opt.termguicolors = true
 -- empty setup using defaults
 require("nvim-tree").setup()
 
+ht = require('haskell-tools')
+
 wk.add({
 	-- File Explorer
 	{"<leader>t", group = "File Explorer"},
@@ -65,6 +67,13 @@ wk.add({
 	{"<c-left>", "<cmd>vsplit<cr>", desc = "Split window vertically"},
 	{"<c-down>", "<cmd>split<cr>", desc = "Split window horizontally"},
 
+	-- Haskell Bindings
+	{"<leader>cl", vim.lsp.codelens.run, desc = "Run CodeLens"},
+	{"<leader>hs", ht.hoogle.hoogle_signature, desc = "Search on Hoogle"},
+	{"<leader>ea", ht.lsp.buf_eval_all, desc = "Evaluate All"},
+	{"<leader>rr", ht.repl.toggle, desc = "Start Repl at local package"},
+	{"<leader>rf", function() ht.repl.toggle(vim.api.nvim_buf_get_name(0)) end, desc = "Start Repl for local buffer"},
+	{"<leader>rq", ht.repl.quit, desc = "Stop current repl"}
 })
 
 -- OR setup with some options

@@ -9,6 +9,11 @@ return {
 	{ "nvim-lualine/lualine.nvim"
 	},
 	{
+  'mrcjkb/haskell-tools.nvim',
+  version = '^4', -- Recommended
+  lazy = false, -- This plugin is already lazy
+	},
+	{
 		"ggandor/leap.nvim"
 	},
 	{ "chrisbra/csv.vim" },
