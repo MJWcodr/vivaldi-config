@@ -92,11 +92,11 @@
         "nixpkgs": "nixpkgs_8"
       },
       "locked": {
-        "lastModified": 1728861450,
-        "narHash": "sha256-cgIn22yq2gHajDC1Vnp/1qQXJxLH7/0n0I2N/lodGE8=",
+        "lastModified": 1728864053,
+        "narHash": "sha256-hPScs+uX9PRxDIyuWEispcxkFSJ2GD9mKfA3B7jQHWM=",
         "ref": "refs/heads/main",
-        "rev": "686edfd8884efd3392d757331d61e95d08c6584f",
-        "revCount": 19,
+        "rev": "fd04cdce3d52c6413b1ce3dde8c309f8fa4f751b",
+        "revCount": 20,
         "type": "git",
         "url": "https://git.mjwcodr.de/mjwcodr/cv"
       },
@@ -335,10 +335,10 @@
         "nixpkgs": "nixpkgs_3"
       },
       "locked": {
-        "lastModified": 1729613980,
-        "narHash": "sha256-4yna+8erPCaav8oEtbwnn4y2RKiIf5jbSAjv7giD010=",
+        "lastModified": 1729614487,
+        "narHash": "sha256-uIEWjAaD/p1B50eU+e63w4yQ9nygOdMCdHVQIlSyCaY=",
         "ref": "refs/heads/main",
-        "rev": "da7dca47038fd94cf8563466bcc27b08ecb789d0",
+        "rev": "d2e08ee706e83bb9bc1fe9567bdd7beeb0d03617",
         "revCount": 9,
         "type": "git",
         "url": "https://git.mjwcodr.de/mjwcodr/kagi.git"
@@ -436,11 +436,11 @@
     },
     "nixpkgs_4": {
       "locked": {
-        "lastModified": 1729265718,
-        "narHash": "sha256-4HQI+6LsO3kpWTYuVGIzhJs1cetFcwT7quWCk/6rqeo=",
+        "lastModified": 1730272153,
+        "narHash": "sha256-B5WRZYsRlJgwVHIV6DvidFN7VX7Fg9uuwkRW9Ha8z+w=",
         "owner": "NixOS",
         "repo": "nixpkgs",
-        "rev": "ccc0c2126893dd20963580b6478d1a10a4512185",
+        "rev": "2d2a9ddbe3f2c00747398f3dc9b05f7f2ebb0f53",
         "type": "github"
       },
       "original": {
@@ -512,8 +512,8 @@
     "nixpkgs_9": {
       "locked": {
         "lastModified": 0,
-        "narHash": "sha256-f0SBJz1eZ2yOuKUr5CA9BHULGXVSn6miBuUWdTyhUhU=",
-        "path": "/nix/store/mln6wr5z539qgldmsm4j1k8k0dm19yvz-source",
+        "narHash": "sha256-4HQI+6LsO3kpWTYuVGIzhJs1cetFcwT7quWCk/6rqeo=",
+        "path": "/nix/store/69bhrhj8imx84l6zvdz0zmh3qc8ykwvd-source",
         "type": "path"
       },
       "original": {
@@ -557,11 +557,11 @@
         "nixpkgs-stable": "nixpkgs-stable"
       },
       "locked": {
-        "lastModified": 1729104314,
-        "narHash": "sha256-pZRZsq5oCdJt3upZIU4aslS9XwFJ+/nVtALHIciX/BI=",
+        "lastModified": 1730302582,
+        "narHash": "sha256-W1MIJpADXQCgosJZT8qBYLRuZls2KSiKdpnTVdKBuvU=",
         "owner": "cachix",
         "repo": "git-hooks.nix",
-        "rev": "3c3e88f0f544d6bb54329832616af7eb971b6be6",
+        "rev": "af8a16fe5c264f5e9e18bcee2859b40a656876cf",
         "type": "github"
       },
       "original": {
@@ -577,11 +577,11 @@
         "poetry2nix": "poetry2nix"
       },
       "locked": {
-        "lastModified": 1730210376,
-        "narHash": "sha256-jSXlUpTbe4tz0kH0owGrEsHtGCIqODi0UfdzXOGL1mo=",
+        "lastModified": 1730216076,
+        "narHash": "sha256-NA5Pu9F6AMLHEBsg6XxBqcZeVwKAqXxtt6dnWMcJ3vY=",
         "ref": "refs/heads/master",
-        "rev": "5d17ecb349b233645468297fc85d10743434160c",
-        "revCount": 146,
+        "rev": "7c1c6d289e142e6f655cdfc4c70195c98bb06e55",
+        "revCount": 152,
         "type": "git",
         "url": "https://git.mjwcodr.de/mjwcodr/Qobuz-dl"
       },
@@ -619,11 +619,11 @@
         "tinted-tmux": "tinted-tmux"
       },
       "locked": {
-        "lastModified": 1729380793,
-        "narHash": "sha256-TV6NYBUqTHI9t5fqNu4Qyr4BZUD2yGxAn3E+d5/mqaI=",
+        "lastModified": 1729963473,
+        "narHash": "sha256-uGjTjvvlGQfQ0yypVP+at0NizI2nrb6kz4wGAqzRGbY=",
         "owner": "danth",
         "repo": "stylix",
-        "rev": "fb9399b7e2c855f42dae76a363bab28d4f24aa8d",
+        "rev": "04afcfc0684d9bbb24bb1dc77afda7c1843ec93b",
         "type": "github"
       },
       "original": {
