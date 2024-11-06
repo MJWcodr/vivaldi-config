@@ -251,7 +251,6 @@ in
   # services.fprintd.tod.driver = pkgs.libfprint-2-tod1-vfs0090; # driver for 2016 ThinkPads
   # services.fprintd.tod.driver = pkgs.libfprint-2-tod1-goodix-550a # Goodix 550a driver (from Lenovo)
 
-
   ##########
   # Hidraw
   ##########

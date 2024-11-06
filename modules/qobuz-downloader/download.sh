@@ -20,4 +20,4 @@ echo "$URLS"
 
 # Download Music
 export QOBUZ_CONFIG_FILE
-qdl dl -q 7 "$TMPFILE" --embed-art
+qdl dl -q 7 "$TMPFILE" --embed-art --og-cover --folder-format "{artist} - {album} ({year})"

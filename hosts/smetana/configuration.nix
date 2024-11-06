@@ -32,6 +32,8 @@ in
 
   networking.hostName = "vpn-gateway";
 
+	nix.settings.experimental-features = "nix-command flakes";
+
   # docker
   environment.systemPackages = with pkgs; [ docker ];
 
