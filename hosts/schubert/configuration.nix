@@ -20,7 +20,8 @@ in
     # ./users.nix
 
     # Import your generated (nixos-generate-config) hardware configuration
-    ./hardware-configuration.nix
+    # ./hardware-configuration.nix
+		# ./services/home-assistant.nix
   ];
 
   nixpkgs = {
@@ -64,16 +65,10 @@ in
       nixPath = lib.mapAttrsToList (n: _: "${n}=flake:${n}") flakeInputs;
     };
 
-  # FIXME: Add the rest of your current configuration
-
-  # TODO: Set your hostname
   networking.hostName = "schubert";
 
-  # TODO: Configure your system-wide user settings (groups, etc), add more users as needed.
   users.users = {
-    # FIXME: Replace with your username
     matthias = {
-      # TODO: You can set an initial password for your user.
       # If you do, you can skip setting a root password by passing '--no-root-passwd' to nixos-install.
       # Be sure to change it (using passwd) after rebooting!
       initialHashedPassword = "$y$j9T$zsUyLA4BaDPctdPaprx4m.$gZ0dqx9gwbQ4bsVbEyKVKUkG6n979Amn1aC2e5zjCR5";
@@ -101,4 +96,5 @@ in
 
   # https://nixos.wiki/wiki/FAQ/When_do_I_update_stateVersion
   system.stateVersion = "23.05";
+	networking.firewall.allowedTCPPorts = [ 22 80 ];
 }

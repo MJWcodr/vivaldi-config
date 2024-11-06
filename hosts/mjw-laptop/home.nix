@@ -46,6 +46,8 @@
     languagetool
     protonmail-bridge
 
+		cachix
+
     fortune
 
     kubectl
