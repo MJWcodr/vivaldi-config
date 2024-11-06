@@ -8,7 +8,7 @@ in
     # ./networking.nix # generated at runtime by nixos-infect
 
     # Wireguard
-    # ./wireguard.nix
+    ./services/wireguard.nix
 
     # Nginx
     # ./nginx.nix
