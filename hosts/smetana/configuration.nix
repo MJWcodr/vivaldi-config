@@ -22,7 +22,7 @@ in { pkgs, ... }: {
 
     # adguard
 
-    ./adguard.nix
+    # ./adguard.nix
 
 		# home assistant on other host
 		./ahrensfelde.nix
