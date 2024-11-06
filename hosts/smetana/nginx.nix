@@ -64,7 +64,7 @@ in {
         locations."/" = {
           proxyPass = "http://${foreignHostIP}:${websitePort}";
           proxyWebsockets = true;
-          root = "/etc/nixos/nginx/${gatewayHost}";
+          root = "/etc/nixos/hosts/smetana/nginx/gateway.mjwcodr.de";
         };
         listen = [
           {
