@@ -59,7 +59,7 @@
           allowedIPs = [ "10.100.0.4/32" ]; # Pixel 6a
         }
         {
-          publicKey = "tZkkw3chA9mMWOjmC8xrhmL+6SUtK0VQwdggtjnwVzc=";
+          publicKey = "ko3cyw8pSR7fQGp0NjKIUmVCp85raUJeYn43mt1GeUo=";
           allowedIPs = [ "10.100.0.10/32" ]; # Papa's Raspberry Pi
         }
       ];
