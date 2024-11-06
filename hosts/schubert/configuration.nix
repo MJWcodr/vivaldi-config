@@ -16,6 +16,9 @@ in
     # gitea
     # ./gitea-runner.nix
 
+		# Home Assistant
+		./services/home-assistant.nix
+
     # podman
     # ./docker.nix
 
