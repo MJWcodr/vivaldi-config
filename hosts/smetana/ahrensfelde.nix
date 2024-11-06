@@ -12,7 +12,7 @@ in
 				forceSSL = true;
 				locations = {
 					"/" = {
-						proxyPass = "http://${ip}:${port}";
+						proxyPass = "http://${ip}:${toString port}";
 						proxyWebsockets = true;
 					};
 
