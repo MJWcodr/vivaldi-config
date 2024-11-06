@@ -21,7 +21,7 @@
   networking.wireguard.interfaces = {
     wg0 = {
       # The IP address of the WireGuard interface.
-      ips = [ "10.100.0.3/24" ];
+      ips = [ "10.100.0.10/24" ];
       listenPort = 51820;
 
       # The private key of the peer.
