@@ -1,100 +1,83 @@
-# This is your system's configuration file.
-# Use this to configure your system environment (it replaces /etc/nixos/configuration.nix)
-{ inputs
-, lib
-, config
-, pkgs
-, ...
-}:
 let
-  mainKey = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIOiHRSsiYZ+pTA7L67XF6y1egdXhJOv09cjr4QhYiIPu matthias@mjw-laptop";
+  sshPublicKey =
+    "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIOiHRSsiYZ+pTA7L67XF6y1egdXhJOv09cjr4QhYiIPu";
 in
-{
-  # You can import other NixOS modules here
+{ pkgs, ... }: {
   imports = [
-    # If you want to use modules from other flakes (such as nixos-hardware):
-    # inputs.hardware.nixosModules.common-cpu-amd
-    # inputs.hardware.nixosModules.common-ssd
-
-    # You can also split up your configuration and import pieces of it here:
-    # ./users.nix
-
-    # Import your generated (nixos-generate-config) hardware configuration
     # ./hardware-configuration.nix
-		# ./services/home-assistant.nix
+    # ./networking.nix # generated at runtime by nixos-infect
+
+    # Wireguard
+    # ./wireguard.nix
+
+    # Nginx
+    # ./nginx.nix
+
+    # gitea
+    # ./gitea-runner.nix
+
+    # podman
+    # ./docker.nix
+
+    # adguard
+    # ./adguard.nix
   ];
 
-  nixpkgs = {
-    # You can add overlays here
-    overlays = [
-      # If you want to use overlays exported from other flakes:
-      # neovim-nightly-overlay.overlays.default
+  boot.tmp.cleanOnBoot = true;
+  zramSwap.enable = true;
 
-      # Or define it inline, for example:
-      # (final: prev: {
-      #   hi = final.hello.overrideAttrs (oldAttrs: {
-      #     patches = [ ./change-hello-to-hi.patch ];
-      #   });
-      # })
-    ];
-    # Configure your nixpkgs instance
-    config = {
-      # Disable if you don't want unfree packages
-      allowUnfree = true;
-    };
-  };
+  programs.mosh.enable = true;
 
-  nix =
-    let
-      flakeInputs = lib.filterAttrs (_: lib.isType "flake") inputs;
-    in
-    {
-      settings = {
-        # Enable flakes and new 'nix' command
-        experimental-features = "nix-command flakes";
-        # Opinionated: disable global registry
-        flake-registry = "";
-        # Workaround for https://github.com/NixOS/nix/issues/9574
-        nix-path = config.nix.nixPath;
-      };
-      # Opinionated: disable channels
-      channel.enable = false;
+	nix.settings.experimental-features = "nix-command flakes";
 
-      # Opinionated: make flake registry and nix path match flake inputs
-      registry = lib.mapAttrs (_: flake: { inherit flake; }) flakeInputs;
-      nixPath = lib.mapAttrsToList (n: _: "${n}=flake:${n}") flakeInputs;
-    };
+  # docker
+  environment.systemPackages = with pkgs; [ vim git ];
 
-  networking.hostName = "schubert";
-
-  users.users = {
-    matthias = {
-      # If you do, you can skip setting a root password by passing '--no-root-passwd' to nixos-install.
-      # Be sure to change it (using passwd) after rebooting!
-      initialHashedPassword = "$y$j9T$zsUyLA4BaDPctdPaprx4m.$gZ0dqx9gwbQ4bsVbEyKVKUkG6n979Amn1aC2e5zjCR5";
-      isNormalUser = true;
-      openssh.authorizedKeys.keys = [
-        mainKey
-      ];
-      # TODO: Be sure to add any other groups you need (such as networkmanager, audio, docker, etc)
-      extraGroups = [ "wheel" ];
-    };
-  };
-
-  # This setups a SSH server. Very important if you're setting up a headless system.
-  # Feel free to remove if you don't need it.
+  networking.domain = "schubert";
   services.openssh = {
     enable = true;
-    settings = {
-      # Opinionated: forbid root login through SSH.
-      PermitRootLogin = "yes";
-      # Opinionated: use keys only.
-      # Remove if you want to SSH using passwords
-      PasswordAuthentication = false;
-    };
+    settings.PermitRootLogin = "prohibit-password";
+    passwordAuthentication = false;
+  };
+  users.users.root.openssh.authorizedKeys.keys = [ sshPublicKey ];
+
+	networking = {
+		hostName = "schubert";
+		useDHCP = false;
+		interfaces = {
+			wlan.useDHCP = true;
+			eth0.useDHCP = true;
+		};
+	};
+
+  # create user matthias
+  users.users.matthias = {
+    isNormalUser = true;
+    extraGroups = [ "wheel" "nix" "docker" ];
+    openssh.authorizedKeys.keys = [ sshPublicKey ];
+		hashedPassword = "$y$j9T$A23QXnn.XjIZCEjSnS1FH.$WDnkSFGM/Ry.wRsHWEW5Wjc14ZPFLWT4SHkbo9cAct9";
   };
 
-  # https://nixos.wiki/wiki/FAQ/When_do_I_update_stateVersion
-  system.stateVersion = "23.05";
-	networking.firewall.allowedTCPPorts = [ 22 80 ];
+  nix.allowedUsers = [
+    "matthias"
+    "root"
+  ];
+
+	hardware = {
+          bluetooth.enable = true;
+          raspberry-pi = {
+            config = {
+              all = {
+                base-dt-params = {
+                  # enable autoprobing of bluetooth driver
+                  # https://github.com/raspberrypi/linux/blob/c8c99191e1419062ac8b668956d19e788865912a/arch/arm/boot/dts/overlays/README#L222-L224
+                  krnbt = {
+                    enable = true;
+                    value = "on";
+                  };
+                };
+								};
+								};
+            };
+  };
 }
