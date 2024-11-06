@@ -11,9 +11,13 @@
     kagi.url = "git+https://git.mjwcodr.de/mjwcodr/kagi.git";
     qobuz-dl.url = "git+https://git.mjwcodr.de/mjwcodr/Qobuz-dl";
     raspberry-pi-nix.url = "github:nix-community/raspberry-pi-nix";
+		comin = {
+			url = "github:nlewo/comin";
+			inputs.nixpkgs.follows = "nixpkgs";
+		};
   };
 
-  outputs = { self, nixpkgs, qobuz-dl, raspberry-pi-nix, agenix, stylix, website
+  outputs = { self, nixpkgs, qobuz-dl, raspberry-pi-nix, agenix, stylix, website, comin
     , deploy-rs, kagi, ... }:
     let
       system = "x86_64-linux";
@@ -125,7 +129,19 @@
         "smetana" = nixpkgs.lib.nixosSystem {
           system = "x86_64-linux";
           modules =
-            [ agenix.nixosModules.default ./hosts/smetana/configuration.nix ];
+            [ agenix.nixosModules.default ./hosts/smetana/configuration.nix
+							 comin.nixosModules.comin
+          	{
+            services.comin = {
+              enable = true;
+              remotes = [{
+                name = "origin";
+                url = "https://git.mjwcodr.de/mjwcodr/nixos-config.git";
+                branches.main.name = "main";
+              }];
+            };
+          	}
+						];
         };
         # a raspberry pi 5
         "schubert" = nixpkgs.lib.nixosSystem {
