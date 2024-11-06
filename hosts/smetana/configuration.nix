@@ -21,7 +21,11 @@ in { pkgs, ... }: {
     ./docker.nix
 
     # adguard
-    # ./adguard.nix
+
+    ./adguard.nix
+
+		# home assistant on other host
+		./ahrensfelde.nix
   ];
 
   boot.tmp.cleanOnBoot = true;
