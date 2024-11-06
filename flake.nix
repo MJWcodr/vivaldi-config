@@ -126,7 +126,26 @@
           modules =
             [ agenix.nixosModules.default ./hosts/smetana/configuration.nix ];
         };
-      };
+				# a raspberry pi 5
+				"schubert" = nixpkgs.lib.nixosSystem {
+					system = "aarch64-linux";
+					modules = [
+						agenix.nixosModules.default
+						./hosts/schubert/configuration.nix
+					];
+				};
+     	};
+
+			deploy.nodes."schubert" = {
+				hostname = "schubert";
+				profiles.system = {
+					sshUser = "root";
+					user = "root";
+					remoteBuild = true;
+					path = deploy-rs.lib.x86_64-linux.activate.nixos
+						self.nixosConfigurations."schubert";
+				};
+			};
 
       deploy.nodes."smetana" = {
         hostname = "gateway.mjwcodr.de";
