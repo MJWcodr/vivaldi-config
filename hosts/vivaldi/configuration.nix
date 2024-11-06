@@ -62,7 +62,7 @@ in
     ./services/jellyfin.nix
 
     # Paperless
-    # ./services/paperless.nix # Temporarily disabled
+    ./services/paperless.nix # Temporarily disabled
 
     # Home Assistant
     ./services/home-assistant.nix
