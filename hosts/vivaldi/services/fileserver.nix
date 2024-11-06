@@ -30,14 +30,12 @@
         "--keep-monthly 6"
         "--keep-yearly 2"
       ];
-      rcloneOptions = {
-        logFile = "/var/log/restic.log";
-      };
+      rcloneOptions = { logFile = "/var/log/restic.log"; };
       timerConfig = {
         # Run every day at 3am
-				OnCalendar = "daily";
-				Persistent = true;
-				RandomizedDelaySec = "1h";
+        OnCalendar = "daily";
+        Persistent = true;
+        RandomizedDelaySec = "1h";
       };
     };
   };

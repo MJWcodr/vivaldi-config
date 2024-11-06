@@ -1,5 +1,4 @@
-{ config, pkgs, ... }:
-{
+{ config, pkgs, ... }: {
 
   # Import other Packages
   imports = [
@@ -19,7 +18,7 @@
     ../../dotfiles/gnome/shortcuts.nix
     ../../dotfiles/entertainment/entertainment.nix
 
-		../../dotfiles/neovim.nix
+    ../../dotfiles/neovim.nix
   ];
 
   # Home Manager needs a bit of information about you and the paths it should
@@ -39,14 +38,14 @@
   home.stateVersion = "23.11"; # Please read the comment before changing.
 
   home.packages = with pkgs; [
-		tree
+    tree
     restic
     rclone
     obsidian
     languagetool
     protonmail-bridge
 
-		cachix
+    cachix
 
     fortune
 
@@ -69,7 +68,7 @@
     nixfmt-classic
     vale
     luajitPackages.lua-lsp
-		ccls
+    ccls
     nixd
     luajitPackages.luacheck
     terraform-ls
@@ -141,8 +140,8 @@
     gnome-podcasts
     # transmission_4-gtk
 
-		tinymist
-		bash-language-server
+    tinymist
+    bash-language-server
 
     # Communication
     element-desktop
@@ -152,8 +151,8 @@
 
     keepassxc
 
-		todo-txt-cli
-		conky
+    todo-txt-cli
+    conky
   ];
 
   # Home Manager is pretty good at managing dotfiles. The primary way to manage
@@ -163,37 +162,37 @@
     # # the Nix store. Activating the configuration will then make '~/.screenrc' a
     # # symlink to the Nix store copy.
     # ".screenrc".source = dotfiles/screenrc;
-		".config/conky.conf".source = ../../dotfiles/conky.conf;
+    ".config/conky.conf".source = ../../dotfiles/conky.conf;
     ".config/restic".source = ../../dotfiles/restic;
     ".config/rclone".source = ../../dotfiles/rclone;
     ".config/images".source = ../../dotfiles/images;
-		".todo".source = ../../dotfiles/todo;
+    ".todo".source = ../../dotfiles/todo;
     # Configure autostart to run "/etc/nixos/dotfiles/bin/checkin.sh" on login
     ".config/autostart/checkin.desktop".text = ''
-      			[Desktop Entry]
-      			Type=Application
-      			Exec=kgx --wait /etc/nixos/dotfiles/bin/checkin.sh && exit
-      			Hidden=false
-      			NoDisplay=false
-      			X-GNOME-Autostart-enabled=true
-      			Name[en_US]=Checkin
-      			Name=Checkin
-      			Comment[en_US]=Checkin
-      			Comment=Checkin
-      			'';
-		# autostart for conky
-		".config/autostart/conky.desktop".text = ''
-			[Desktop Entry]
-			Type=Application
-			Exec=conky -c ${config.home.homeDirectory}/.config/conky.conf
-			Hidden=false
-			NoDisplay=false
-			X-GNOME-Autostart-enabled=true
-			Name[en_US]=Conky
-			Name=Conky
-			Comment[en_US]=Conky
-			Comment=Conky
-			'';
+      [Desktop Entry]
+      Type=Application
+      Exec=kgx --wait /etc/nixos/dotfiles/bin/checkin.sh && exit
+      Hidden=false
+      NoDisplay=false
+      X-GNOME-Autostart-enabled=true
+      Name[en_US]=Checkin
+      Name=Checkin
+      Comment[en_US]=Checkin
+      Comment=Checkin
+    '';
+    # autostart for conky
+    ".config/autostart/conky.desktop".text = ''
+      [Desktop Entry]
+      Type=Application
+      Exec=conky -c ${config.home.homeDirectory}/.config/conky.conf
+      Hidden=false
+      NoDisplay=false
+      X-GNOME-Autostart-enabled=true
+      Name[en_US]=Conky
+      Name=Conky
+      Comment[en_US]=Conky
+      Comment=Conky
+    '';
   };
 
   # You can also manage environment variables but you will have to manually
@@ -221,7 +220,6 @@
   # Configure the gnome desktop
   # Setup Backup using Restic and Rclone
 
-
   # Add Applications to Gnome
   # As already mentioned
   targets.genericLinux.enable = true;
@@ -244,24 +242,19 @@
     pinentryPackage = pkgs.pinentry-gnome3;
   };
 
-
   systemd.user.services.conky = {
-    Unit = {
-      Description = "Conky System Monitor";
-    };
-    Install = {
-      WantedBy = [ "default.target" ];
-    };
+    Unit = { Description = "Conky System Monitor"; };
+    Install = { WantedBy = [ "default.target" ]; };
     Service = {
-			Type = "simple";
+      Type = "simple";
       ExecStart = "${pkgs.writeShellScript "conky" ''
-				# ${pkgs.conky}/bin/conky -c ${config.home.homeDirectory}/.config/conky.conf
-				${pkgs.conky}/bin/conky
+        # ${pkgs.conky}/bin/conky -c ${config.home.homeDirectory}/.config/conky.conf
+        ${pkgs.conky}/bin/conky
       ''}";
     };
   };
 
-	services.copyq.enable = true;
+  services.copyq.enable = true;
 
   nixpkgs.config.permittedInsecurePackages = [ "nix-2.16.2" ];
   # Let Home Manager install and manage itself.

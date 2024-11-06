@@ -52,8 +52,7 @@ let
   webdavHost = "dav.${domain}";
   webdavPort = "9100";
 
-in
-{
+in {
 
   services.nginx = {
     enable = true;

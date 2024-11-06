@@ -34,7 +34,7 @@
     dedicatedServer.openFirewall =
       true; # Open ports in the firewall for Source Dedicated Server
   };
-	hardware.graphics.enable32Bit = true; # Enable 32bit libs that steam uses
+  hardware.graphics.enable32Bit = true; # Enable 32bit libs that steam uses
 
   # Enable Stadia Controller
   services.udev.extraRules = ''

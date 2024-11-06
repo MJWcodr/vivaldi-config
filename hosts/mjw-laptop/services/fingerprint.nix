@@ -2,8 +2,6 @@
 
 {
 
-
-
   services.udev.extraRules = ''
     # Goodix Fingerprint Sensor
     SUBSYSTEM=="usb", ATTRS{idVendor}=="27c6", ATTRS{idProduct}=="538c", ATTRS{dev}=="*", TEST=="power/control", ATTR{power/control}="auto", MODE="0660", GROUP="plugdev"

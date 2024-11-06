@@ -1,8 +1,7 @@
 let
   sshPublicKey =
     "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIOiHRSsiYZ+pTA7L67XF6y1egdXhJOv09cjr4QhYiIPu";
-in
-{ pkgs, ... }: {
+in { pkgs, ... }: {
   imports = [
     # ./hardware-configuration.nix
     # ./networking.nix # generated at runtime by nixos-infect
@@ -16,8 +15,8 @@ in
     # gitea
     # ./gitea-runner.nix
 
-		# Home Assistant
-		./services/home-assistant.nix
+    # Home Assistant
+    ./services/home-assistant.nix
 
     # podman
     # ./docker.nix
@@ -31,7 +30,7 @@ in
 
   programs.mosh.enable = true;
 
-	nix.settings.experimental-features = "nix-command flakes";
+  nix.settings.experimental-features = "nix-command flakes";
 
   # docker
   environment.systemPackages = with pkgs; [ vim git ];
@@ -44,26 +43,24 @@ in
   };
   users.users.root.openssh.authorizedKeys.keys = [ sshPublicKey ];
 
-	networking = {
-		hostName = "schubert";
-		useDHCP = false;
-		interfaces = {
-			wlan.useDHCP = true;
-			eth0.useDHCP = true;
-		};
-	};
+  networking = {
+    hostName = "schubert";
+    useDHCP = false;
+    interfaces = {
+      wlan.useDHCP = true;
+      eth0.useDHCP = true;
+    };
+  };
 
   # create user matthias
   users.users.matthias = {
     isNormalUser = true;
     extraGroups = [ "wheel" "nix" "docker" ];
     openssh.authorizedKeys.keys = [ sshPublicKey ];
-		hashedPassword = "$y$j9T$A23QXnn.XjIZCEjSnS1FH.$WDnkSFGM/Ry.wRsHWEW5Wjc14ZPFLWT4SHkbo9cAct9";
+    hashedPassword =
+      "$y$j9T$A23QXnn.XjIZCEjSnS1FH.$WDnkSFGM/Ry.wRsHWEW5Wjc14ZPFLWT4SHkbo9cAct9";
   };
 
-  nix.allowedUsers = [
-    "matthias"
-    "root"
-  ];
+  nix.allowedUsers = [ "matthias" "root" ];
 
 }

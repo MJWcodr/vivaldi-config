@@ -15,11 +15,11 @@ with lib;
   config = mkIf config.services.gnome3.gnome-remote-desktop.enable {
     services.pipewire.enable = true;
 
-		services.xserver.enable = true;
+    services.xserver.enable = true;
 
-		services.xrdp.enable = true;
-		services.xrdp.defaultWindowManager = "gnome-remote-desktop";
-		services.xrdp.openFirewall = true;
+    services.xrdp.enable = true;
+    services.xrdp.defaultWindowManager = "gnome-remote-desktop";
+    services.xrdp.openFirewall = true;
 
     systemd.packages = [ pkgs.gnome-remote-desktop ];
   };

@@ -8,14 +8,6 @@ pkgs.stdenv.mkDerivation {
     sha256 = "sha256-zDAJze5+vIJPlNG8mNc0Ldbj101GjJfzwDMxbYSjph0=";
   };
 
-
-  buildPhase = ''
-    		cd $src
-    		./configure  --prefix=$out
-
-    		make
-
-    	'';
-
+  buildPhase = "	cd $src\n	./configure  --prefix=$out\n\n	make\n\n";
 
 }

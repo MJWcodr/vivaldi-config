@@ -6,8 +6,7 @@ let
   vivaldi =
     "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIF7iwA1DTPIsyLbHeFFnC9wa/Sd/np54NVgTFaKHoNFf";
   smetana = "";
-in
-{
+in {
   # Backup Keys
   "secrets/rclone_backup.age".publicKeys = [ vivaldi matthias ];
   "secrets/restic_backup.age".publicKeys = [ vivaldi matthias ];
@@ -30,8 +29,8 @@ in
   # Paperless
   "secrets/paperless.age".publicKeys = [ vivaldi matthias ];
 
-	# Qobuz Downloader
-	"secrets/qobuzConfig.age".publicKeys = [ vivaldi matthias ];
+  # Qobuz Downloader
+  "secrets/qobuzConfig.age".publicKeys = [ vivaldi matthias ];
 
   # Radicale
   "secrets/radicale-auth.age".publicKeys = [ vivaldi matthias ];

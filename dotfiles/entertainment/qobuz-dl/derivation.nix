@@ -1,20 +1,13 @@
-{ lib
-, buildPythonPackage
-, fetchPypi
+{ lib, buildPythonPackage, fetchPypi
 
-  # build-system
+# build-system
 , setuptools-scm
 
-  # dependencies
-, attrs
-, pluggy
-, py
-, setuptools
-, six
+# dependencies
+, attrs, pluggy, py, setuptools, six
 
-  # buildInputs
-, python3Packages
-}:
+# buildInputs
+, python3Packages }:
 with python3Packages;
 buildPythonPackage rec {
   pname = "qobuz-dl";

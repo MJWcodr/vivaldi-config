@@ -37,12 +37,12 @@
           ignorePerms = true;
           devices = [ "mjw-laptop" "pixel6a" ];
         };
-				"Diary" = {
-					id = "oyniv-xxcpq";
-					path = "/srv/data/Diary";
-					ignorePerms = true;
-					devices = [ "mjw-laptop" "pixel6a" ];
-				};
+        "Diary" = {
+          id = "oyniv-xxcpq";
+          path = "/srv/data/Diary";
+          ignorePerms = true;
+          devices = [ "mjw-laptop" "pixel6a" ];
+        };
       };
       devices = {
         "mjw-laptop" = {

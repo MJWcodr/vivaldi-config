@@ -99,33 +99,32 @@
     };
 
     shellInit = ''
-            			# Greeting
-            			function fish_greeting
-            				figlet -f slant "$hostname"
-            				fortune
-            			end
+                  			# Greeting
+                  			function fish_greeting
+                  				figlet -f slant "$hostname"
+                  				fortune
+                  			end
 
-            			set -l nix_shell_info (
-             			 if test -n "$IN_NIX_SHELL"
-                	 echo -n "<nix-shell> "
-              		end
+                  			set -l nix_shell_info (
+                   			 if test -n "$IN_NIX_SHELL"
+                      	 echo -n "<nix-shell> "
+                    		end
 
-									export TODO_FILE="$HOME/Documents/Diary/20.\ Listen/10.\ ToDos/todo.txt"
+      									export TODO_FILE="$HOME/Documents/Diary/20.\ Listen/10.\ ToDos/todo.txt"
 
-      						export KAGI_API_KEY=$(pass dev/kagi.com/api-key)
+            						export KAGI_API_KEY=$(pass dev/kagi.com/api-key)
 
-      						export PATH="$HOME/.local/bin:$PATH"
-      						export PATH="$HOME/.cargo/bin:$PATH"
-      						export PATH="$HOME/go/bin:$PATH"
-            			)
+            						export PATH="$HOME/.local/bin:$PATH"
+            						export PATH="$HOME/.cargo/bin:$PATH"
+            						export PATH="$HOME/go/bin:$PATH"
+                  			)
 
-      						# fish_config theme save "Catppuccin Mocha" # currently broken
-      						zoxide init fish --cmd j | source
-      	     			'';
+            						# fish_config theme save "Catppuccin Mocha" # currently broken
+            						zoxide init fish --cmd j | source
+            	     			'';
   };
 
   # programs.zioxide.enable = true;
-
 
   # move the fish theme to the right place
   #home.file.".config/fish/themes/mocha" = {

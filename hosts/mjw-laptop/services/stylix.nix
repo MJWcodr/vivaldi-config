@@ -6,8 +6,7 @@ let
     rev = "...";
     sha256 = "...";
   };
-in
-{
+in {
   imports = [ (import stylix).homeManagerModules.stylix ];
 
   stylix = {

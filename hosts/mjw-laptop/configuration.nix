@@ -9,8 +9,7 @@ let
     sha256 = "sha256:0kg9iaixqygpncw7avgh1grwyjgnfc9i7k9pk8hc4xrvr8jv2l3c";
   };
 
-in
-{
+in {
   imports = [
     # Enable Home-Manager
     (import "${home-manager}/nixos")
@@ -25,10 +24,10 @@ in
     # Include the wireguard configuration
     ./services/wireguard.nix
 
-		# ../../modules/qobuz-downloader.nix
+    # ../../modules/qobuz-downloader.nix
   ];
 
-	programs.nix-ld.enable = true;
+  programs.nix-ld.enable = true;
 
   home-manager.users.matthias = {
     # The home.stateVersion option does not have a default and must be set
@@ -90,15 +89,15 @@ in
     };
   };
 
-	services.displayManager.defaultSession = "gnome";
+  services.displayManager.defaultSession = "gnome";
 
   boot.binfmt.registrations.appimage = {
     wrapInterpreterInShell = false;
     interpreter = "${pkgs.appimage-run}/bin/appimage-run";
     recognitionType = "magic";
     offset = 0;
-    mask = ''\xff\xff\xff\xff\x00\x00\x00\x00\xff\xff\xff'';
-    magicOrExtension = ''\x7fELF....AI\x02'';
+    mask = "\\xff\\xff\\xff\\xff\\x00\\x00\\x00\\x00\\xff\\xff\\xff";
+    magicOrExtension = "\\x7fELF....AI\\x02";
   };
 
   # Configure keymap in X11
@@ -151,7 +150,6 @@ in
     		::1 localhost
   '';
 
-
   # Define a user account. Don't forget to set a password with ‘passwd’.
   users.users.matthias = {
     isNormalUser = true;
@@ -165,9 +163,9 @@ in
       git
       transmission_4
       transmission_4-gtk
-			typst-lsp
-			tinymist
-			websocat
+      typst-lsp
+      tinymist
+      websocat
     ];
   };
 
@@ -178,9 +176,8 @@ in
   # Allow unfree packages
   nixpkgs.config.allowUnfree = true;
 
-  nixpkgs.config.allowUnfreePredicate = pkg: builtins.elem (lib.getName pkg) [
-    "maltego"
-  ];
+  nixpkgs.config.allowUnfreePredicate = pkg:
+    builtins.elem (lib.getName pkg) [ "maltego" ];
 
   system.autoUpgrade = {
     enable = true;
@@ -215,28 +212,24 @@ in
   # Bluetooth
   ##########
 
-  hardware.bluetooth.settings = {
-    General = {
-      Experimental = true;
-    };
-  };
+  hardware.bluetooth.settings = { General = { Experimental = true; }; };
 
-	##########
-	# Qobuz Downloader
-	##########
+  ##########
+  # Qobuz Downloader
+  ##########
 
-	# age.secrets = {
-	#	qobuzConfig = {
-	#		file = ../../secrets/qobuzConfig.age;
-	#		owner = config.services.qobuz-downloader.user;
-	#	};
-	#};
+  # age.secrets = {
+  #	qobuzConfig = {
+  #		file = ../../secrets/qobuzConfig.age;
+  #		owner = config.services.qobuz-downloader.user;
+  #	};
+  #};
 
-	# services.qobuz-downloader = {
-	#	enable = true;
-	#	user = "matthias";
-	#	configFilePath = config.age.secrets.qobuzConfig.path;
-	#};
+  # services.qobuz-downloader = {
+  #	enable = true;
+  #	user = "matthias";
+  #	configFilePath = config.age.secrets.qobuzConfig.path;
+  #};
 
   ##########
   # Finger Print Reader
@@ -246,7 +239,8 @@ in
   # If simply enabling fprintd is not enough, try enabling fprintd.tod...
   services.fprintd.tod.enable = true;
   # ...and use one of the next four drivers
-  services.fprintd.tod.driver = pkgs.libfprint-2-tod1-goodix; # Goodix driver module
+  services.fprintd.tod.driver =
+    pkgs.libfprint-2-tod1-goodix; # Goodix driver module
   # services.fprintd.tod.driver = pkgs.libfprint-2-tod1-elan # Elan(04f3:0c4b) driver
   # services.fprintd.tod.driver = pkgs.libfprint-2-tod1-vfs0090; # driver for 2016 ThinkPads
   # services.fprintd.tod.driver = pkgs.libfprint-2-tod1-goodix-550a # Goodix 550a driver (from Lenovo)
@@ -255,25 +249,22 @@ in
   # Hidraw
   ##########
 
-  users.groups.hidraw = {
-    gid = 1010;
-  };
+  users.groups.hidraw = { gid = 1010; };
 
-  services.udev.extraRules = ''
-    		# https://unix.stackexchange.com/a/85459
-    		# Allow all users to access hidraw devices
-    		KERNEL=="hidraw*", SUBSYSTEM=="hidraw", MODE="0660", GROUP="hidraw"
-    	'';
+  services.udev.extraRules =
+    "	# https://unix.stackexchange.com/a/85459\n	# Allow all users to access hidraw devices\n	KERNEL==\"hidraw*\", SUBSYSTEM==\"hidraw\", MODE=\"0660\", GROUP=\"hidraw\"\n";
 
   ##########
   # Enable Experimental Features
   ##########
 
   nix.settings.experimental-features = "nix-command flakes";
-	nix.settings.auto-optimise-store = true;
-	nix.settings.trusted-users = [ "matthias" ];
+  nix.settings.auto-optimise-store = true;
+  nix.settings.trusted-users = [ "matthias" ];
 
-	nix.settings.trusted-public-keys = [ "nix-community.cachix.org-1:mB9FSh9qf2dCimDSUo8Zy7bkq5CX+/rkCWyvRCYg3Fs=" ];
+  nix.settings.trusted-public-keys = [
+    "nix-community.cachix.org-1:mB9FSh9qf2dCimDSUo8Zy7bkq5CX+/rkCWyvRCYg3Fs="
+  ];
 
   # Open ports in the firewall.
   networking.firewall.allowedTCPPorts = [ 5173 ];

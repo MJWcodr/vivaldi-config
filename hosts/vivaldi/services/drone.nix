@@ -1,8 +1,6 @@
 { config, pkgs, ... }:
-let
-  droneserver = config.users.users.droneserver.name;
-in
-{
+let droneserver = config.users.users.droneserver.name;
+in {
 
   ##########
   # Secrets
@@ -12,9 +10,7 @@ in
       file = ../secrets/drone-server.age;
       owner = "droneserver";
     };
-    sslrootcert = {
-      file = ../secrets/sslroot.crt.age;
-    };
+    sslrootcert = { file = ../secrets/sslroot.crt.age; };
   };
 
   ##########
@@ -31,21 +27,21 @@ in
   # Drone server
   system.activationScripts.drone-server = {
     text = ''
-      			mkdir -p /var/lib/drone
-      			chown droneserver:droneserver /var/lib/drone
+            			mkdir -p /var/lib/drone
+            			chown droneserver:droneserver /var/lib/drone
 
-						touch /var/log/drone/drone-server.log
-						chown droneserver:droneserver /var/log/drone/drone-server.log
+      						touch /var/log/drone/drone-server.log
+      						chown droneserver:droneserver /var/log/drone/drone-server.log
 
-						touch /var/log/drone/drone-runner-docker.log
-						chown drone-runner-docker:drone-runner-docker /var/log/drone/drone-runner-docker.log
+      						touch /var/log/drone/drone-runner-docker.log
+      						chown drone-runner-docker:drone-runner-docker /var/log/drone/drone-runner-docker.log
 
-						touch /var/log/drone/drone-runner-exec.log
-						chown drone-runner-exec:drone-runner-exec /var/log/drone/drone-runner-exec.log
+      						touch /var/log/drone/drone-runner-exec.log
+      						chown drone-runner-exec:drone-runner-exec /var/log/drone/drone-runner-exec.log
 
-						touch /var/log/drone/drone-runner-ssh.log
-						chown drone-runner-ssh:drone-runner-ssh /var/log/drone/drone-runner-ssh.log
-      		'';
+      						touch /var/log/drone/drone-runner-ssh.log
+      						chown drone-runner-ssh:drone-runner-ssh /var/log/drone/drone-runner-ssh.log
+            		'';
   };
 
   systemd.services.drone-server = {
@@ -55,9 +51,7 @@ in
     serviceConfig = {
       # Used for secrets
       EnvironmentFile = config.age.secrets.drone-server.path;
-      ExecStart = ''
-        				${pkgs.drone}/bin/drone-server
-        			'';
+      ExecStart = "	${pkgs.drone}/bin/drone-server\n";
       Environment = [
         "DRONE_DATABASE_DRIVER=sqlite3"
         "DRONE_DATABASE_DATASOURCE=/var/lib/drone/drone.sqlite"
@@ -142,20 +136,9 @@ in
     ### MANUALLY RESTART SERVICE IF CHANGED
     restartIfChanged = true;
     confinement.enable = true;
-    confinement.packages = [
-      pkgs.git
-      pkgs.gnutar
-      pkgs.bash
-      pkgs.nixFlakes
-      pkgs.gzip
-    ];
-    path = [
-      pkgs.git
-      pkgs.gnutar
-      pkgs.bash
-      pkgs.nixFlakes
-      pkgs.gzip
-    ];
+    confinement.packages =
+      [ pkgs.git pkgs.gnutar pkgs.bash pkgs.nixFlakes pkgs.gzip ];
+    path = [ pkgs.git pkgs.gnutar pkgs.bash pkgs.nixFlakes pkgs.gzip ];
     serviceConfig = {
       Environment = [
         "DRONE_RPC_PROTO=http"
@@ -170,18 +153,24 @@ in
       BindPaths = [
         "/nix/var/nix/daemon-socket/socket"
         "/run/nscd/socket"
-				"/var/log/drone:/var/log/drone"
+        "/var/log/drone:/var/log/drone"
       ];
       BindReadOnlyPaths = [
         "/etc/passwd:/etc/passwd"
         "/etc/group:/etc/group"
         "/nix/var/nix/profiles/system/etc/nix:/etc/nix"
-        "${config.environment.etc."ssl/certs/ca-certificates.crt".source}:/etc/ssl/certs/ca-certificates.crt"
-        "${config.environment.etc."ssh/ssh_known_hosts".source}:/etc/ssh/ssh_known_hosts"
-        "${builtins.toFile "ssh_config" ''
-          Host git.ayats.org
-          ForwardAgent yes
-        ''}:/etc/ssh/ssh_config"
+        "${
+          config.environment.etc."ssl/certs/ca-certificates.crt".source
+        }:/etc/ssl/certs/ca-certificates.crt"
+        "${
+          config.environment.etc."ssh/ssh_known_hosts".source
+        }:/etc/ssh/ssh_known_hosts"
+        "${
+          builtins.toFile "ssh_config" ''
+            Host git.ayats.org
+            ForwardAgent yes
+          ''
+        }:/etc/ssh/ssh_config"
         "/etc/machine-id"
         "/etc/resolv.conf"
         "/nix/"
@@ -207,18 +196,10 @@ in
   systemd.services.drone-runner-ssh = {
     enable = true;
     wantedBy = [ "multi-user.target" ];
-    script = ''
-      			${pkgs.drone-runner-ssh}/bin/drone-runner-ssh
-      		'';
+    script = "	${pkgs.drone-runner-ssh}/bin/drone-runner-ssh\n";
     confinement.enable = true;
-    confinement.packages = [
-      pkgs.git
-      pkgs.gnutar
-      pkgs.bash
-      pkgs.nixFlakes
-      pkgs.gzip
-      pkgs.openssh
-    ];
+    confinement.packages =
+      [ pkgs.git pkgs.gnutar pkgs.bash pkgs.nixFlakes pkgs.gzip pkgs.openssh ];
     serviceConfig = {
       Environment = [
         "DRONE_RPC_PROTO=http"
@@ -236,7 +217,6 @@ in
 
   };
 
-
   ##########
   # Nginx
   ##########
@@ -252,9 +232,7 @@ in
       addr = "vivaldi.fritz.box";
     }];
 
-    locations."/" = {
-      proxyPass = "http://localhost:3030/";
-    };
+    locations."/" = { proxyPass = "http://localhost:3030/"; };
   };
 
   networking.firewall.allowedTCPPorts = [ 3002 ];

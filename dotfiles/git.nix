@@ -1,9 +1,6 @@
 { pkgs, ... }: {
 
-
-  home.packages = with pkgs; [
-    pass-git-helper
-  ];
+  home.packages = with pkgs; [ pass-git-helper ];
 
   home.file.".config/pass-git-helper/git-pass-mapping.ini".text = ''
     [git.mjwcodr.de]

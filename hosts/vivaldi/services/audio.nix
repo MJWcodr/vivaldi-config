@@ -4,10 +4,10 @@
   services.minidlna = {
     enable = true;
     settings = {
-			friendly_name = "NixOS Media Server";
+      friendly_name = "NixOS Media Server";
       port = 8200;
       media_dir = [ "/srv/music" ];
-			inotify = "yes";
+      inotify = "yes";
     };
     openFirewall = true;
   };

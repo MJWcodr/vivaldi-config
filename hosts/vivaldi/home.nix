@@ -1,5 +1,4 @@
-{ config, pkgs, ... }:
-{
+{ config, pkgs, ... }: {
 
   # Import other Packages
   imports = [
@@ -19,7 +18,7 @@
     #../../dotfiles/gnome/shortcuts.nix
     ../../dotfiles/entertainment/entertainment.nix
 
-		../../dotfiles/neovim.nix
+    ../../dotfiles/neovim.nix
   ];
 
   # Home Manager needs a bit of information about you and the paths it should
@@ -129,17 +128,17 @@
     ".config/images".source = ../../dotfiles/images;
     # Configure autostart to run "/etc/nixos/dotfiles/bin/checkin.sh" on login
     ".config/autostart/checkin.desktop".text = ''
-      			[Desktop Entry]
-      			Type=Application
-      			Exec=kgx --wait /etc/nixos/dotfiles/bin/checkin.sh && exit
-      			Hidden=false
-      			NoDisplay=false
-      			X-GNOME-Autostart-enabled=true
-      			Name[en_US]=Checkin
-      			Name=Checkin
-      			Comment[en_US]=Checkin
-      			Comment=Checkin
-      			'';
+      [Desktop Entry]
+      Type=Application
+      Exec=kgx --wait /etc/nixos/dotfiles/bin/checkin.sh && exit
+      Hidden=false
+      NoDisplay=false
+      X-GNOME-Autostart-enabled=true
+      Name[en_US]=Checkin
+      Name=Checkin
+      Comment[en_US]=Checkin
+      Comment=Checkin
+    '';
   };
 
   # You can also manage environment variables but you will have to manually

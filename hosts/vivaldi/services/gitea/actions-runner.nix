@@ -1,10 +1,4 @@
-{
-  config,
-  self,
-  pkgs,
-  lib,
-  ...
-}:
+{ config, self, pkgs, lib, ... }:
 let
   storeDeps = pkgs.runCommand "store-deps" { } ''
     mkdir -p $out/bin
@@ -31,8 +25,7 @@ let
     cp -a "${pkgs.cacert}/etc/ssl/certs/ca-bundle.crt" $out/etc/ssl/certs/ca-bundle.crt
   '';
   numInstances = 2;
-in
-lib.mkMerge [
+in lib.mkMerge [
   {
     # everything here has no dependencies on the store
     systemd.services.gitea-runner-nix-image = {
@@ -98,9 +91,9 @@ lib.mkMerge [
     users.groups.nixuser = { };
   }
   {
-    systemd.services =
-      lib.genAttrs (builtins.genList (n: "gitea-runner-nix${builtins.toString n}-token") numInstances)
-        (name: {
+    systemd.services = lib.genAttrs
+      (builtins.genList (n: "gitea-runner-nix${builtins.toString n}-token")
+        numInstances) (name: {
           wantedBy = [ "multi-user.target" ];
           after = [ "gitea.service" ];
           environment = {
@@ -109,10 +102,13 @@ lib.mkMerge [
           };
           script = ''
             set -euo pipefail
-            token=$(${lib.getExe self.packages.${pkgs.hostPlatform.system}.gitea} actions generate-runner-token)
+            token=$(${
+              lib.getExe self.packages.${pkgs.hostPlatform.system}.gitea
+            } actions generate-runner-token)
             echo "TOKEN=$token" > /var/lib/gitea-registration/${name}
           '';
-          unitConfig.ConditionPathExists = [ "!/var/lib/gitea-registration/${name}" ];
+          unitConfig.ConditionPathExists =
+            [ "!/var/lib/gitea-registration/${name}" ];
           serviceConfig = {
             User = "gitea";
             Group = "gitea";
@@ -137,24 +133,16 @@ lib.mkMerge [
 
     virtualisation.containers.containersConf.settings = {
       # podman seems to not work with systemd-resolved
-      containers.dns_servers = [
-        "8.8.8.8"
-        "8.8.4.4"
-      ];
+      containers.dns_servers = [ "8.8.8.8" "8.8.4.4" ];
     };
   }
   {
-    systemd.services =
-      lib.genAttrs (builtins.genList (n: "gitea-runner-nix${builtins.toString n}") numInstances)
-        (name: {
-          after = [
-            "${name}-token.service"
-            "gitea-runner-nix-image.service"
-          ];
-          requires = [
-            "${name}-token.service"
-            "gitea-runner-nix-image.service"
-          ];
+    systemd.services = lib.genAttrs
+      (builtins.genList (n: "gitea-runner-nix${builtins.toString n}")
+        numInstances) (name: {
+          after = [ "${name}-token.service" "gitea-runner-nix-image.service" ];
+          requires =
+            [ "${name}-token.service" "gitea-runner-nix-image.service" ];
 
           # TODO: systemd confinment
           serviceConfig = {
@@ -199,12 +187,8 @@ lib.mkMerge [
               "~setdomainname"
               "~sethostname"
             ];
-            RestrictAddressFamilies = [
-              "AF_INET"
-              "AF_INET6"
-              "AF_UNIX"
-              "AF_NETLINK"
-            ];
+            RestrictAddressFamilies =
+              [ "AF_INET" "AF_INET6" "AF_UNIX" "AF_NETLINK" ];
 
             # Needs network access
             PrivateNetwork = false;
@@ -228,28 +212,25 @@ lib.mkMerge [
           };
         });
 
-    services.gitea-actions-runner.instances =
-      lib.genAttrs (builtins.genList (n: "nix${builtins.toString n}") numInstances)
-        (name: {
-          enable = true;
-          name = "nix-runner";
-          # take the git root url from the gitea config
-          # only possible if you've also configured your gitea though the same nix config
-          # otherwise you need to set it manually
-          url = config.services.gitea.settings.server.ROOT_URL;
-          # use your favourite nix secret manager to get a path for this
-          tokenFile = "/var/lib/gitea-registration/gitea-runner-${name}-token";
-          labels = [ "nix:docker://gitea-runner-nix" ];
-          settings = {
-            container.options = "-e NIX_BUILD_SHELL=/bin/bash -e PAGER=cat -e PATH=/bin -e SSL_CERT_FILE=/etc/ssl/certs/ca-bundle.crt --device /dev/kvm -v /nix:/nix -v ${storeDeps}/bin:/bin -v ${storeDeps}/etc/ssl:/etc/ssl --user nixuser --device=/dev/kvm";
-            # the default network that also respects our dns server settings
-            container.network = "host";
-            container.valid_volumes = [
-              "/nix"
-              "${storeDeps}/bin"
-              "${storeDeps}/etc/ssl"
-            ];
-          };
-        });
+    services.gitea-actions-runner.instances = lib.genAttrs
+      (builtins.genList (n: "nix${builtins.toString n}") numInstances) (name: {
+        enable = true;
+        name = "nix-runner";
+        # take the git root url from the gitea config
+        # only possible if you've also configured your gitea though the same nix config
+        # otherwise you need to set it manually
+        url = config.services.gitea.settings.server.ROOT_URL;
+        # use your favourite nix secret manager to get a path for this
+        tokenFile = "/var/lib/gitea-registration/gitea-runner-${name}-token";
+        labels = [ "nix:docker://gitea-runner-nix" ];
+        settings = {
+          container.options =
+            "-e NIX_BUILD_SHELL=/bin/bash -e PAGER=cat -e PATH=/bin -e SSL_CERT_FILE=/etc/ssl/certs/ca-bundle.crt --device /dev/kvm -v /nix:/nix -v ${storeDeps}/bin:/bin -v ${storeDeps}/etc/ssl:/etc/ssl --user nixuser --device=/dev/kvm";
+          # the default network that also respects our dns server settings
+          container.network = "host";
+          container.valid_volumes =
+            [ "/nix" "${storeDeps}/bin" "${storeDeps}/etc/ssl" ];
+        };
+      });
   }
 ]

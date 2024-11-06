@@ -34,7 +34,9 @@
         publicKey = "Y+pFXSFxKdHII4llp74CI9cTLIPos98ylGnktUPUaGA=";
 
         # Forward traffic to the peer.
-        allowedIPs = [ "10.100.0.0/24" ]; # 10.100.0.0/24 is the subnet of the wireguard network
+        allowedIPs = [
+          "10.100.0.0/24"
+        ]; # 10.100.0.0/24 is the subnet of the wireguard network
 
         # The endpoint of the peer.
         endpoint = "gateway.mjwcodr.de:51820";

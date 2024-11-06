@@ -36,7 +36,10 @@ in {
       after = [ "network.target" ];
       wants = [ "network.target" ];
       serviceConfig = {
-        ExecStart = "${pkgs.rclone}/bin/rclone serve webdav --htpasswd ${cfg.htpasswdFile} --baseurl /private  --addr :${toString cfg.internalPrivatePort} ${cfg.serveDir}";
+        ExecStart =
+          "${pkgs.rclone}/bin/rclone serve webdav --htpasswd ${cfg.htpasswdFile} --baseurl /private  --addr :${
+            toString cfg.internalPrivatePort
+          } ${cfg.serveDir}";
         Restart = "always";
         RestartSec = "10";
         StandardOutput = "journal";
@@ -64,7 +67,8 @@ in {
               proxyPass = "http://localhost:${toString cfg.internalPublicPort}";
             };
             "/private" = {
-              proxyPass = "http://localhost:${toString cfg.internalPrivatePort}/private";
+              proxyPass =
+                "http://localhost:${toString cfg.internalPrivatePort}/private";
             };
           };
           listen = [{

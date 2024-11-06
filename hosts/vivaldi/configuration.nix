@@ -11,14 +11,12 @@ let
     url = "https://github.com/nix-community/home-manager/archive/master.tar.gz";
     sha256 = "sha256:0kg9iaixqygpncw7avgh1grwyjgnfc9i7k9pk8hc4xrvr8jv2l3c";
   };
-in
 
-{
+in {
   imports = [
     # Include the results of the hardware scan.
     # Home Manager NixOS
     (import "${home-manager}/nixos")
-
 
     # Secret Management
     ./hardware-configuration.nix
@@ -40,7 +38,7 @@ in
 
     # Gitea
     ./services/gitea.nix
-		# /services/gitea/actions-runner.nix
+    # /services/gitea/actions-runner.nix
 
     # ToDo - Vikunja
     ./services/vikunja.nix
@@ -56,7 +54,7 @@ in
 
     # Workspace for Matthias
     # ../../workspace/workspace.nix
-		# ./services/vnc.nix
+    # ./services/vnc.nix
 
     # Jellyfin
     ./services/jellyfin.nix
@@ -76,23 +74,19 @@ in
     # Mosh
     ./services/mosh.nix
 
-		#./services/pi-hole.nix
+    #./services/pi-hole.nix
 
-		# Audiobookshelf
-		./services/audiobookshelf.nix
+    # Audiobookshelf
+    ./services/audiobookshelf.nix
 
-		# hedgedoc
-		./services/hedgedoc.nix
+    # hedgedoc
+    ./services/hedgedoc.nix
 
-		./services/webdav.nix
+    ./services/webdav.nix
 
-	];
+  ];
 
-	home-manager.users.matthias = {
-	imports = [
-		./home.nix
-	];
-	};
+  home-manager.users.matthias = { imports = [ ./home.nix ]; };
 
   # PKI
   security.pki.certificateFiles = [ ./services/tls/ca.pem ];
@@ -108,19 +102,17 @@ in
     };
   };
 
-	system.autoUpgrade = {
-  	enable = true;
-  	# flake = inputs.self.outPath;
-  	flags = [
-    	"--update-input"
-    	"nixpkgs"
-    	"-L" # print build logs
-  	];
-  	dates = "02:00";
-  	randomizedDelaySec = "45min";
-	};
-
-
+  system.autoUpgrade = {
+    enable = true;
+    # flake = inputs.self.outPath;
+    flags = [
+      "--update-input"
+      "nixpkgs"
+      "-L" # print build logs
+    ];
+    dates = "02:00";
+    randomizedDelaySec = "45min";
+  };
 
   # Bootloader.
   boot.loader.systemd-boot.enable = true;
