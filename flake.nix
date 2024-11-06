@@ -9,10 +9,12 @@
     pre-commit-hooks.url = "github:cachix/git-hooks.nix";
     website.url = "git+https://git.mjwcodr.de/mjwcodr/actual-website.git";
     kagi.url = "git+https://git.mjwcodr.de/mjwcodr/kagi.git";
-		qobuz-dl.url = "git+https://git.mjwcodr.de/mjwcodr/Qobuz-dl";
+    qobuz-dl.url = "git+https://git.mjwcodr.de/mjwcodr/Qobuz-dl";
+    raspberry-pi-nix.url = "github:nix-community/raspberry-pi-nix";
   };
 
-  outputs = { self, nixpkgs, qobuz-dl, agenix, stylix, website, deploy-rs, kagi, ... }:
+  outputs = { self, nixpkgs, qobuz-dl, raspberry-pi-nix, agenix, stylix, website
+    , deploy-rs, kagi, ... }:
     let
       system = "x86_64-linux";
       pkgs = nixpkgs.legacyPackages.${system};
@@ -74,7 +76,7 @@
               environment.systemPackages = [
                 agenix.packages.x86_64-linux.default
                 kagi.defaultPackage.${system}
-								qobuz-dl.packages.${system}.default
+                qobuz-dl.packages.${system}.default
               ];
             }
           ];
@@ -112,11 +114,10 @@
               networking.firewall.allowedTCPPorts = [ 8000 ];
             }
             ./hosts/vivaldi/configuration.nix
-						{
-							environment.systemPackages = [
-								qobuz-dl.packages.${system}.default
-							];
-						}
+            {
+              environment.systemPackages =
+                [ qobuz-dl.packages.${system}.default ];
+            }
           ];
         };
 
@@ -126,26 +127,46 @@
           modules =
             [ agenix.nixosModules.default ./hosts/smetana/configuration.nix ];
         };
-				# a raspberry pi 5
-				"schubert" = nixpkgs.lib.nixosSystem {
-					system = "aarch64-linux";
-					modules = [
-						agenix.nixosModules.default
-						./hosts/schubert/configuration.nix
-					];
-				};
-     	};
+        # a raspberry pi 5
+        "schubert" = nixpkgs.lib.nixosSystem {
+          system = "aarch64-linux";
+          modules = [
+            agenix.nixosModules.default
+            raspberry-pi-nix.nixosModules.raspberry-pi
+            ./hosts/schubert/configuration.nix
+            {
+              raspberry-pi-nix.board = "bcm2712";
+              hardware = {
+                raspberry-pi = {
+                  config = {
+                    all = {
+                      base-dt-params = {
+                        # enable autoprobing of bluetooth driver
+                        # https://github.com/raspberrypi/linux/blob/c8c99191e1419062ac8b668956d19e788865912a/arch/arm/boot/dts/overlays/README#L222-L224
+                        krnbt = {
+                          enable = true;
+                          value = "on";
+                        };
+                      };
+                    };
+                  };
+                };
+              };
+            }
+          ];
+        };
+      };
 
-			deploy.nodes."schubert" = {
-				hostname = "schubert";
-				profiles.system = {
-					sshUser = "root";
-					user = "root";
-					remoteBuild = true;
-					path = deploy-rs.lib.x86_64-linux.activate.nixos
-						self.nixosConfigurations."schubert";
-				};
-			};
+      deploy.nodes."schubert" = {
+        hostname = "schubert";
+        profiles.system = {
+          sshUser = "root";
+          user = "root";
+          remoteBuild = true;
+          path = deploy-rs.lib.x86_64-linux.activate.nixos
+            self.nixosConfigurations."schubert";
+        };
+      };
 
       deploy.nodes."smetana" = {
         hostname = "gateway.mjwcodr.de";
