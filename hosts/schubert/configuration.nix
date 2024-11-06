@@ -62,8 +62,8 @@ in { pkgs, ... }: {
   };
 
   nix.allowedUsers = [ "matthias" "root" ];
-	nix = {
-			substituters = [
+	nix.settings = {
+		substituters = [
         "https://nix-community.cachix.org"
       ];
       trusted-public-keys = [
