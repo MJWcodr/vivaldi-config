@@ -8,7 +8,7 @@
   systemd.services.wireguard-keygen = {
     enable = true;
     after = [ "network.target" ];
-		before = [ "networking.wireguard" ];
+		before = [ "networking.wireguard.service" ];
     path = [ pkgs.bash pkgs.wireguard-tools ];
     script =
       "	mkdir -p /etc/wireguard-keys\n	\n	# check if private key exists\n	if [ -f /etc/wireguard-keys/private ]; then\n		exit 0\n	fi\n\n	wg genkey > /etc/wireguard-keys/private\n	wg pubkey < /etc/wireguard-keys/private > /etc/wireguard-keys/public\n";
