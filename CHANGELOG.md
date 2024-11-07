@@ -1,7 +1,87 @@
-## 0.2.0 (2024-01-17)
+## 0.1.0 (2024-11-07)
+
+### Cosmetic
+
+- format code
+- Change file Formatting
+- Change Secret Naming
 
 ### Feature
 
+- Add Action
+- Add New Music
+- Fix nginx routes
+- Add new website
+- Add comin deployment scheme
+- Change string to int
+- Remove adguard
+- Add ahrensfelde
+- Add stuff
+- Add cachix
+- trust cachig
+- Reactivate paperless
+- Assign ip to wireguard
+- Add Home Assistant to Schubert
+- Add files
+- Add wireguard keys
+- Start wireguard later
+- Add wireguard to schubert
+- Improve schubert
+- Fix Schubert
+- Implement schubert
+- Add Schubert
+- enable flakes on vpn gateway
+- Update Deps
+- Add Music
+- Add Haskell
+- Add tree as default package
+- Add new music
+- Update Flake
+- Revert to old website
+- Change to new website
+- Fix smetana
+- Add dav to mjwcodr.de
+- Add Remote for WebDav
+- Add new feature gitea
+- Change neovim import
+- Add new feature
+- Add Jake Chudnow to music list
+- Add new languages to neovim
+- Update flake.nix
+- Add kagi api to fish
+- Add to Neovim
+- add typst support in neovim
+- Add Typst
+- Rename Nix OptimiseStore
+- add conky
+- Add new music
+- Add Home Manaer
+- Make deployable
+- Add First functional deployment
+- Change server size in init script
+- readd hardware-config
+- Add Webdav
+- Add New Stuff
+- New Features
+- do a lot
+- Fix youtube
+- Add Rss
+- Change Juris ID and the pixel6a id
+- Remove youtube channels
+- Remove Youtube Channels
+- Add Mosh
+- Enable Sockets Navidrome
+- Restructure to have only one backup
+- Add Radicale
+- Add Backup
+- Add new stuff
+- Add setup home.mjwcodr.de
+- Add samba
+- Rename obsolete options
+- Add Arte to Youtube Downloads
+- Add Home Assistant
+- Add dmitry to music share syncthing
+- Add Minidlna
 - Add DLNA
 - Add fern
 - Add Channels
@@ -37,21 +117,6 @@
 - Add Logging to Drone
 - Add Drone to Homer
 - Add SSH-Runner
-
-### Fix
-
-- Remove Changelog from commit
-- Add Matthias to Nix
-
-## 0.1.0 (2023-11-19)
-
-### Cosmetic
-
-- Change file Formatting
-- Change Secret Naming
-
-### Feature
-
 - Add Proper TLS Implementation 🎉
 - Exchange Certificates
 - Add multiple Job Runners
@@ -67,9 +132,18 @@
 - Add Powersaving Options
 - Add Powersaving Options
 
-  ### Fix
+### Fix
 
-  - Fix Boot Inhibiting Bug in Navidrome Config
+- fix ports webdav
+- Add to neovim
+- Remove Spotify Credentials and rotate them
+- Allow navidrome to use websockets
+- Fix-Syncthing error
+- Remove wait for network
+- remove gitea runner
+- Remove Changelog from commit
+- Add Matthias to Nix
+- Fix Boot Inhibiting Bug in Navidrome Config
 - Disable Hedgedoc
 - Disable Hedgedoc
 - fix Gitea
