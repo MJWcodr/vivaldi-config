@@ -1,3 +1,9 @@
+## 0.1.5 (2024-11-07)
+
+### Fix
+
+- Remove not needed pipeline
+
 ## 0.1.4 (2024-11-07)
 
 ### Cosmetic
