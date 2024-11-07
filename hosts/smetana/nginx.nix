@@ -56,7 +56,7 @@ in {
 
   services.nginx = {
     enable = true;
-
+		statusPage = true;
     virtualHosts = {
       "${domain}" = {
         enableACME = true;

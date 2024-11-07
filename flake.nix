@@ -122,7 +122,18 @@
               environment.systemPackages =
                 [ qobuz-dl.packages.${system}.default ];
             }
-          ];
+						comin.nixosModules.comin
+          	{
+            services.comin = {
+              enable = true;
+              remotes = [{
+                name = "origin";
+                url = "https://git.mjwcodr.de/mjwcodr/nixos-config.git";
+                branches.main.name = "main";
+              }];
+            };
+          	}
+						];
         };
 
         # smetana is my vpn-gateway
