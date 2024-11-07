@@ -820,11 +820,11 @@
         "tinted-tmux": "tinted-tmux"
       },
       "locked": {
-        "lastModified": 1730924223,
-        "narHash": "sha256-tGvmW0qih+dCAH9L4BEMYMiHcBoJVZtESbC9WH0EEuw=",
+        "lastModified": 1731002033,
+        "narHash": "sha256-uGjTjvvlGQfQ0yypVP+at0NizI2nrb6kz4wGAqzRGbY=",
         "owner": "danth",
         "repo": "stylix",
-        "rev": "762c07ee10b381bc8e085be5b6c2ec43139f13b0",
+        "rev": "f71c2effed1ce4f9fbeefe402e4e431428ffe93a",
         "type": "github"
       },
       "original": {
@@ -1015,11 +1015,11 @@
         "nixpkgs": "nixpkgs_10"
       },
       "locked": {
-        "lastModified": 1730997443,
-        "narHash": "sha256-VgLK/MX1wqeHobf3LzLboIs+2i3jTTgfnOPo/tqpGMk=",
+        "lastModified": 1731006579,
+        "narHash": "sha256-JO2IPb3fbJm8Hx+yvVxiZjl8J027e7SH2mHRi1T6iMA=",
         "ref": "refs/heads/main",
-        "rev": "861f47abf69886b55007743db2699bf6d791c2fa",
-        "revCount": 6,
+        "rev": "0818e39ca42ddc7e2f76958758a0acfc03fbfbff",
+        "revCount": 7,
         "type": "git",
         "url": "https://git.mjwcodr.de/mjwcodr/actual-website.git"
       },
