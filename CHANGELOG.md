@@ -1,3 +1,9 @@
+## 0.1.3 (2024-11-07)
+
+### Cosmetic
+
+- dont print version in timeline
+
 ## 0.1.2 (2024-11-07)
 
 ### Cosmetic
