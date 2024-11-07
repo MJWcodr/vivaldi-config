@@ -101,13 +101,14 @@ in {
       owner = config.services.nginx.user;
     };
   };
-  age.secrets = {
+
+	age.secrets = {
     "secrets/sslcert.crt.age" = {
-      file = ../../../secrets/sslcert.crt.age;
+      file = ../../secrets/sslcert.crt.age;
       owner = config.services.nginx.user;
     };
     "secrets/sslcert.key.age" = {
-      file = ../../../secrets/sslcert.key.age;
+      file = ../../secrets/sslcert.key.age;
       owner = config.services.nginx.user;
     };
   };
