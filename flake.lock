@@ -502,11 +502,11 @@
     },
     "nixpkgs_4": {
       "locked": {
-        "lastModified": 1730928433,
-        "narHash": "sha256-yXSfN0VIlgVHJcA/Hnvpc01OERFPcX12ynguoiBths8=",
+        "lastModified": 1730958623,
+        "narHash": "sha256-JwQZIGSYnRNOgDDoIgqKITrPVil+RMWHsZH1eE1VGN0=",
         "owner": "NixOS",
         "repo": "nixpkgs",
-        "rev": "fe348e1a06a2d791e992d46844a83d2d44436c5a",
+        "rev": "85f7e662eda4fa3a995556527c87b2524b691933",
         "type": "github"
       },
       "original": {
@@ -1015,11 +1015,11 @@
         "nixpkgs": "nixpkgs_10"
       },
       "locked": {
-        "lastModified": 1731006579,
-        "narHash": "sha256-JO2IPb3fbJm8Hx+yvVxiZjl8J027e7SH2mHRi1T6iMA=",
+        "lastModified": 1731008917,
+        "narHash": "sha256-PKxRrCIy8Uke2DTI5LFnfzEA+zgS3apYbdog0VJfR4A=",
         "ref": "refs/heads/main",
-        "rev": "0818e39ca42ddc7e2f76958758a0acfc03fbfbff",
-        "revCount": 7,
+        "rev": "b9a323191c3230a11e6a5352d4c963b133733e5e",
+        "revCount": 8,
         "type": "git",
         "url": "https://git.mjwcodr.de/mjwcodr/actual-website.git"
       },
