@@ -1,3 +1,9 @@
+## 0.4.1 (2024-11-07)
+
+### Fix
+
+- Update website once again
+
 ## 0.4.0 (2024-11-07)
 
 ### Feature
