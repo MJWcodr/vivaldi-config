@@ -62,7 +62,7 @@ in {
       "	#!/bin/sh\n	set -e\n	mkdir -p /srv/gitea\n	chown -R ${config.services.gitea.user}:${config.services.gitea.group} /srv/gitea\n";
   };
 
-  services.forgejo = {
+  services.gitea = {
     enable = true;
     appName = "Mjwcodr Git"; # Give the site a name
     database = {
