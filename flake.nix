@@ -118,10 +118,10 @@
 						{
               services.nginx = {
                 enable = true;
-								forceSSL = true;
                 virtualHosts = {
                   "website" = {
                     enableACME = false;
+										forceSSL = true;
                     locations = {
                       "/" = { root = website.defaultPackage.x86_64-linux; };
                     };
