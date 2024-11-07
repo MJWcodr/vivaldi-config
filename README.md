@@ -8,7 +8,7 @@
 <div align="center">
 
   [![License](https://img.shields.io/badge/license-MIT-blue.svg)](/LICENSE)
-  [![Pipeline Status](https://git.mjwcodr.de/{mjwcodr}/{nixos-config}/actions/workflows/{bump.yml}/badge.svg?branch={main})
+  [![Pipeline Status](https://git.mjwcodr.de/{mjwcodr}/{nixos-config}/actions/workflows/{bump.yml}/badge.svg?branch={main})](https://git.mjwcodr.de/mjwcodr/nixos-config/actions?workflow=bump.yml)
 
 </div>
 
