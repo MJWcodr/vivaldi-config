@@ -15,10 +15,10 @@ in {
       file = ../../../secrets/postgrespass.age;
       owner = config.services.gitea.user;
     };
-    gitea-actions-token = {
-      file = ../../../secrets/gitea-actions-token.age;
-      owner = "gitea-runner";
-    };
+    #gitea-actions-token = {
+     # file = ../../../secrets/gitea-actions-token.age;
+      #owner = "gitea-runner";
+    #};
   };
 
   ##########
