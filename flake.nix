@@ -90,34 +90,7 @@
           system = "x86_64-linux";
           modules = [
             agenix.nixosModules.default
-            {
-              services.nginx = {
-                enable = true;
-                virtualHosts = {
-                  "website" = {
-                    enableACME = false;
-                    locations = {
-                      "/" = { root = website.defaultPackage.x86_64-linux; };
-                    };
-                    listen = [
-                      {
-                        port = 8000;
-                        ssl = false;
-                        addr = "localhost";
-                      }
-                      {
-                        port = 8000;
-                        ssl = false;
-                        addr = "vivaldi.fritz.box";
-                      }
-                    ];
-
-                  };
-                };
-              };
-              networking.firewall.allowedTCPPorts = [ 8000 ];
-            }
-            ./hosts/vivaldi/configuration.nix
+                        ./hosts/vivaldi/configuration.nix
             {
               environment.systemPackages =
                 [ qobuz-dl.packages.${system}.default ];
@@ -142,7 +115,35 @@
           modules =
             [ agenix.nixosModules.default ./hosts/smetana/configuration.nix
 							 comin.nixosModules.comin
-          	{
+						{
+              services.nginx = {
+                enable = true;
+								forceSSL = true;
+                virtualHosts = {
+                  "website" = {
+                    enableACME = false;
+                    locations = {
+                      "/" = { root = website.defaultPackage.x86_64-linux; };
+                    };
+                    listen = [
+                      {
+                        port = 443;
+                        ssl = false;
+                        addr = "mjwcodr.de";
+                      }
+                      {
+                        port = 80;
+                        ssl = true;
+                        addr = "mjwcodr.de";
+                      }
+                    ];
+
+                  };
+                };
+              };
+              networking.firewall.allowedTCPPorts = [ 8000 ];
+            }
+						{
             services.comin = {
               enable = true;
               remotes = [{

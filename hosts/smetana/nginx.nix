@@ -58,27 +58,6 @@ in {
     enable = true;
 		statusPage = true;
     virtualHosts = {
-      "${domain}" = {
-        enableACME = true;
-        forceSSL = true;
-        locations."/" = {
-          proxyPass = "http://${foreignHostIP}:${websitePort}";
-          proxyWebsockets = true;
-          root = ./nginx/gateway.mjwcodr.de;
-        };
-        listen = [
-          {
-            ssl = true;
-            port = 443;
-            addr = "${domain}";
-          }
-          {
-            ssl = false;
-            port = 80;
-            addr = "${domain}";
-          }
-        ];
-      };
       "${gatewayHost}" = {
         enableACME = true;
         forceSSL = true;
