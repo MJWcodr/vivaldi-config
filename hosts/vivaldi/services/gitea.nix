@@ -62,13 +62,14 @@ in {
       "	#!/bin/sh\n	set -e\n	mkdir -p /srv/gitea\n	chown -R ${config.services.gitea.user}:${config.services.gitea.group} /srv/gitea\n";
   };
 
-  services.gitea = {
+  services.forgejo = {
     enable = true;
     appName = "Mjwcodr Git"; # Give the site a name
     database = {
       type = "postgres";
       passwordFile = config.age.secrets.gitea-postgres.path;
     };
+		lfs.enable = true;
     stateDir = "/srv/gitea";
     settings = {
       server = {

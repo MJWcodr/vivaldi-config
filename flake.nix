@@ -173,17 +173,6 @@
         };
       };
 
-      deploy.nodes."schubert" = {
-        hostname = "schubert";
-        profiles.system = {
-          sshUser = "root";
-          user = "root";
-          remoteBuild = true;
-          path = deploy-rs.lib.x86_64-linux.activate.nixos
-            self.nixosConfigurations."schubert";
-        };
-      };
-
       deploy.nodes."smetana" = {
         hostname = "gateway.mjwcodr.de";
         profiles.system = {
