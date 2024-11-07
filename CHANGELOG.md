@@ -1,3 +1,11 @@
+## 0.3.0 (2024-11-07)
+
+### Feature
+
+- Add Gitea again
+- Add flake
+- Add to gitea
+
 ## 0.2.0 (2024-11-07)
 
 ### Feature
