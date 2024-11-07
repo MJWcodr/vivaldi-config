@@ -71,6 +71,7 @@ in {
     };
 		lfs.enable = true;
     stateDir = "/srv/gitea";
+		user = "gitea";
     settings = {
       server = {
         DOMAIN = domain;
