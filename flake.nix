@@ -119,7 +119,7 @@
               services.nginx = {
                 enable = true;
                 virtualHosts = {
-                  "website" = {
+                  "mjwcodr.de" = {
                     enableACME = true;
 										forceSSL = true;
                     locations = {
@@ -128,12 +128,12 @@
                     listen = [
                       {
                         port = 443;
-                        ssl = false;
+                        ssl = true;
                         addr = "mjwcodr.de";
                       }
                       {
                         port = 80;
-                        ssl = true;
+                        ssl = false;
                         addr = "mjwcodr.de";
                       }
                     ];
