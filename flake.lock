@@ -1015,11 +1015,11 @@
         "nixpkgs": "nixpkgs_10"
       },
       "locked": {
-        "lastModified": 1731075387,
-        "narHash": "sha256-qSbHDPdqwfOBj1bII72ofW92/HdoaSStLIUDak9hYqg=",
+        "lastModified": 1731085086,
+        "narHash": "sha256-UG201tK3UxXwyDBp6NZBlkd5nxKcKbkLZ2bY18udFH0=",
         "ref": "refs/heads/main",
-        "rev": "480f2e635f430ef0f608fd346e5a39da2c0399c3",
-        "revCount": 15,
+        "rev": "957e8b60417fa1c8e9ffe5fb7544c3a9f36b95e3",
+        "revCount": 18,
         "type": "git",
         "url": "https://git.mjwcodr.de/mjwcodr/actual-website.git"
       },
