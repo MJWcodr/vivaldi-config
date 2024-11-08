@@ -146,12 +146,13 @@
 						{
             services.comin = {
               enable = true;
+							hostname = "smetana";
               remotes = [{
                 name = "origin";
                 url = "https://git.mjwcodr.de/mjwcodr/nixos-config.git";
                 branches.main.name = "main";
+								poller.period = 60;
               }];
-							poller.period = 60;
             };
           	}
 						];
