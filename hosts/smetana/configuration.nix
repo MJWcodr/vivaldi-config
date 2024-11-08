@@ -31,6 +31,12 @@ in { pkgs, ... }: {
   boot.tmp.cleanOnBoot = true;
   zramSwap.enable = true;
 
+	environment.systemPackages = with pkgs; [
+		git
+		htop
+		vim
+	];
+
   programs.mosh.enable = true;
 
   networking.hostName = "smetana";
