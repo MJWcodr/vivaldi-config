@@ -32,6 +32,7 @@ in { pkgs, ... }: {
   zramSwap.enable = true;
 
 	environment.systemPackages = with pkgs; [
+		docker
 		git
 		htop
 		vim
@@ -42,9 +43,6 @@ in { pkgs, ... }: {
   networking.hostName = "smetana";
 
   nix.settings.experimental-features = "nix-command flakes";
-
-  # docker
-  environment.systemPackages = with pkgs; [ docker ];
 
   networking.domain = "gateway.mjwcodr.de";
   services.openssh = {
