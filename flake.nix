@@ -151,6 +151,7 @@
                 url = "https://git.mjwcodr.de/mjwcodr/nixos-config.git";
                 branches.main.name = "main";
               }];
+							poller.period = 60;
             };
           	}
 						];
