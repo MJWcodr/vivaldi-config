@@ -33,7 +33,7 @@ in { pkgs, ... }: {
 
   programs.mosh.enable = true;
 
-  networking.hostName = "vpn-gateway";
+  networking.hostName = "smetana";
 
   nix.settings.experimental-features = "nix-command flakes";
 
