@@ -2,6 +2,7 @@
 /home/matthias/Downloads/
 /home/matthias/Games/
 /home/matthias/.cache/
+*.npm/
 *.git/
 */venv/
 *.var/app/
