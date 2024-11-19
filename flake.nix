@@ -11,7 +11,7 @@
 		};
     pre-commit-hooks.url = "github:cachix/git-hooks.nix";
     website = {
-			url = "git+https://git.mjwcodr.de/mjwcodr/actual-website.git";
+			url = "git+https://git.mjwcodr.de/mjwcodr/website.git";
 			inputs.nixpkgs.follows = "nixpkgs";
 		};
     kagi.url = "git+https://git.mjwcodr.de/mjwcodr/kagi.git";
