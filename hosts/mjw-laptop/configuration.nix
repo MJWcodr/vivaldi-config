@@ -134,21 +134,21 @@ in {
   # Enable touchpad support (enabled default in most desktopManager).
   # services.xserver.libinput.enable = true;
 
-  networking.extraHosts = ''
-        0.0.0.0 www.youtube.com
-        ::0 www.youtube.com
-    		0.0.0.0 youtube.com
-    		::0 youtube.com
-
-    		127.0.0.2 mjw-laptop
-    		::2 mjw-laptop
-
-    		10.100.0.2 vivaldi-ext
-    		10.100.0.1 gateway-ext
-
-    		127.0.0.1 localhost
-    		::1 localhost
-  '';
+  # networking.extraHosts = ''
+   #     0.0.0.0 www.youtube.com
+    ##    ::0 www.youtube.com
+    	#	0.0.0.0 youtube.com
+    	#	::0 youtube.com
+#
+ #   		127.0.0.2 mjw-laptop
+  #  		::2 mjw-laptop
+#
+ #   		10.100.0.2 vivaldi-ext
+  #  		10.100.0.1 gateway-ext
+#
+ #   		127.0.0.1 localhost
+  #  		::1 localhost
+  #'';
 
   # Define a user account. Don't forget to set a password with ‘passwd’.
   users.users.matthias = {
