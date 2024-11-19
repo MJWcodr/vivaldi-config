@@ -5,7 +5,10 @@
     nixpkgs.url = "nixpkgs/nixpkgs-unstable";
     agenix.url = "github:ryantm/agenix";
     deploy-rs.url = "github:serokell/deploy-rs";
-    stylix.url = "github:danth/stylix";
+		stylix = {
+			url = "github:danth/stylix";
+			inputs.nixpkgs.follows = "nixpkgs";
+		};
     pre-commit-hooks.url = "github:cachix/git-hooks.nix";
     website.url = "git+https://git.mjwcodr.de/mjwcodr/actual-website.git";
     kagi.url = "git+https://git.mjwcodr.de/mjwcodr/kagi.git";
