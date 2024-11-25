@@ -149,6 +149,8 @@
     signal-desktop
     discord
 
+		foliate
+
     keepassxc
 
     todo-txt-cli
