@@ -54,8 +54,8 @@
                 image = ./wallpaper.jpg;
                 polarity = "dark";
                 # TODO: add this again
-								# base16Scheme =
-                #  "${pkgs.base16-schemes}/share/themes/${theme}.yaml";
+								base16Scheme =
+                 "${pkgs.base16-schemes}/share/themes/${theme}.yaml";
                 fonts = {
                   serif = {
                     package = pkgs.dejavu_fonts;
